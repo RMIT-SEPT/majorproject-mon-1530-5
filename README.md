@@ -1,9 +1,9 @@
 # RMIT SEPT 2020 Major Project
 
-# Group 00
+# Group 05
 
 ## Members
-* SURNAME, GivenName (sXXXX)
+* BOUND, Daniel (s3719027)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
@@ -11,8 +11,8 @@
 
 ## Records
 
-* Github repository : https://github.com/RMIT-SEPT/MajorProject/Groupx
-* ClickUp Workspace : https://app.clickup.com/xxxx/yyyy
+* Github repository : https://github.com/AlanaTobgui/SETP_MON-1530-5
+* ClickUp Workspace : https://app.clickup.com/6915716
 
 
 ## Code documentation
