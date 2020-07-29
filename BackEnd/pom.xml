@@ -12,7 +12,7 @@
 	<artifactId>myapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>myapi</name>
-	<description>Demo project for Spring Boot</description>
+	<description>SEPT_MON-1530-5 Group BackEnd</description>
 
 	<properties>
 		<java.version>1.8</java.version>
