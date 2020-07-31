@@ -1,4 +1,4 @@
-package com.rmit.myapi.Entity;
+package com.rmit.bookingAPI.Model;
 
 import java.util.Date;
 
@@ -16,5 +16,20 @@ public class Booking {
         this.date = date;
         this.customer = customer;
         this.employee = employee;
+    }
+    public int getBookingId() {
+        return bookingId;
+    }
+    public Service getService() {
+        return service;
+    }
+    public Date getDate() {
+        return date;
+    }
+    public Customer getCustomer() {
+        return customer;
+    }
+    public Employee getEmployee() {
+        return employee;
     }
 }

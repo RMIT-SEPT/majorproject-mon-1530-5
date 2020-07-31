@@ -1,4 +1,4 @@
-package com.rmit.myapi.Entity;
+package com.rmit.bookingAPI.Model;
 
 public class Service {
 

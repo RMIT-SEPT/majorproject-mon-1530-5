@@ -1,17 +1,25 @@
-package com.rmit.myapi.Entity;
+package com.rmit.bookingAPI.Model;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
-public class Employee extends User{
+public class Employee{
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String username;
+    private String password;
     private String name;
     private ArrayList<DayOfWeek> availability;
     private ArrayList<Service> services;
 
     public Employee(String username, String password, String name) {
-        super.setUsername(username);
-        super.setPassword(password);
+        this.username = username;
+        this.password = password;
         this.name = name;
     }
     public String getName() {

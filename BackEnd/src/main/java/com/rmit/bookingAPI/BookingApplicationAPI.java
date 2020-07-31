@@ -1,4 +1,4 @@
-package com.rmit.myapi;
+package com.rmit.bookingAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
