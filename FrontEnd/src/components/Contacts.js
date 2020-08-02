@@ -16,22 +16,6 @@ function Contacts() {
           </div>
           <div className="flex items-center py-2">
             <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-              type="email"
-              placeholder="Email"
-              aria-label="Email"
-            />
-          </div>
-          <div className="flex items-center py-2">
-            <input
-              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-              type="text"
-              placeholder="Company Name"
-              aria-label="Company Name"
-            />
-          </div>
-          <div className="flex items-center py-2">
-            <input
                   className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               type="textarea"
               placeholder="Message"
