@@ -1,26 +1,46 @@
 package com.rmit.bookingAPI.Model;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class Employee{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
     private String name;
-    private ArrayList<DayOfWeek> availability;
-    private ArrayList<Service> services;
+    @ElementCollection
+    private List<DayOfWeek> availability;
+    @ElementCollection
+    private List<Long> serviceIds;
 
     public Employee(String username, String password, String name) {
         this.username = username;
         this.password = password;
         this.name = name;
+    }
+    public Employee() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
     public String getName() {
         return name;
@@ -28,7 +48,7 @@ public class Employee{
     public void setName(String name) {
         this.name = name;
     }
-    public ArrayList<DayOfWeek> getAvailability() {
+    public List<DayOfWeek> getAvailability() {
         return availability;
     }
     public void addAvailability(DayOfWeek dayOfWeek) {
@@ -41,17 +61,17 @@ public class Employee{
             availability.remove(dayOfWeek);
         }
     }
-    public ArrayList<Service> getServices() {
-        return services;
+    public List<Long> getServices() {
+        return serviceIds;
     }
-    public void addService(Service service) {
-        if (!services.contains(service)) {
-            services.add(service);
+    public void addService(Long service) {
+        if (!serviceIds.contains(service)) {
+            serviceIds.add(service);
         }
     }
-    public void removeAvailability(Service service) {
-        if (services.contains(service)) {
-            services.remove(service);
+    public void removeAvailability(Long service) {
+        if (serviceIds.contains(service)) {
+            serviceIds.remove(service);
         }
     }
 }

@@ -1,35 +1,41 @@
 package com.rmit.bookingAPI.Model;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Booking {
 
-    private int bookingId;
-    private Service service;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Date date;
-    private Customer customer;
-    private Employee employee;
+    private Long serviceId;
+    private Long customerId;
+    private Long employeeId;
 
-    public Booking(int bookingId, Service service, Date date, Customer customer, Employee employee) {
-        this.bookingId = bookingId;
-        this.service = service;
+    public Booking(Date date, Long serviceId, Long customerId, Long employeeId) {
+        this.id = id;
         this.date = date;
-        this.customer = customer;
-        this.employee = employee;
+        this.serviceId = serviceId;
+        this.customerId = customerId;
+        this.employeeId = employeeId;
     }
-    public int getBookingId() {
-        return bookingId;
+    public Booking() {
     }
-    public Service getService() {
-        return service;
+    public Long getId() {
+        return id;
     }
     public Date getDate() {
         return date;
     }
-    public Customer getCustomer() {
-        return customer;
+    public Long getServiceId() {
+        return serviceId;
     }
-    public Employee getEmployee() {
-        return employee;
+    public Long getCustomerId() {
+        return customerId;
+    }
+    public Long getEmployeeId() {
+        return employeeId;
     }
 }
