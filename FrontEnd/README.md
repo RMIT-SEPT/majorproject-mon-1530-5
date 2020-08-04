@@ -1,3 +1,7 @@
+## Prerequisites
+1. Make sure that you have Node js installed on you machine - https://nodejs.org/en/download/
+2. Make sure that you are in "/Frontend" directory
+
 ## Setting Up the project 
 
 1. Run 'npm install' scripts to install the dependencies
