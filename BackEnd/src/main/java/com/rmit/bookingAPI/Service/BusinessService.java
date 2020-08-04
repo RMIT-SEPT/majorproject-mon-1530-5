@@ -18,7 +18,7 @@ public class BusinessService {
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
-    private ServiceRepository serviceRepository;
+    private PaidServiceRepository paidServiceRepository;
     @Autowired
     private ShiftRepository shiftRepository;
     @Autowired
@@ -39,10 +39,10 @@ public class BusinessService {
         customerRepository.findAll().forEach(customers::add);
         return customers;
     }
-    public List<Service> getAllServices() {
-        List<Service> services = new ArrayList<Service>();
-        serviceRepository.findAll().forEach(services::add);
-        return services;
+    public List<PaidService> getAllPaidServices() {
+        List<PaidService> paidServices = new ArrayList<PaidService>();
+        paidServiceRepository.findAll().forEach(paidServices::add);
+        return paidServices;
     }
     public List<Shift> getAllShifts() {
         List<Shift> shifts = new ArrayList<Shift>();
@@ -63,8 +63,8 @@ public class BusinessService {
     public void addCustomer(Customer customer) {
         customerRepository.save(customer);
     }
-    public void addService(Service service) {
-        serviceRepository.save(service);
+    public void addPaidService(PaidService paidService) {
+        paidServiceRepository.save(paidService);
     }
     public void addShift(Shift shift) {
         shiftRepository.save(shift);
