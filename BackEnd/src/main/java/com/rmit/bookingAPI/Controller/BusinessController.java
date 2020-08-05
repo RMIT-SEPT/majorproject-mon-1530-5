@@ -1,5 +1,7 @@
 package com.rmit.bookingAPI.Controller;
 
+import ch.qos.logback.core.CoreConstants;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.rmit.bookingAPI.Model.*;
 import com.rmit.bookingAPI.Service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ public class BusinessController {
     }
     @PostMapping(value = "/login")
     public ResponseEntity<?> customerLogin(@RequestParam("username") String username, @RequestParam("password") String password) {
+        System.out.println(username + "here!");
         Customer tempCustomer = businessService.getCustomer(username);
         if (tempCustomer.getPassword().equals(password)) {
             return new ResponseEntity<Customer>(tempCustomer, HttpStatus.OK);
