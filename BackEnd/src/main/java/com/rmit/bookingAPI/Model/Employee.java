@@ -19,14 +19,6 @@ public class Employee{
     @ElementCollection
     private List<Long> serviceIds;
 
-    public Employee(String username, String password, String name) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-    }
-    public Employee() {
-    }
-
     public Long getId() {
         return id;
     }

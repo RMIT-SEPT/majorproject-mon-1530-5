@@ -14,15 +14,6 @@ public class Customer{
     private String address;
     private String phoneNumber;
 
-    public Customer (String username, String password, String name, String address, String phoneNumber) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-    }
-    public Customer() {
-    }
     public Long getId() {
         return id;
     }
