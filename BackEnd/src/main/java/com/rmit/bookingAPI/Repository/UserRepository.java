@@ -1,10 +1,11 @@
 package com.rmit.bookingAPI.Repository;
 
-import com.rmit.bookingAPI.Model.Admin;
+import com.rmit.bookingAPI.Model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends CrudRepository<Admin, Long> {
-    Admin findByUsername(String username);
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findByUsername(String username);
+
 }

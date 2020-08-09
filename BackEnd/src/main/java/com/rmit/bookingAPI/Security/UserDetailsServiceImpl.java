@@ -1,7 +1,7 @@
 package com.rmit.bookingAPI.Security;
 
-import com.rmit.bookingAPI.Model.Customer;
-import com.rmit.bookingAPI.Repository.CustomerRepository;
+import com.rmit.bookingAPI.Model.User;
+import com.rmit.bookingAPI.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,21 +9,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    CustomerRepository customerRepository;
+    UserRepository userRepository;
 
-    public CustomerDetailsService(CustomerRepository customerRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         super();
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = this.customerRepository.findByUsername(username);
-        if (null == customer) {
+        User user = this.userRepository.findByUsername(username);
+        if (null == user) {
             throw new UsernameNotFoundException("Username: " + username + " not found...");
         }
-        return new CustomerDetails(customer);
+        return new UserDetailsImpl(user, user.getAuthGroup());
     }
 }

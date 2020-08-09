@@ -1,31 +1,41 @@
 package com.rmit.bookingAPI.Security;
 
-import com.rmit.bookingAPI.Model.Admin;
+import com.rmit.bookingAPI.Model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
-public class AdminDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
-    private Admin admin;
-    public AdminDetails(Admin admin) {
+    private User user;
+    private String authGroup;
+
+    public UserDetailsImpl(User user, String authGroup) {
         super();
-        this.admin = admin;
+        this.user = user;
+        this.authGroup = authGroup;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
+        if (null == authGroup) {
+            return Collections.emptySet();
+        }
+        Set<SimpleGrantedAuthority> grantedAuthority = new HashSet<>();
+        grantedAuthority.add(new SimpleGrantedAuthority(authGroup));
+        return grantedAuthority;
     }
     @Override
     public String getPassword() {
-        return this.admin.getPassword();
+        return this.user.getPassword();
     }
     @Override
     public String getUsername() {
-        return this.admin.getUsername();
+        return this.user.getUsername();
     }
     @Override
     public boolean isAccountNonExpired() {

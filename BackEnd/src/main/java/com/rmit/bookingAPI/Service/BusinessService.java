@@ -5,24 +5,21 @@ import com.rmit.bookingAPI.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class BusinessService {
 
     @Autowired
-    private AdminRepository adminRepository;
-//    @Autowired
-//    private EmployeeRepository employeeRepository;
-//    @Autowired
-//    private CustomerRepository customerRepository;
-//    @Autowired
-//    private PaidServiceRepository paidServiceRepository;
-//    @Autowired
-//    private ShiftRepository shiftRepository;
-//    @Autowired
-//    private BookingRepository bookingRepository;
+    private UserRepository userRepository;
+    @Autowired
+    private EmployeeDetailsRepository employeeDetailsRepository;
+    @Autowired
+    private CustomerDetailsRepository customerDetailsRepository;
+    @Autowired
+    private PaidServiceRepository paidServiceRepository;
+    @Autowired
+    private ShiftRepository shiftRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 //
 //    public List<Admin> getAllAdmins() {
 //        List<Admin> admins = new ArrayList<Admin>();
@@ -54,23 +51,23 @@ public class BusinessService {
 //        bookingRepository.findAll().forEach(bookings::add);
 //        return bookings;
 //    }
-//    public void addAdmin(Admin admin) {
-//        adminRepository.save(admin);
-//    }
-//    public void addEmployee(Employee employee) {
-//        employeeRepository.save(employee);
-//    }
-//    public void addCustomer(Customer customer) {
-//        customerRepository.save(customer);
-//    }
-//    public void addPaidService(PaidService paidService) {
-//        paidServiceRepository.save(paidService);
-//    }
-//    public void addShift(Shift shift) {
-//        shiftRepository.save(shift);
-//    }
-//    public void addBooking(Booking booking) {
-//        bookingRepository.save(booking);
-//    }
+    public void addUser(Admin admin) {
+        adminRepository.save(admin);
+    }
+    public void addEmployee(EmployeeDetails employee) {
+        employeeRepository.save(employee);
+    }
+    public void addCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+    public void addPaidService(PaidService paidService) {
+        paidServiceRepository.save(paidService);
+    }
+    public void addShift(Shift shift) {
+        shiftRepository.save(shift);
+    }
+    public void addBooking(Booking booking) {
+        bookingRepository.save(booking);
+    }
 
 }

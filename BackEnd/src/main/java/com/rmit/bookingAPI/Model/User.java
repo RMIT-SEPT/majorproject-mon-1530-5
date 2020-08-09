@@ -3,13 +3,14 @@ package com.rmit.bookingAPI.Model;
 import javax.persistence.*;
 
 @Entity
-public class Admin{
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
+    private String authGroup;
 
     public Long getId() {
         return id;
@@ -33,5 +34,13 @@ public class Admin{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAuthGroup() {
+        return authGroup;
+    }
+
+    public void setAuthGroup(String authGroup) {
+        this.authGroup = authGroup;
     }
 }
