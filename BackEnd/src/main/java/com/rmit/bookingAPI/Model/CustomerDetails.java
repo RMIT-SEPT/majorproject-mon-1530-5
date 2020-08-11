@@ -8,6 +8,7 @@ public class CustomerDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
     private String name;
     private String address;
@@ -19,13 +20,11 @@ public class CustomerDetails{
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
+    public CustomerDetails() {
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {

@@ -5,45 +5,35 @@ import com.rmit.bookingAPI.Service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 public class BusinessController {
 
     @Autowired
     BusinessService businessService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> customerRegister(@RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<?> customerRegister(@RequestBody CustomerDTO customerDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
+        }
         businessService.addCustomer(customerDTO);
-        return new ResponseEntity<CustomerDetails>(customerDTO.getCustomerDetailsObject(), HttpStatus.OK);
+        return new ResponseEntity<CustomerDetails>(customerDTO.getCustomerDetailsObject(), HttpStatus.CREATED);
     }
     @PostMapping(value = "/login")
-    public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO, BindingResult result) {
         User user = businessService.findUserByUsername(loginDTO.getUsername());
         if (null != user) {
             if (user.getPassword() == loginDTO.getPassword()) {
                 return new ResponseEntity<User>(businessService.findUserByUsername(loginDTO.getUsername()), HttpStatus.OK);
             }
+            return new ResponseEntity<String>("Incorrect password", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<User>(businessService.findUserByUsername(loginDTO.getUsername()), HttpStatus.OK);
+        return new ResponseEntity<String>("A login with that username doesn't exist", HttpStatus.BAD_REQUEST);
     }
-//    @GetMapping("/")
-//    public String home() {
-//        return "<h1>Welcome</h1>";
-//    }
-//    @GetMapping("/customer")
-//    public String customer() {
-//        return "<h1>Welcome Customer</h1>";
-//    }
-//    @GetMapping("/employee")
-//    public String employee() {
-//        return "<h1>Welcome Employee</h1>";
-//    }
-//    @GetMapping("/admin")
-//    public String admin() {
-//        return "<h1>Welcome Admin</h1>";
-//    }
 
 
 }
