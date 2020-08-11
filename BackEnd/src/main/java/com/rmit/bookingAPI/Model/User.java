@@ -12,6 +12,14 @@ public class User{
     private String password;
     private String authGroup;
 
+    public User(String username, String password, String authGroup) {
+        this.username = username;
+        this.password = password;
+        this.authGroup = authGroup;
+    }
+    public User() {
+    }
+
     public Long getId() {
         return id;
     }

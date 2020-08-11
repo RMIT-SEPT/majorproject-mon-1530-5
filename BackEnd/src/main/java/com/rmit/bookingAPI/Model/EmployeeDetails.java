@@ -18,6 +18,13 @@ public class EmployeeDetails {
     @ElementCollection
     private List<Long> serviceIds;
 
+    public EmployeeDetails(String username, String name) {
+        this.username = username;
+        this.name = name;
+    }
+    public EmployeeDetails() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,7 +1,5 @@
 package com.rmit.bookingAPI.Controller;
 
-import ch.qos.logback.core.CoreConstants;
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.rmit.bookingAPI.Model.*;
 import com.rmit.bookingAPI.Service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,19 @@ public class BusinessController {
     BusinessService businessService;
 
     @PostMapping(value = "/register")
-    public ResponseEntity<?> customerRegister(@RequestBody Customer customer) {
-        businessService.addCustomer(customer);
-        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+    public ResponseEntity<?> customerRegister(@RequestBody CustomerDTO customerDTO) {
+        businessService.addCustomer(customerDTO);
+        return new ResponseEntity<CustomerDetails>(customerDTO.getCustomerDetailsObject(), HttpStatus.OK);
+    }
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO) {
+        User user = businessService.findUserByUsername(loginDTO.getUsername());
+        if (null != user) {
+            if (user.getPassword() == loginDTO.getPassword()) {
+                return new ResponseEntity<User>(businessService.findUserByUsername(loginDTO.getUsername()), HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<User>(businessService.findUserByUsername(loginDTO.getUsername()), HttpStatus.OK);
     }
 //    @GetMapping("/")
 //    public String home() {
