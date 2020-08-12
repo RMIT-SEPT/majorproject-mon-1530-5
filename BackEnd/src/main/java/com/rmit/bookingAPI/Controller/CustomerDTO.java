@@ -19,9 +19,14 @@ public class CustomerDTO {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public User getUserObject() {
         return new User(this.username, this.password, "CUSTOMER");
     }
+
     public CustomerDetails getCustomerDetailsObject() {
         return new CustomerDetails(this.username, this.name, this.address, this.phoneNumber);
     }

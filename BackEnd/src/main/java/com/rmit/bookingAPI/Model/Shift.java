@@ -12,11 +12,11 @@ public class Shift {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long employeeId;
+    private String employeeUsername;
     private Date date;
 
-    public Shift(Long employeeId, Date date) {
-        this.employeeId = employeeId;
+    public Shift(String employeeId, Date date) {
+        this.employeeUsername = employeeId;
         this.date = date;
     }
     public Shift() {
@@ -24,11 +24,11 @@ public class Shift {
     public Long getId() {
         return id;
     }
-    public Long getEmployeeId() {
-        return employeeId;
+    public String getEmployeeUsername() {
+        return employeeUsername;
     }
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeUsername(String employeeUsername) {
+        this.employeeUsername = employeeUsername;
     }
     public Date getDate() {
         return date;

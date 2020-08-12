@@ -20,8 +20,11 @@ public class BusinessController {
         if (result.hasErrors()) {
             return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
         }
+        if (null != businessService.findUserByUsername(customerDTO.getUsername())) { // a null return indicates the username is not being used
+            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
+        }
         businessService.addCustomer(customerDTO);
-        return new ResponseEntity<CustomerDetails>(customerDTO.getCustomerDetailsObject(), HttpStatus.CREATED);
+        return new ResponseEntity<CustomerDetails>(businessService.findCustomerDetailsByUsername(customerDTO.getUsername()), HttpStatus.CREATED);
     }
     @PostMapping(value = "/login")
     public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO, BindingResult result) {
@@ -34,6 +37,8 @@ public class BusinessController {
         }
         return new ResponseEntity<String>("A login with that username doesn't exist", HttpStatus.BAD_REQUEST);
     }
+//    @GetMapping(value="/customers")
+//    public Re
 
 
 }

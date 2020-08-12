@@ -11,15 +11,15 @@ public class Booking {
     private Long id;
     private Date date;
     private Long serviceId;
-    private Long customerId;
-    private Long employeeId;
+    private String customerUsername;
+    private String employeeUsername;
 
-    public Booking(Date date, Long serviceId, Long customerId, Long employeeId) {
+    public Booking(Date date, Long serviceId, String customerUsername, String employeeUsername) {
         this.id = id;
         this.date = date;
         this.serviceId = serviceId;
-        this.customerId = customerId;
-        this.employeeId = employeeId;
+        this.customerUsername = customerUsername;
+        this.employeeUsername = employeeUsername;
     }
     public Booking() {
     }
@@ -32,10 +32,10 @@ public class Booking {
     public Long getServiceId() {
         return serviceId;
     }
-    public Long getCustomerId() {
-        return customerId;
+    public String getCustomerUsername() {
+        return customerUsername;
     }
-    public Long getEmployeeId() {
-        return employeeId;
+    public String getEmployeeUsername() {
+        return employeeUsername;
     }
 }

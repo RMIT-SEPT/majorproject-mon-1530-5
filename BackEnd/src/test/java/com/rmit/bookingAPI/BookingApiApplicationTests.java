@@ -6,6 +6,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BookingApiApplicationTests {
 
+	@Test
+	void addEmployeeExistingUsername() {
+
+	}
+
 	//register customer account and log in test
 	//attempt to load unauthorized portal
 

@@ -29,6 +29,30 @@ public class BusinessService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    public EmployeeDetails findEmployeeDetailsByUsername(String username) {
+        return employeeDetailsRepository.findByUsername(username);
+    }
+    public CustomerDetails findCustomerDetailsByUsername(String username) {
+        return customerDetailsRepository.findByUsername(username);
+    }
+    public List<Shift> findShiftsByUsername(String username) {
+        List<Shift> shifts = new ArrayList<Shift>();
+        for (Shift shift : getAllShifts()) {
+            if (shift.getEmployeeUsername().equals(username)) {
+                shifts.add(shift);
+            }
+        }
+        return shifts;
+    }
+    public List<Booking> findBookingsByUsername(String username) {
+        List<Booking> bookings = new ArrayList<Booking>();
+        for (Booking booking : getAllBookings()) {
+            if (booking.getCustomerUsername().equals(username)) {
+                bookings.add(booking);
+            }
+        }
+        return bookings;
+    }
 
     public List<User> getAllAdmins() {
         List<User> users = new ArrayList<User>();
