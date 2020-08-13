@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class BusinessController {
@@ -28,6 +30,9 @@ public class BusinessController {
     }
     @PostMapping(value = "/login")
     public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
+        }
         User user = businessService.findUserByUsername(loginDTO.getUsername());
         if (null != user) {
             if (user.getPassword() == loginDTO.getPassword()) {
@@ -37,8 +42,17 @@ public class BusinessController {
         }
         return new ResponseEntity<String>("A login with that username doesn't exist", HttpStatus.BAD_REQUEST);
     }
-//    @GetMapping(value="/customers")
-//    public Re
+    @GetMapping(value="/customers")
+    public ResponseEntity<?> getAllCustomers() {
+        return new ResponseEntity<List<CustomerDetails>>(businessService.getAllCustomerDetails(), HttpStatus.OK);
+    }
+    @GetMapping(value="/customer/{username}")
+    public ResponseEntity<?> getCustomerByUsername(@PathVariable("username") String username) {
+        if (null != businessService.findCustomerDetailsByUsername(username)) {
+            return new ResponseEntity<CustomerDetails>(businessService.findCustomerDetailsByUsername(username), HttpStatus.OK);
+        }
+        return new ResponseEntity<String>("A customer with that username doesn't exist", HttpStatus.BAD_REQUEST);
+    }
 
 
 }
