@@ -1,97 +1,163 @@
 package com.rmit.bookingAPI;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.Controller.BusinessController;
 import com.rmit.bookingAPI.Controller.CustomerDTO;
-import com.rmit.bookingAPI.Service.BusinessService;
+import com.rmit.bookingAPI.Controller.LoginDTO;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = BusinessController.class)
 class BookingApiApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
+	@Autowired
+	private ObjectMapper objectMapper;
+
 	@MockBean
-	BusinessController businessController;
+	private BusinessController businessController;
 
 	@Test
 	public void mySqlServicesTest() {
-
-		//test connection
+		/*
+			For future implementation
+		*/
 	}
 
 	@Test
 	public void authTest() {
-		//for future security implementation
+		/*
+			For future implementation
+		*/
 	}
 
 	@Test
-	public void addCustomerTestSuccess() {
+	void validCustomerRegisterReturn200() throws Exception {
 
-		//create valid customerDTO object
-		//use it as a parameter for the customerRegister controller method
-		//assert that its HTTP status result will be 200 (OK)
+		CustomerDTO customerDTO = new CustomerDTO("test", "password", "Test Name", "1 Victoria Street", "0412345678");
 
-//		CustomerDTO testCustomerDTO = new CustomerDTO("daniel","password", "Daniel", "1 Victoria Street", "1234567890");
-//		businessController.customerRegister(testCustomerDTO, null);
-//		ResponseEntity<CustomerDTO> responseEntity = new ResponseEntity<CustomerDTO>(null);
-//		responseEntity.status(HttpStatus.OK);
-//
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO)))
+				.andExpect(status().isOk());
+	}
+	@Test
+	void invalidCustomerRegisterReturn400_missingField() throws Exception {
+
+		CustomerDTO customerDTO = new CustomerDTO("test", "password", "", "1 Victoria Street", "0412345678");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO)))
+				.andExpect(status().isBadRequest());
+	}
+	@Test
+	void invalidCustomerRegisterReturn400_existingUsername() throws Exception {
+
+		CustomerDTO customerDTO_1 = new CustomerDTO("test", "password", "Test Name", "1 Victoria Street", "0412345678");
+		CustomerDTO customerDTO_2 = new CustomerDTO("test", "password", "Test Name", "1 Victoria Street", "0412345678");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO_1)));
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO_2)))
+				.andExpect(status().isBadRequest());
+	}
+
+
+	@Test
+	public void validCustomerLoginReturn200() throws Exception{
+
+		CustomerDTO customerDTO = new CustomerDTO("test", "password", "", "1 Victoria Street", "0412345678");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO)));
+
+		LoginDTO loginDTO = new LoginDTO("test", "password");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(loginDTO)))
+				.andExpect(status().isOk());
 	}
 
 	@Test
-	public void loginCustomerTestSuccess() {
+	public void invalidCustomerLoginReturn400_wrongUsername() throws Exception{
 
-		//create valid customerDTO object
-		//use it as a parameter for the customerRegister controller method
-		//create valid loginDTO object
-		//assert that its HTTP status result will be 200 (OK)
+		CustomerDTO customerDTO = new CustomerDTO("test", "password", "", "1 Victoria Street", "0412345678");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO)));
+
+		LoginDTO loginDTO = new LoginDTO("tset", "password");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(loginDTO)))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
-	public void addDuplicateCustomerTestFail() {
+	public void invalidCustomerLoginReturn400_wrongPassword() throws Exception{
 
-		//create valid customerDTO object
-		//use it as a parameter for the customerRegister controller method
-		//assert that its HTTP status result will be 200 (OK)
-		//use the customerDTO object again as a parameter for the customerRegister controller method
-		//assert that its HTTP status result will be 400 (BAD_REQUEST)
+		CustomerDTO customerDTO = new CustomerDTO("test", "password", "", "1 Victoria Street", "0412345678");
 
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(customerDTO)));
+
+		LoginDTO loginDTO = new LoginDTO("test", "passwrod");
+
+		mockMvc.perform(post("/api/register", 42L)
+				.contentType("application/json")
+				.content(objectMapper.writeValueAsString(loginDTO)))
+				.andExpect(status().isBadRequest());
 	}
 
 	@Test
 	public void addDuplicateEmployeeTestFail() {
+
+		/*
+			For future implementation
+		*/
 
 		//create valid employeeDTO object
 		//use it as a parameter for the addEmployee controller method
 		//assert that its HTTP status result will be 200 (OK)
 		//use the employeeDTO object again as a parameter for the addEmployee controller method
 		//assert that its HTTP status result will be 400 (BAD_REQUEST)
-
 	}
 
 	@Test
 	public void accessForbiddenPage() {
 
+		/*
+			For future implementation
+		*/
+
 		//no setup
 		//get request from /myinformation
 		//receieve 403 forbidden
 	}
-
-
-	//attempt to load unauthorized portal
 
 
 	//register customer account with identical username to another customer account
@@ -106,12 +172,6 @@ class BookingApiApplicationTests {
 	//add service with missing details
 
 	//roster employee outside of availability
-
 	//roster employee twice in a day
-	//
-
-	@Test
-	void contextLoads() {
-	}
 
 }

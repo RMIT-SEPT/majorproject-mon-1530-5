@@ -1,6 +1,7 @@
 package com.rmit.bookingAPI.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /*
 * User Entity class design reasoning:
