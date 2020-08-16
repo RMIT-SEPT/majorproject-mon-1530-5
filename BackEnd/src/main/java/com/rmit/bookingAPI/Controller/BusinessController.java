@@ -42,7 +42,7 @@ public class BusinessController {
         }
         User user = businessService.findUserByUsername(loginDTO.getUsername());
         if (null != user) {
-            if (user.getPassword() == loginDTO.getPassword()) {
+            if (user.getPassword().equals(loginDTO.getPassword())) {
                 return new ResponseEntity<User>(businessService.findUserByUsername(loginDTO.getUsername()), HttpStatus.OK);
             }
             return new ResponseEntity<String>("Incorrect password", HttpStatus.BAD_REQUEST);
