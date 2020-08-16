@@ -93,12 +93,15 @@ public class BusinessService {
         userRepository.save(employeeDTO.getUserObject());
         employeeDetailsRepository.save(employeeDTO.getEmployeeDetailsObject());
     }
+
     public void addPaidService(PaidService paidService) {
         paidServiceRepository.save(paidService);
     }
+
     public void addShift(Shift shift) {
         shiftRepository.save(shift);
     }
+
     public void addBooking(Booking booking) {
         bookingRepository.save(booking);
     }

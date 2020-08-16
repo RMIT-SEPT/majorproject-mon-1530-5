@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000") // Connection support for Reactjs Frontend requests
 public class BusinessController {
 
     @Autowired
@@ -29,6 +29,12 @@ public class BusinessController {
         businessService.addCustomer(customerDTO);
         return new ResponseEntity<CustomerDetails>(businessService.findCustomerDetailsByUsername(customerDTO.getUsername()), HttpStatus.CREATED);
     }
+
+    /*
+    * Login feature at the moment uses simple parameter passing but in the future will
+    * implement JWT and proper hashing, storage and retrieval of passwords through Spring security.
+    * This has partially been implemented in the security package, but has been commented out as it is not complete.
+    * */
     @PostMapping(value = "/login")
     public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO, BindingResult result) {
         if (result.hasErrors()) {
