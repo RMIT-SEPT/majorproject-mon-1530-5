@@ -4,7 +4,11 @@ class Register extends Component {
   render() {
     return (
       <div className="pt-4">
+<<<<<<< HEAD
         <h1 className="text-center text-4xl">Register</h1>
+=======
+        <h1 className="text-center text-4xl font-mono">Register</h1>
+>>>>>>> master
         <form className="w-full max-w-lg mx-auto py-2">
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

@@ -4,7 +4,11 @@ class Login extends Component {
   render() {
     return (
       <div className="pt-4">
+<<<<<<< HEAD
         <h1 className="text-center text-4xl ">Login</h1>
+=======
+        <h1 className="text-center text-4xl font-mono">Login</h1>
+>>>>>>> master
         <form className="max-w-lg mx-auto px-5 py-5">
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">

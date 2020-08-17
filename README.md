@@ -4,8 +4,8 @@
 
 ## Members
 * BOUND, Daniel (s3719027)
-* SURNAME, GivenName (sXXXX)
-* SURNAME, GivenName (sXXXX)
+* VO, Alex (s3781244)
+* BOGACHEV, Gleb (s3694543)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
 
