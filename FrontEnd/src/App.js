@@ -6,7 +6,9 @@ import Contacts from './components/Contacts';
 import Login from './components/Login'
 import Register from './components/Register'
 import {BrowserRouter as Router,Route} from 'react-router-dom';
-import Profile from './components/Profile'
+import Profile from './components/Profile';
+import AddEmployee from './components/AddEmployee';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
       <Route path="/login" component= {Login}/>
       <Route path="/register" component= {Register}/>
       <Route path="/profile" component= {Profile}/>
+      <Route path ="/addEmployee" component ={AddEmployee}/>
     </div>
     </Router>
   );
