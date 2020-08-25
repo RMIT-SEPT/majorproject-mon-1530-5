@@ -8,6 +8,7 @@ import Register from './components/Register'
 import {BrowserRouter as Router,Route} from 'react-router-dom';
 import Profile from './components/Profile';
 import AddEmployee from './components/AddEmployee';
+import AddShift from './components/AddShift';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Route path="/register" component= {Register}/>
       <Route path="/profile" component= {Profile}/>
       <Route path ="/addEmployee" component ={AddEmployee}/>
+      <Route path ="/addShift" component ={AddShift}/>
     </div>
     </Router>
   );
