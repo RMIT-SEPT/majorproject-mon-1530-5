@@ -16,25 +16,56 @@ export class Calendar extends Component {
       "November",
       "December",
     ],
-    currentMonth: "",
-    currentDate: "",
-    lastDay: "",
-    firstDayIndex: "",
-    prevLastDay: "",
+    currentMonth: "", 
+    currentDate: "", 
+    lastDay: "",   
+    firstDayIndex: "", 
+    prevLastDay: "", 
     lastDayIndex: "",
-    date: new Date(),
+    date: new Date(), // date object that contains all date related functions
     selectedDay:new Date().getDate()
   };
-  //Change current month to next month and the date on svg arrow-right click
+
+  //Sets up the values for the calendar
+  calendar = () => {
+    const date = this.state.date;
+    // Setting the current day of the month to first day on the date object
+    // This is done to find out the day of the week this day corresponds too
+    date.setDate(1); 
+    this.setState({
+      currentMonth: this.state.months[date.getMonth()], // Current month on the calendar
+      currentDate: new Date().toDateString(), // String that contains (day of the week ,day of the month ,year)
+      lastDay: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),  // Last day of the currently selected month
+      // Index of the first day of the month Sun = 0, Mon = 1 and so on
+      firstDayIndex: date.getDay(),
+      //Last day(31,30..) of the previous month
+      prevLastDay: new Date(date.getFullYear(), date.getMonth(), 0).getDate(),
+      // Index of the last day of the the month Sun = 0, Mon = 1 and so on
+      lastDayIndex: new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0
+      ).getDay(), 
+    });
+  }
+
+  componentDidMount() {
+    //Sets up the calendar for the current month
+    this.calendar();
+  }
+
+
+  //Change current month to next month
   nextMonth = () => {
     const date = this.state.date;
-    date.setMonth(date.getMonth() + 1);
+    date.setMonth(date.getMonth() + 1); //adding 1 to the index of the current month and setting the result
     this.setState({
       currentMonth: this.state.months[date.getMonth()],
       currentDate: date.toDateString(),
     });
     this.calendar();
   };
+
   //Change current month to previous month and the date on svg arrow-left click
   previousMonth = () => {
     const date = this.state.date;
@@ -45,11 +76,8 @@ export class Calendar extends Component {
     });
     this.calendar();
   };
-  componentDidMount() {
-    //Sets up the calendar for the current month
-    this.calendar();
-  }
 
+  // sets the day that the user clicked as the current day 
   setDay = (e)=>{
    const date = this.state.date
    date.setDate(e.target.innerHTML)
@@ -58,32 +86,20 @@ export class Calendar extends Component {
     })
     this.calendar()
   }
-  //Sets up the values for the calendar
-  calendar = () => {
-    const date = this.state.date;
-    date.setDate(1);
-    this.setState({
-      currentMonth: this.state.months[date.getMonth()],
-      currentDate: new Date().toDateString(),
-      lastDay: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),
-      firstDayIndex: date.getDay(),
-      prevLastDay: new Date(date.getFullYear(), date.getMonth(), 0).getDate(),
-      lastDayIndex: new Date(
-        date.getFullYear(),
-        date.getMonth() + 1,
-        0
-      ).getDay(),
-    });
-   
-  };
 
   render() {
+    const {lastDay,firstDayIndex,prevLastDay,lastDayIndex,selectedDay} = this.state
+
     const previousMontLastDays = () => {
       const previousDays = [];
-      for (let i = this.state.firstDayIndex; i > 0; i--) {
+      // loop starts from the index which corresponds 
+      //to the day of the week of the first day (0..6)
+      for (let i = firstDayIndex; i > 0; i--) {
         previousDays.push(
+          // inserts the jsx into the array
+          // prevLastDay = Last day(31,30..) of the previous month
           <td className="border px-4 py-2 bg-gray-500" key={i}>
-            {this.state.prevLastDay - i + 1}
+            {prevLastDay - i + 1}
           </td>
         );
       }
@@ -91,14 +107,19 @@ export class Calendar extends Component {
     };
     const nextMonthDays = () => {
       const nextMonthDays = [];
-      let nextDays = 7 - this.state.lastDayIndex - 1;
+      // the number of the left over days 
+      // of the next month on the calendar
+      let nextDays = 7 - lastDayIndex - 1; 
       for (let i = 1; i <= nextDays; i++) {
         nextMonthDays.push(<td className="border px-4 py-2 bg-gray-500" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
+
+    // Creats a first row of the calendar 
     const createFirstRow = () => {
       const rows = [];
+      // previousMontLastDays().length = returns the number of the left over last days of the previous month
       rows.push(previousMontLastDays());
       for (let i = 1; i <= 7 - previousMontLastDays().length; i++) {
         rows.push(<td className="border px-4 py-2 hover:bg-blue-500" key={i}>{i}</td>);
@@ -106,11 +127,12 @@ export class Calendar extends Component {
 
       return rows;
     };
+   // Creats a middle rows of the calendar 
     const createMiddleRows = (n) => {
       const rows = [];
       for (let i = 1; i <= 7; i++) {
-        if (7 - previousMontLastDays().length + i + n <= this.state.lastDay) {
-          if(this.state.selectedDay === 7 - previousMontLastDays().length + i + n){
+        if (7 - previousMontLastDays().length + i + n <= lastDay) {
+          if(selectedDay === 7 - previousMontLastDays().length + i + n){
             rows.push(
               <td className="border px-4 py-2 bg-blue-500" key={i}>
                 {7 - previousMontLastDays().length + i + n}
@@ -129,6 +151,8 @@ export class Calendar extends Component {
       }
       return rows;
     };
+
+    //Creates last row of the calendar
     const createLastRow = () => {
       const rows = [];
       if (previousMontLastDays().length === 5) {
@@ -146,6 +170,7 @@ export class Calendar extends Component {
 
       return rows;
     };
+
     return (
       <div className="max-w-lg container border-2 border-blue-500">
         <div className="flex justify-evenly bg-blue-500">
@@ -184,7 +209,7 @@ export class Calendar extends Component {
             />
           </svg>
         </div>
-        <table className="table-auto ">
+        <table className="table-auto">
           <thead>
             <tr>
               <th className="px-6 py-2">Sun</th>
