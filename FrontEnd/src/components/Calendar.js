@@ -61,9 +61,6 @@ export class Calendar extends Component {
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
-    this.setState({
-      selectedDay:date.getDate()
-    })
     date.setDate(1);
     this.setState({
       currentMonth: this.state.months[date.getMonth()],
