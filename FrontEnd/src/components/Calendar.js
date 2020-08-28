@@ -24,6 +24,7 @@ export class Calendar extends Component {
     lastDayIndex: "",
     date: new Date(),
   };
+  //Change current month to next month and the date on svg arrow-right click
   nextMonth = () => {
     const date = this.state.date;
     date.setMonth(date.getMonth() + 1);
@@ -33,6 +34,7 @@ export class Calendar extends Component {
     });
     this.calendar();
   };
+  //Change current month to previous month and the date on svg arrow-left click
   previousMonth = () => {
     const date = this.state.date;
     date.setMonth(date.getMonth() - 1);
@@ -43,9 +45,10 @@ export class Calendar extends Component {
     this.calendar();
   };
   componentDidMount() {
+    //Sets up the calendar for the current month
     this.calendar();
   }
- 
+  //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
     date.setDate(1);
@@ -68,7 +71,7 @@ export class Calendar extends Component {
       const previousDays = [];
       for (let i = this.state.firstDayIndex; i > 0; i--) {
         previousDays.push(
-          <td class="border px-4 py-2 bg-gray-500">
+          <td className="border px-4 py-2 bg-gray-500" key={i}>
             {this.state.prevLastDay - i + 1}
           </td>
         );
@@ -79,27 +82,55 @@ export class Calendar extends Component {
       const nextMonthDays = [];
       let nextDays = 7 - this.state.lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td class="border px-4 py-2 bg-gray-500">{i}</td>);
+        nextMonthDays.push(<td className="border px-4 py-2 bg-gray-500" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
-   const createRows = (n) =>{
-     const rows =[]
-     for (let i = 1; i <= 7; i++) {
-       if(7 - previousMontLastDays().length + i + n<=31){
-        rows.push( <td class="border px-4 py-2 hover:bg-blue-500">
-        {7 - previousMontLastDays().length + i+n}
-      </td>)
-       }
-     }
-     return rows
+    const createFirstRow = () => {
+      const rows = [];
+      rows.push(previousMontLastDays());
+      for (let i = 1; i <= 7 - previousMontLastDays().length; i++) {
+        rows.push(<td className="border px-4 py-2 hover:bg-blue-500" key={i}>{i}</td>);
+      }
+
+      return rows;
+    };
+    const createMiddleRows = (n) => {
+      const rows = [];
+      for (let i = 1; i <= 7; i++) {
+        if (7 - previousMontLastDays().length + i + n <= this.state.lastDay) {
+          rows.push(
+            <td className="border px-4 py-2 hover:bg-blue-500" key={i}>
+              {7 - previousMontLastDays().length + i + n}
+            </td>
+          );
+        }
+      }
+      return rows;
+    };
+    const createLastRow = () => {
+      const rows = [];
+      if (previousMontLastDays().length === 5) {
+        rows.push(
+          <td className="border px-4 py-2 hover:bg-blue-500"key={31} >31</td>,
+          nextMonthDays()
+        );
+      } else if (previousMontLastDays().length === 6) {
+        rows.push(
+          <td className="border px-4 py-2 hover:bg-blue-500" key={30}>30</td>,
+          <td className="border px-4 py-2 hover:bg-blue-500" key={31}>31</td>,
+          nextMonthDays()
+        );
+      }
+
+      return rows;
     };
 
     return (
       <div className="max-w-lg container border-2 border-blue-500">
         <div className="flex justify-evenly bg-blue-500">
           <svg
-            class="fill-current text-white inline-block pr-4 w-12"
+            className="fill-current text-white inline-block pr-4 w-12"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -114,11 +145,11 @@ export class Calendar extends Component {
             />
           </svg>
           <div className="date">
-            <p class="text-5xl text-white">{this.state.currentMonth}</p>
-            <p class="text-white mb-5">{this.state.currentDate}</p>
+            <p className="text-5xl text-white">{this.state.currentMonth}</p>
+            <p className="text-white mb-5">{this.state.currentDate}</p>
           </div>
           <svg
-            class="fill-current text-white inline-block pl-4 w-12"
+            className="fill-current text-white inline-block pl-4 w-12"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -133,42 +164,28 @@ export class Calendar extends Component {
             />
           </svg>
         </div>
-        <table class="table-auto ">
+        <table className="table-auto ">
           <thead>
             <tr>
-              <th class="px-6 py-2">Sun</th>
-              <th class="px-5 py-2">Mon</th>
-              <th class="px-5 py-2">Tue</th>
-              <th class="px-5 py-2">Wed</th>
-              <th class="px-5 py-2">Thu</th>
-              <th class="px-6 py-2">Fri</th>
-              <th class="px-6 py-2">Sat</th>
+              <th className="px-6 py-2">Sun</th>
+              <th className="px-5 py-2">Mon</th>
+              <th className="px-5 py-2">Tue</th>
+              <th className="px-5 py-2">Wed</th>
+              <th className="px-5 py-2">Thu</th>
+              <th className="px-6 py-2">Fri</th>
+              <th className="px-6 py-2">Sat</th>
             </tr>
           </thead>
           <tbody>
+            <tr>{createFirstRow()}</tr>
+            <tr>{createMiddleRows(0)}</tr>
+            <tr>{createMiddleRows(7)}</tr>
+            <tr>{createMiddleRows(14)}</tr>
             <tr>
-              {previousMontLastDays()}
-              {Array.from(
-                Array(7 - previousMontLastDays().length),
-                (_, i) => i + 1
-              ).map((i) => {
-
-                return <td class="border px-4 py-2 hover:bg-blue-500">{i}</td>;
-              })}
+              {createMiddleRows(21)}
+              {previousMontLastDays().length <= 4 ? nextMonthDays() : null}
             </tr>
-            <tr>
-            {createRows(0)}
-            </tr>
-            <tr>
-            {createRows(7)}
-            </tr>
-            <tr>
-            {createRows(14)}
-            </tr>
-            <tr>
-            {createRows(21)}
-            </tr>
-
+            <tr>{createLastRow()}</tr>
           </tbody>
         </table>
       </div>
