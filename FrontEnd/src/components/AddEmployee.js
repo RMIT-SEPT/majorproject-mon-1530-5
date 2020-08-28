@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 
-export class AddEmployee extends Component {
+class AddEmployee extends Component {
+  state = {
+    uesname:"",
+    name: "",
+    type:""
+  }
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  };
   render() {
     return (
       <div className="pt-4">
@@ -18,6 +28,8 @@ export class AddEmployee extends Component {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               type="text"
               id="username"
+              value={this.state.username}
+              onChange={this.handleChange}
               required
             />
           </div>
@@ -33,6 +45,8 @@ export class AddEmployee extends Component {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               type="text"
               id="name"
+              value={this.state.name}
+              onChange={this.handleChange}
               required
             />
           </div>
@@ -47,6 +61,8 @@ export class AddEmployee extends Component {
               <select
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 id="type"
+                value={this.state.type}
+                onChange={this.handleChange}
               >
                 <option>Dentist</option>
                 <option>Gym Trainer</option>
