@@ -23,6 +23,7 @@ export class Calendar extends Component {
     prevLastDay: "",
     lastDayIndex: "",
     date: new Date(),
+    selectedDay:new Date().getDate()
   };
   //Change current month to next month and the date on svg arrow-right click
   nextMonth = () => {
@@ -48,9 +49,21 @@ export class Calendar extends Component {
     //Sets up the calendar for the current month
     this.calendar();
   }
+
+  setDay = (e)=>{
+   const date = this.state.date
+   date.setDate(e.target.innerHTML)
+    this.setState({
+      selectedDay: date.getDate()
+    })
+    this.calendar()
+  }
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
+    this.setState({
+      selectedDay:date.getDate()
+    })
     date.setDate(1);
     this.setState({
       currentMonth: this.state.months[date.getMonth()],
@@ -64,6 +77,7 @@ export class Calendar extends Component {
         0
       ).getDay(),
     });
+   
   };
 
   render() {
@@ -99,11 +113,21 @@ export class Calendar extends Component {
       const rows = [];
       for (let i = 1; i <= 7; i++) {
         if (7 - previousMontLastDays().length + i + n <= this.state.lastDay) {
-          rows.push(
-            <td className="border px-4 py-2 hover:bg-blue-500" key={i}>
-              {7 - previousMontLastDays().length + i + n}
-            </td>
-          );
+          if(this.state.selectedDay === 7 - previousMontLastDays().length + i + n){
+            rows.push(
+              <td className="border px-4 py-2 bg-blue-500" key={i}>
+                {7 - previousMontLastDays().length + i + n}
+              </td>
+            );
+          }
+          else{
+            rows.push(
+              <td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={i}>
+                {7 - previousMontLastDays().length + i + n}
+              </td>
+            );
+          }
+          
         }
       }
       return rows;
@@ -125,7 +149,6 @@ export class Calendar extends Component {
 
       return rows;
     };
-
     return (
       <div className="max-w-lg container border-2 border-blue-500">
         <div className="flex justify-evenly bg-blue-500">
