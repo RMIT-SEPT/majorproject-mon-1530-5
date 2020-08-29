@@ -4,7 +4,8 @@ import Calendar from "./Calendar";
  class AddShift extends Component {
    state = {
      selectedTime:"",
-     bookedShifts:["20:30","12:30"] //in the future will include a list of boo dates from db
+     bookedShifts:["20:30","12:30"], //in the future will include a list of boo dates from db
+     currentDay:""
    }
 
   setShift =(e) =>{ 
@@ -12,6 +13,15 @@ import Calendar from "./Calendar";
       selectedTime:e.target.innerHTML
     })
   }
+// set to intial values on every clik action in calendar component
+  setIntialShiftBtns = () =>{
+    this.setState({
+      selectedTime:"",
+      bookedShifts:[],
+      currentDay:""
+    })
+  }
+
   render() {
     const {selectedTime,bookedShifts} = this.state
     const createShiftBtns = (startIndex,loopLength) =>{
@@ -82,7 +92,7 @@ import Calendar from "./Calendar";
         </div>
 
         <div className="flex justify-evenly mx-5 my-5 py-5">
-        <Calendar/>
+        <Calendar setIntialShiftBtns={this.setIntialShiftBtns}/>
   
 
 

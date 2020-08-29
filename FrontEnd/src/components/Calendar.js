@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 export class Calendar extends Component {
+ 
   state = {
     months: [
       "January",
@@ -29,7 +30,7 @@ export class Calendar extends Component {
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
-    
+
     const currentDate = new Date()
     currentDate.setFullYear(this.state.date.getFullYear())
     // Setting the current day of the month to first day on the date object
@@ -100,6 +101,7 @@ export class Calendar extends Component {
     this.setState({
       selectedDay: date.getDate()
     })
+    this.props.setIntialShiftBtns()
     this.calendar()
   }
 
