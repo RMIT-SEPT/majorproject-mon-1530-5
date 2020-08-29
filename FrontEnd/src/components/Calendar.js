@@ -29,12 +29,14 @@ export class Calendar extends Component {
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
+    //date in the state to varible so it can be used to set currentDate properly
+    let currentDate = this.state.date;
     // Setting the current day of the month to first day on the date object
     // This is done to find out the day of the week this day corresponds too
     date.setDate(1); 
     this.setState({
       currentMonth: this.state.months[date.getMonth()], // Current month on the calendar
-      currentDate: new Date().toDateString(), // String that contains (day of the week ,day of the month ,year)
+      currentDate: currentDate.toDateString(), // String that contains (day of the week ,day of the month ,year)
       lastDay: new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),  // Last day of the currently selected month
       // Index of the first day of the month Sun = 0, Mon = 1 and so on
       firstDayIndex: date.getDay(),
@@ -58,11 +60,23 @@ export class Calendar extends Component {
   //Change current month to next month
   nextMonth = () => {
     const date = this.state.date;
-    date.setMonth(date.getMonth() + 1); //adding 1 to the index of the current month and setting the result
-    this.setState({
-      currentMonth: this.state.months[date.getMonth()],
-      currentDate: date.toDateString(),
-    });
+    if(date.getMonth() === 11){
+      date.setMonth(date.getMonth() + 1); //adding 1 to the index of the current month and setting the result
+      date.setFullYear(date.getFullYear())
+      console.log(date.getFullYear())
+      this.setState({
+        currentMonth: this.state.months[date.getMonth()],
+        currentDate: date.toDateString(),
+      });
+    }
+    else{
+      date.setMonth(date.getMonth() + 1); //adding 1 to the index of the current month and setting the result
+      this.setState({
+        currentMonth: this.state.months[date.getMonth()],
+        currentDate: date.toDateString(),
+      });
+    }
+   
     this.calendar();
   };
 

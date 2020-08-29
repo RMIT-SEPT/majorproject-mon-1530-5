@@ -1,9 +1,40 @@
 import React, { Component } from "react";
 import Calendar from "./Calendar";
 
-export class AddShift extends Component {
+ class AddShift extends Component {
+   state = {
+     selectedTime:"",
+     bookedShifts:["20:30","12:30"] //in the future will include a list of boo dates from db
+   }
 
+  setShift =(e) =>{ 
+    this.setState({
+      selectedTime:e.target.innerHTML
+    })
+  }
   render() {
+    const {selectedTime,bookedShifts} = this.state
+    const createShiftBtns = (startIndex,loopLength) =>{
+      let shiftTime = ["6:30","10:30","14:30","18:30","8:30","12:30","16:30","20:30"]
+      let shiftBtns = []
+      for(let i = startIndex; i <= loopLength; i++){
+        if(selectedTime === shiftTime[i] ){
+          shiftBtns.push(
+            <button class="bg-blue-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
+            {shiftTime[i]}
+          </button>
+           )
+        }
+        else{
+          shiftBtns.push(
+            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
+            {shiftTime[i]}
+          </button>
+           )
+        }
+      }
+      return shiftBtns
+    }
     return (
       <div>
         <div class="flex flex-col-reverse py-2">
@@ -58,32 +89,10 @@ export class AddShift extends Component {
           <div className=" self-center mx-5 px-5">
             <div className="flex space-x-6">
             <div className="flex flex-col w-40 space-y-3">
-            <button class="bg-gray-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              6:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              10:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              14:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              18:30
-            </button>
+            {createShiftBtns(0,3)}
             </div>
             <div className="flex flex-col space-y-3 w-40">
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              8:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              12:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              16:30
-            </button>
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-              20:30
-            </button>
+            {createShiftBtns(4,7)}
             </div>
           </div>
         </div>
