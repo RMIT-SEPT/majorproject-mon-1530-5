@@ -20,7 +20,7 @@ import Calendar from "./Calendar";
       for(let i = startIndex; i <= loopLength; i++){
         if(selectedTime === shiftTime[i] ){
           shiftBtns.push(
-            <button class="bg-blue-500 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
+            <button class="bg-blue-500  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
             {shiftTime[i]}
           </button>
            )
