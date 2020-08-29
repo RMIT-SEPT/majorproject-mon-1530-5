@@ -29,7 +29,6 @@ export class Calendar extends Component {
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
-    //date in the state to varible so it can be used to set currentDate properly
     let currentDate = this.state.date;
     // Setting the current day of the month to first day on the date object
     // This is done to find out the day of the week this day corresponds too
