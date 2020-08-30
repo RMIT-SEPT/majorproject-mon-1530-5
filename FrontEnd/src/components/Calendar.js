@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { addShift } from "../actions/shiftActions";
+import {connect} from 'react-redux'
 
 export class Calendar extends Component {
  
@@ -24,7 +26,8 @@ export class Calendar extends Component {
     prevLastDay: "", 
     lastDayIndex: "",
     date: new Date(), // date object that contains all date related functions
-    selectedDay:new Date().getDate()
+    selectedDay:new Date().getDate(),
+    selectedDate:"" //For db
   };
 
   //Sets up the values for the calendar
@@ -35,7 +38,6 @@ export class Calendar extends Component {
     currentDate.setFullYear(this.state.date.getFullYear())
     // Setting the current day of the month to first day on the date object
     // This is done to find out the day of the week this day corresponds too
-
     date.setDate(1); 
     this.setState({
       currentMonth: this.state.months[date.getMonth()], // Current month on the calendar
@@ -52,6 +54,7 @@ export class Calendar extends Component {
         0
       ).getDay(), 
     });
+    console.log(this.state.selectedDate)
   }
 
   componentDidMount() {
@@ -97,9 +100,10 @@ export class Calendar extends Component {
   // sets the day that the user clicked as the current day 
   setDay = (e)=>{
    const date = this.state.date
-   date.setDate(e.target.innerHTML)
+    date.setDate(e.target.innerHTML)
     this.setState({
-      selectedDay: date.getDate()
+      selectedDay: date.getDate(),
+      selectedDate: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
     })
     this.props.setIntialShiftBtns()
     this.calendar()
@@ -255,5 +259,21 @@ export class Calendar extends Component {
     );
   }
 }
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    addShift:(shift) => dispatch(addShift(shift)),
+    getIndividualEmployee:(username) =>dispatch(addShift(username))
+  }
+  }
+  
+  
+  const mapStateToProps =(state) =>{
+    return{
+      employees:state.employee.employees,
+      services:state.service.services,
+      selectedDay:state.shift.selectedDay,
+      selectedTime:state.shift.selectedTime,
+    }
+  }
 
-export default Calendar;
+export default connect(mapStateToProps,mapDispatchToProps)(Calendar);

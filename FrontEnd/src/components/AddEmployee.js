@@ -1,25 +1,42 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import {createEmployees} from "../actions/employeeActions"
+import { getService } from "../actions/servicesActions";
+
 
 class AddEmployee extends Component {
   state = {
     uesname:"",
     name: "",
-    type:""
+    type:"",
   }
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
     });
   };
+  handleSubmit =(e) =>{
+    e.preventDefault()
+    const newEmployee = {
+      username: this.state.username,
+      password:"password",
+      name:this.state.name
+    }
+    this.props.createEmployees(newEmployee)
+  }
+
+  componentDidMount(){
+    this.props.getService()
+  }
   render() {
+    const{authError,services} = this.props
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl ">Add Employee</h1>
-        <form className="max-w-md mx-auto px-5 py-5">
+        <form className="max-w-md mx-auto px-5 py-5" onSubmit={this.handleSubmit}>
           <div className="md:flex-col mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              for="username"
               id="username"
             >
               Username
@@ -28,10 +45,12 @@ class AddEmployee extends Component {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               type="text"
               id="username"
-              value={this.state.username}
               onChange={this.handleChange}
               required
             />
+             {authError ? (
+                <p className="text-red-500 text-xs italic">Username already exists</p>
+              ) : null}
           </div>
           <div className="md:flex-col mb-6">
             <label
@@ -45,7 +64,6 @@ class AddEmployee extends Component {
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
               type="text"
               id="name"
-              value={this.state.name}
               onChange={this.handleChange}
               required
             />
@@ -57,20 +75,18 @@ class AddEmployee extends Component {
             >
               Type
             </label>
-            <div class="relative">
+            <div className="relative">
               <select
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 id="type"
-                value={this.state.type}
-                onChange={this.handleChange}
               >
-                <option>Dentist</option>
-                <option>Gym Trainer</option>
-                <option>Barber</option>
+                {services && services.map(service =>{
+                  return( <option>{service.name}</option>)
+                })}
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  class="fill-current h-4 w-4"
+                  className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -106,4 +122,20 @@ class AddEmployee extends Component {
   }
 }
 
-export default AddEmployee;
+
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    createEmployees:(employee)=> dispatch(createEmployees(employee)),
+    getService:() => dispatch(getService()),
+  }
+  }
+  
+  const mapStateToProps =(state) =>{
+    return{
+      employees:state.employee.employees,
+      authError:state.employee.authError,
+      services:state.service.services,
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddEmployee);
