@@ -119,7 +119,7 @@ export class Calendar extends Component {
         previousDays.push(
           // inserts the jsx into the array
           // prevLastDay = Last day(31,30..) of the previous month
-          <td className="border px-4 py-2 bg-gray-500" key={i}>
+          <td className="border px-4 py-2 bg-gray-400" key={i}>
             {prevLastDay - i + 1}
           </td>
         );
@@ -132,7 +132,7 @@ export class Calendar extends Component {
       // of the next month on the calendar
       let nextDays = 7 - lastDayIndex - 1; 
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td className="border px-4 py-2 bg-gray-500" key={i}>{i}</td>);
+        nextMonthDays.push(<td className="border px-4 py-2 bg-gray-400" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
@@ -193,7 +193,7 @@ export class Calendar extends Component {
     };
 
     return (
-      <div className="max-w-lg container border-2 border-blue-500">
+      <div className="max-w-lg container border-2 border-blue-800">
         <div className="flex justify-evenly bg-blue-500">
           <svg
             className="fill-current text-white inline-block pr-4 w-12"
