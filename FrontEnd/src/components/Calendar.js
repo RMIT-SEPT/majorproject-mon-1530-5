@@ -27,7 +27,6 @@ export class Calendar extends Component {
     lastDayIndex: "",
     date: new Date(), // date object that contains all date related functions
     selectedDay:new Date().getDate(),
-    selectedDate:"" //For db
   };
 
   //Sets up the values for the calendar
@@ -54,7 +53,7 @@ export class Calendar extends Component {
         0
       ).getDay(), 
     });
-    console.log(this.state.selectedDate)
+    
   }
 
   componentDidMount() {
@@ -103,9 +102,9 @@ export class Calendar extends Component {
     date.setDate(e.target.innerHTML)
     this.setState({
       selectedDay: date.getDate(),
-      selectedDate: `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
     })
-    this.props.setIntialShiftBtns()
+    // send selected date to addshift.js
+    this.props.changeSelectedDate(`${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`)
     this.calendar()
   }
 
@@ -259,21 +258,6 @@ export class Calendar extends Component {
     );
   }
 }
-const mapDispatchToProps=(dispatch) =>{
-  return{
-    addShift:(shift) => dispatch(addShift(shift)),
-    getIndividualEmployee:(username) =>dispatch(addShift(username))
-  }
-  }
-  
-  
-  const mapStateToProps =(state) =>{
-    return{
-      employees:state.employee.employees,
-      services:state.service.services,
-      selectedDay:state.shift.selectedDay,
-      selectedTime:state.shift.selectedTime,
-    }
-  }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Calendar);
+
+export default Calendar;

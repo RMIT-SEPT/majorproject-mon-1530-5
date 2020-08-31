@@ -10,7 +10,9 @@ const initialState = {
         return  Object.assign({}, state, {
           services:action.response
         })
+        
       }
+
       case'GET_ERRORS':{
         console.log(action.payload)
       }

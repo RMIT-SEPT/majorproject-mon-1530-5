@@ -8,30 +8,34 @@ import { addShift } from "../actions/shiftActions";
  class AddShift extends Component {
    state = {
      selectedTime:"", 
-     currentDay:"",
+     selectedDate:"",
+     startDateTime:"",
+     endDateTime:""
    }
-
+   
   setShift =(e) =>{ 
     this.setState({
       selectedTime:e.target.innerHTML,
+      startDateTime:this.state.selectedDate + " " + e.target.innerHTML
     })
   }
 // set to intial values on every click action in calendar component
-  setIntialShiftBtns = () =>{
+  changeSelectedDate = (date) =>{
     this.setState({
       selectedTime:"",
-      currentDay:""
+      selectedDate:date
     })
   }
 
+
   handleSubmit = (e) =>{
     e.preventDefault()
-    // const newShift = {
-    //   employeeUsername: this.props.getIndividualEmployee("gleb"),
-    //   startDateTime:
-    //   endDateTime:this.state.name
-    // }
-
+    const newShift = {
+      employeeUsername: "janeDoe",
+      startDateTime:this.state.startDateTime,
+      endDateTime:this.state.startDateTime
+    }
+    this.props.addShift(newShift)
   }
 
   componentDidMount(){
@@ -68,7 +72,7 @@ import { addShift } from "../actions/shiftActions";
           <div class="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
             <label
               class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-first-name"
+
             >
               Search Employee
             </label>
@@ -95,7 +99,7 @@ import { addShift } from "../actions/shiftActions";
           <div class="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
             <label
               class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-first-name"
+
             >
               Choose the Service
             </label>
@@ -106,7 +110,7 @@ import { addShift } from "../actions/shiftActions";
               >
                 
                {services && services.map(service =>{
-                  return( <option>{service.name}</option>)
+                  return( <option key={service.id}>{service.name}</option>)
                 })}
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -121,9 +125,8 @@ import { addShift } from "../actions/shiftActions";
             </div>
           </div>
         </div>
-
         <div className="flex justify-evenly mx-5 my-5 py-5">
-        <Calendar setIntialShiftBtns={this.setIntialShiftBtns}/>
+        <Calendar changeSelectedDate={this.changeSelectedDate}/>
 
           <div className=" self-center mx-5 px-5">
             <div className="flex space-x-6">
@@ -136,6 +139,7 @@ import { addShift } from "../actions/shiftActions";
           </div>
         </div>
         </div>
+        <form onSubmit={this.handleSubmit}>
         <div class="flex justify-center space-x-5">
           <div>
             <button
@@ -157,6 +161,7 @@ import { addShift } from "../actions/shiftActions";
             </button>
           </div>
         </div>
+        </form>
       </div>
     );
   }
@@ -167,7 +172,6 @@ return{
   getEmployee:()=> dispatch(getEmployees()),
   getService:() => dispatch(getService()),
   addShift:(shift) => dispatch(addShift(shift)),
-  getIndividualEmployee:(username) =>dispatch(addShift(username))
 }
 }
 
@@ -176,8 +180,6 @@ const mapStateToProps =(state) =>{
   return{
     employees:state.employee.employees,
     services:state.service.services,
-    selectedDay:state.shift.selectedDay,
-    selectedTime:state.shift.selectedTime,
   }
 }
 
