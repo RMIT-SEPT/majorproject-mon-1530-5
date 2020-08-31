@@ -51,14 +51,14 @@ import { addShift } from "../actions/shiftActions";
       for(let i = startIndex; i <= loopLength; i++){
         if(selectedTime === shiftTime[i] ){
           shiftBtns.push(
-            <button class="bg-blue-500  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
+            <button className="bg-blue-500  text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" key={i} onClick={this.setShift}>
             {shiftTime[i]}
           </button>
            )
         }
         else{
           shiftBtns.push(
-            <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" onClick={this.setShift}>
+            <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"  key={i} onClick={this.setShift}>
             {shiftTime[i]}
           </button>
            )
@@ -68,15 +68,15 @@ import { addShift } from "../actions/shiftActions";
     }
     return (
       <div>
-        <div class="flex flex-col-reverse py-2">
-          <div class="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
+        <div className="flex flex-col-reverse py-2">
+          <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 
             >
               Search Employee
             </label>
-            <div class="relative">
+            <div className="relative">
               <select
                 className="bg-gray-200  appearance-none  block w-full border-2 border-gray-200 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 id="type"
@@ -85,9 +85,9 @@ import { addShift } from "../actions/shiftActions";
                   return( <option>{employee.name}</option>)
                 })}
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  class="fill-current h-4 w-4"
+                  className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -96,14 +96,14 @@ import { addShift } from "../actions/shiftActions";
               </div>
             </div>
           </div>
-          <div class="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
+          <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
 
             >
               Choose the Service
             </label>
-            <div class="relative">
+            <div className="relative">
               <select
                 className="bg-gray-200  appearance-none  block w-full border-2 border-gray-200 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                 id="type"
@@ -113,9 +113,9 @@ import { addShift } from "../actions/shiftActions";
                   return( <option key={service.id}>{service.name}</option>)
                 })}
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
-                  class="fill-current h-4 w-4"
+                  className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                 >
@@ -140,7 +140,7 @@ import { addShift } from "../actions/shiftActions";
         </div>
         </div>
         <form onSubmit={this.handleSubmit}>
-        <div class="flex justify-center space-x-5">
+        <div className="flex justify-center space-x-5">
           <div>
             <button
               className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
