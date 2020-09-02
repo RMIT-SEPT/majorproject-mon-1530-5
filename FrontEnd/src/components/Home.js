@@ -6,7 +6,7 @@ function Home() {
   return (
     <div>
       <div className="container mx-auto pt-5">
-       <div> <img  src={logo} alt="Logo" className="center" /></div>
+       <div> <img  src={logo} alt="logo"  className="center"/></div>
 
         {/*Description of home page (visible to users*/}
           <br />
