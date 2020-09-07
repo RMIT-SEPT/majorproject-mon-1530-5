@@ -16,6 +16,13 @@ html {
 /* Sections
    ========================================================================== */
 
+/**
+ * Remove the margin in all browsers.
+ */
+
+body {
+  margin: 0;
+}
 
 /**
  * Logo functionality
@@ -26,13 +33,7 @@ img.center{
      max-width:40%;
      max-height:40%;
 }
-/**
- * Remove the margin in all browsers.
- */
 
-body {
-  margin: 0;
-}
 
 /**
  * Render the `main` element consistently in IE.
