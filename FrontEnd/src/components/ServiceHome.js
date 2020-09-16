@@ -53,8 +53,8 @@ class ServiceHome extends Component{
                                 <option value = "that"> That</option>
                                 <option value = "those"> Those</option>
                                 </select>
-                                <div className="submitButton">
-                                <input type = "submit" value="Submit" className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full"/> </div></form>
+                                 </form>
+
             <br/><br/>
             <h1 className="text-center text-1xl "><b>Select Employee</b></h1><br/>
                 <form onSubmit={this.handleSubmitEmployee}>
@@ -64,6 +64,18 @@ class ServiceHome extends Component{
                 <option value = "that"> That</option>
                 <option value = "those"> Those</option>
                 </select>
+ </form>
+
+            <br/><br/>
+            <h1 className="text-center text-1xl "><b>Select Time Slot</b></h1><br/>
+                <form onSubmit={this.handleSubmitEmployee}>
+
+                <select className = "shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" value = {this.state.value} onChange={this.handleChangeEmployee}>
+                <option value = "this"> This</option>
+                <option value = "that"> That</option>
+                <option value = "those"> Those</option>
+                </select>
+                            <br/><br/>
                 <div className="submitButton">
                 <input type = "submit" value="Submit" className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full"/> </div> </form>
         </div>
@@ -72,4 +84,6 @@ class ServiceHome extends Component{
 
 
 }
+{/*// add employee, service database to drop down. Once employee is picked, add times to calender (or if not enough time, to the next drop down).*/}
+
 export default ServiceHome;
