@@ -25,17 +25,6 @@ body {
 }
 
 /**
- * Logo functionality
- */
-img.center{
-     margin-left: auto;
-     margin-right: auto;
-     max-width:40%;
-     max-height:40%;
-}
-
-
-/**
  * Render the `main` element consistently in IE.
  */
 
@@ -87384,4 +87373,43 @@ video {
     -webkit-animation: bounce 1s infinite;
             animation: bounce 1s infinite;
   }
+}
+/*
+* Book a service button -- Home Page
+*/
+.buttonBook {
+  text-align: center;
+  font-size: 27px;
+  margin:0 auto;
+  display:block;
+  cursor: pointer;
+  height: 85px;
+}
+
+/*
+ * Logo functionality
+ */
+img.center{
+     margin-left: auto;
+     margin-right: auto;
+     max-width:40%;
+     max-height:40%;
+}
+
+/*
+*Select service and employee page
+*/
+
+select {
+display: block;
+margin: 0 auto;
+}
+
+.submitButton
+{ text-align: center; }
+
+.dropDown option{
+  color: #ccc;
+  font-size: 14px;
+  width:150px;
 }

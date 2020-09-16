@@ -10,6 +10,7 @@ import Profile from './components/Profile';
 import AddEmployee from './components/AddEmployee';
 import AddShift from './components/AddShift';
 import Feedback from "./components/Feedback"
+import ServiceHome from "./components/ServiceHome";
 import {Provider} from "react-redux"
 import store from "./store"
 
@@ -29,6 +30,7 @@ function App() {
       <Route path ="/addEmployee" component ={AddEmployee}/>
       <Route path ="/addShift" component ={AddShift}/>
       <Route path ="/feedback" component ={Feedback}/>
+      <Route path = "/serviceHome" component = {ServiceHome}/>
     </div>
     </Router>
     </Provider>
