@@ -10,24 +10,30 @@ class ServiceHome extends Component{
 
    state = {
      selectedEmployee:"",
-     selectedService:""
+     selectedService:"",
+     selectedTimeSlot:""
    };
 
    constructor(props){
         super(props);
         this.state = {value: 'Pick an option'};
-
         this.handleChangeService = this.handleChangeService.bind(this);
         this.handleChangeEmployee = this.handleChangeEmployee.bind(this);
+        this.handleChangeTimeSlot = this.handleChangeTimeSlot.bind(this);
         this.handleSubmitEmployee = this.handleSubmitEmployee.bind(this);
         this.handleSubmitService = this.handleSubmitService.bind(this);
+        this.handleSubmitTimeSlot = this.handleSubmitTimeSlot.bind(this);
    }
 
    handleChangeService(event) {
-      this.setState({value: event.target.value});
+      this.setState({value: event.target.selectedService});
    }
    handleChangeEmployee(event) {
-      this.setState({value: event.target.value});
+      this.setState({value: event.target.selectedEmployee});
+   }
+
+   handleChangeTimeSlot(event) {
+         this.setState({value: event.target.selectedTimeSlot});
    }
 
    handleSubmitService(event) {
@@ -39,6 +45,10 @@ class ServiceHome extends Component{
         alert("The chosen service is: " + this.selectedEmployee.value);
         event.preventDefault();
     }
+       handleSubmitTimeSlot(event) {
+            alert("The chosen service is: " + this.selectedTimeSlot.value);
+            event.preventDefault();
+        }
 
    render() {
         return (
