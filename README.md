@@ -18,3 +18,8 @@
 ## Code documentation
 
 [Quick Start](/docs/README.md) in `docs` folder
+
+
+## Important Notes
+Please be aware that sprint 0 and 1 (and part of sprint 2) were completed in another repository. 
+The link to this repository is: https://github.com/AlanaTobgui/SETP_MON-1530-5.git
