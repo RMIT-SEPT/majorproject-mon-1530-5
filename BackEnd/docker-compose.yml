@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  docker-mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=bookingapi
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
