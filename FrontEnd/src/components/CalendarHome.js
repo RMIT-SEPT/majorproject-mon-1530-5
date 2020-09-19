@@ -27,7 +27,12 @@ export class CalendarHome extends Component {
     lastDayIndex: "",
     date: new Date(),
     selectedServiceID: "",
-    vacantBookings: [ ]
+    selectedBookingID: "",
+    vacantBookings: [ ],
+    customerUsername: "",
+    selectedDate: "",
+    selectedTime: "",
+    selectedEmployee: "",
   };
   //Change current month to next month and the date on svg arrow-right click
   nextMonth = () => {
@@ -73,9 +78,7 @@ export class CalendarHome extends Component {
   };
   //When a service is selected
   handleChange = (e) => {
-    this.setState({ selectedServiceID: e.target.value }, () => {
-      // console.log(this.state.selectedServiceID);
-    });
+    this.setState({ selectedServiceID: e.target.value });
     if (e.target.value > 0) {
       this.getVacantBookings(e);
     } else {
@@ -90,53 +93,67 @@ export class CalendarHome extends Component {
         .then((response)=>{
           this.setState({
             vacantBookings: response.data
-          }, () => {
-            // console.log("vacantBookings[]:", this.state.vacantBookings);
-            // for (let i = 0; i < this.state.vacantBookings.length; i++) {
-            //   console.log("Date and Time:", this.state.vacantBookings[i].bookingTime, 
-            //   this.state.vacantBookings[i].date);
-            // }
           })
         })
   }
-  bookingInfo = (e) => {
-    console.log(e.target.value);
-    
+  handleClick = (e) => {
+    this.setState({
+      selectedBookingID: e.target.value
+    })
+    const i = this.getBookingIndex();
+    // this.setState({
+    //   selectedDate: this.state.vacantBookings[i].date,
+    //   selectedTime: this.state.vacantBookings[i].time,
+    //   selectedEmployee: this.state.vacantBookings[i].employeeUsername
+    // })
   }
+  getBookingIndex = () => {
+    for (let i = 0; i < this.state.vacantBookings.length; i++) {
+      if (this.state.vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
+        return i;
+      }
+    }
+  }
+  handleSubmit = (e) => {
+    console.log(this.state.selectedDate)
+    console.log(this.state.selectedTime)
+    console.log(this.state.selectedServiceID)
+    console.log(this.state.customerUsername)
+    console.log(this.state.selectedEmployee)
+    e.preventDefault()
+    axios
+      .post("http://localhost:8080/api/booking/add", {
+        date: this.state.selectedDate,
+        time: this.state.selectedTime,
+        serviceId: this.state.selectedServiceID,
+        customerUsername: this.state.customerUsername,
+        employeeUsername: this.state.selectedEmployee
+      })
+      .then((response) => {
+        console.log(response)    
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   render() {
     const {services} = this.props;
     const {vacantBookings} = this.state;
     const date = this.state.date;
     const newDate = new Date(date);
-    const bookingList = vacantBookings.length ? (
-      vacantBookings.map(booking => {
-        return (
-          <button className="border px-5 py-5" key={booking.id}>
-              <p>Booking ID: {booking.id}
-              <br/>Service ID: {booking.serviceId}
-              <br/>Employee Name: {booking.employeeUsername}
-              <br/>Date: {booking.date}
-              <br/>Booking Time: {booking.bookingTime}</p><br/>
-          </button>
-        )
-      })
-    ) : (
-      <div>No bookings available</div>
-    )
-    
-    // const bookingInfo = (id) => {
-    //   for (let i = 0; i < this.state.vacantBookings.length; i++) {
-    //     if (this.state.vacantBookings[i].id === id) {
-    //       return (
-    //         <div><p>Booking ID: {vacantBookings[i].id}
-    //         <br/>Service ID: {vacantBookings[i].serviceId}
-    //         <br/>Employee Name: {vacantBookings[i].employeeUsername}
-    //         <br/>Date: {vacantBookings[i].date}
-    //         <br/>Booking Time: {vacantBookings[i].bookingTime}</p><br/></div>);
-    //     }
-    //   }
-    //   return (<div>Select a booking</div>);
-    // }
+    const buildBookingInfo = () => {
+      for (let i = 0; i < vacantBookings.length; i++) {
+        if (vacantBookings[i].id === parseInt(this.state.selectedBookingID))
+          return (
+            <div><p>Booking ID: {vacantBookings[i].id}
+            <br/>Service ID: {vacantBookings[i].serviceId}
+            <br/>Employee Name: {vacantBookings[i].employeeUsername}
+            <br/>Date: {vacantBookings[i].date}
+            <br/>Booking Time: {vacantBookings[i].bookingTime}</p><br/></div>);
+      }
+      return (<div>Select a booking</div>);
+    }
+    const bookingInfo = buildBookingInfo();
     // Create booking buttons for calendar
     const bookingButtons = (bookDate) => {
       const bookings = [];
@@ -150,15 +167,71 @@ export class CalendarHome extends Component {
         day = '0' + day;
       }
       const formattedDate = [year,month,day].join('-');
-      // console.log(formattedDate);
-      for (let i = 0; i < this.state.vacantBookings.length; i++) {
-        if (this.state.vacantBookings[i].date === formattedDate) {
+      for (let i = 0; i < vacantBookings.length; i++) {
+        if (vacantBookings[i].date === formattedDate) {
           bookings.push(<button className="border px-5 py-5" key={vacantBookings[i].id} 
-          value={vacantBookings[i].id} onClick={this.bookingInfo}>
+          value={vacantBookings[i].id} onClick={this.handleClick}>
             {vacantBookings[i].bookingTime}</button>)
         }
       }
       return bookings;
+    }
+    const bookingForm = () => {
+      for (let i = 0; i < vacantBookings.length; i++) {
+        if (vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
+          return (<div className="pt-4">
+          <h1 className="text-center text-4xl">Book Service</h1>
+          <div className="text-center">Booking ID: {vacantBookings[i].id}
+                <br/>Service ID: {vacantBookings[i].serviceId}
+                <br/>Employee Name: {vacantBookings[i].employeeUsername}
+                <br/>Date: {vacantBookings[i].date}
+                <br/>Booking Time: {vacantBookings[i].bookingTime}</div><br/>
+          <form
+            onSubmit={this.handleSubmit}
+            className="w-full max-w-lg mx-auto py-2"
+          >
+            <div className="flex flex-wrap -mx-3 mb-6">
+              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  Full Name
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                  type="text"
+                  placeholder="e.g Jane Doe"
+                  id="name"
+                  required
+                />
+              </div>
+              <div className="w-full md:w-1/2 px-3">
+                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  Username
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  type="text"
+                  placeholder="e.g janeDoe"
+                  id="username"
+                  required
+                />
+              </div>
+            </div>
+            <div className="md:flex md:items-center">
+              <div className="md:w-1/3"></div>
+              <div className="md:w-2/3">
+                <button
+                  className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  type="submit"
+                >
+                  Book
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>)
+        } 
+      }
+      return (<div className="text-center text-4xl">Please Select a Booking</div>);
     }
     const previousMonthLastDays = () => {
       const previousDays = [];
@@ -301,8 +374,8 @@ export class CalendarHome extends Component {
             <tr>{createLastRow()}</tr>
           </tbody>
         </table>
-        <div className="text-center" id="bookings"><br/>{bookingList}</div>
-        {/* <div className="text-center" id="bookingInfo"><br/>{bookingInfo(this.state.selectedServiceID)}</div> */}
+        {/* <div className="text-center" id="bookingInfo"><br/>{bookingInfo}</div> */}
+        {bookingForm()}
       </div>
     );
   }
