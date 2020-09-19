@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
 import { getService } from "../actions/servicesActions";
+import { addBooking, resetFeedback } from "../actions/bookingActions"
 import axios from "axios"
 
 export class CalendarHome extends Component {
@@ -87,7 +88,7 @@ export class CalendarHome extends Component {
       })
     }
   }
-  //Set vacant bookings to api data
+  //Get vacant bookings and set vacantBookings[] to api data
   getVacantBookings = (e) => {
     axios.get(`http://localhost:8080/api/booking/vacantBookings/${e.target.value}`)
         .then((response)=>{
@@ -96,64 +97,51 @@ export class CalendarHome extends Component {
           })
         })
   }
+  // When booking button is clicked
   handleClick = (e) => {
     this.setState({
       selectedBookingID: e.target.value
+    }, function () {
+      var i = this.getBookingIndex()
+      this.setState({
+        selectedDate: this.state.vacantBookings[i].date.split('-').reverse().join('-'),
+        selectedTime: this.state.vacantBookings[i].bookingTime.substring(0, this.state.vacantBookings[i].bookingTime.length - 3),
+        selectedEmployee: this.state.vacantBookings[i].employeeUsername
+      })
     })
-    const i = this.getBookingIndex();
-    // this.setState({
-    //   selectedDate: this.state.vacantBookings[i].date,
-    //   selectedTime: this.state.vacantBookings[i].time,
-    //   selectedEmployee: this.state.vacantBookings[i].employeeUsername
-    // })
   }
+  // Get index of the booking selected on calendar in vacantBookings[]
   getBookingIndex = () => {
-    for (let i = 0; i < this.state.vacantBookings.length; i++) {
+    for (var i = 0; i < this.state.vacantBookings.length; i++) {
       if (this.state.vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
         return i;
       }
     }
   }
+  // Set customerUsername to username value 
+  handleUsername = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
+  }
+  // Create booking object and post to api
   handleSubmit = (e) => {
-    console.log(this.state.selectedDate)
-    console.log(this.state.selectedTime)
-    console.log(this.state.selectedServiceID)
-    console.log(this.state.customerUsername)
-    console.log(this.state.selectedEmployee)
     e.preventDefault()
-    axios
-      .post("http://localhost:8080/api/booking/add", {
-        date: this.state.selectedDate,
-        time: this.state.selectedTime,
-        serviceId: this.state.selectedServiceID,
-        customerUsername: this.state.customerUsername,
-        employeeUsername: this.state.selectedEmployee
-      })
-      .then((response) => {
-        console.log(response)    
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const booking = {
+      bookingDate: this.state.selectedDate,
+      bookingTime: this.state.selectedTime,
+      serviceId: this.state.selectedServiceID,
+      customerUsername: this.state.customerUsername,
+      employeeUsername: this.state.selectedEmployee
+    }
+    console.log(booking);
+    this.props.addBooking(booking);
   };
   render() {
-    const {services} = this.props;
+    const {services,msgBook,msgStyle} = this.props;
     const {vacantBookings} = this.state;
     const date = this.state.date;
     const newDate = new Date(date);
-    const buildBookingInfo = () => {
-      for (let i = 0; i < vacantBookings.length; i++) {
-        if (vacantBookings[i].id === parseInt(this.state.selectedBookingID))
-          return (
-            <div><p>Booking ID: {vacantBookings[i].id}
-            <br/>Service ID: {vacantBookings[i].serviceId}
-            <br/>Employee Name: {vacantBookings[i].employeeUsername}
-            <br/>Date: {vacantBookings[i].date}
-            <br/>Booking Time: {vacantBookings[i].bookingTime}</p><br/></div>);
-      }
-      return (<div>Select a booking</div>);
-    }
-    const bookingInfo = buildBookingInfo();
     // Create booking buttons for calendar
     const bookingButtons = (bookDate) => {
       const bookings = [];
@@ -176,6 +164,7 @@ export class CalendarHome extends Component {
       }
       return bookings;
     }
+    // Create booking form for when a booking button is selected
     const bookingForm = () => {
       for (let i = 0; i < vacantBookings.length; i++) {
         if (vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
@@ -211,7 +200,8 @@ export class CalendarHome extends Component {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   type="text"
                   placeholder="e.g janeDoe"
-                  id="username"
+                  id="customerUsername"
+                  onChange={this.handleUsername}
                   required
                 />
               </div>
@@ -374,8 +364,8 @@ export class CalendarHome extends Component {
             <tr>{createLastRow()}</tr>
           </tbody>
         </table>
-        {/* <div className="text-center" id="bookingInfo"><br/>{bookingInfo}</div> */}
         {bookingForm()}
+        {msgBook === "" ? null: <p className={msgStyle}>{msgBook}</p>}
       </div>
     );
   }
@@ -384,12 +374,16 @@ export class CalendarHome extends Component {
 const mapDispatchToProps=(dispatch) =>{
   return{
     getService:() => dispatch(getService()),
+    addBooking:(booking) => dispatch(addBooking(booking)),
+    resetFeedback:() =>dispatch(resetFeedback())
   }
 }
 
 const mapStateToProps =(state) =>{
   return{
     services:state.service.services,
+    msgBook:state.booking.msgBook,
+    msgStyle:state.booking.msgStyle
   }
 }
 
