@@ -107,4 +107,14 @@ public class UserService {
     public void updateEmployeeDetails(EmployeeDetails employeeDetails) {
         employeeDetailsRepository.save(employeeDetails);
     }
+
+    public void removeCustomer(String username) {
+        userRepository.delete(userRepository.findByUsername(username));
+        customerDetailsRepository.delete(customerDetailsRepository.findByUsername(username));
+    }
+
+    public void removeEmployee(String username) {
+        userRepository.delete(userRepository.findByUsername(username));
+        employeeDetailsRepository.delete(employeeDetailsRepository.findByUsername(username));
+    }
 }

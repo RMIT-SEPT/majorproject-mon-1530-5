@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.Controller.DTO.EmployeeDTO;
 import com.rmit.bookingAPI.Controller.DTO.LoginDTO;
 import com.rmit.bookingAPI.Model.PaidService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +26,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class EmployeeTests {
+class EmployeeControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-    
+
+    @BeforeEach
+    void setupEach() throws Exception {
+
+        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
+
+        this.mockMvc.perform(post("/api/employee/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(employeeDTO)));
+    }
+
+    @AfterEach
+    void breakdownEach() throws Exception {
+        this.mockMvc.perform(delete("/api/employee/remove/testEmployee"));
+    }
+
     @Test
     @DirtiesContext
     void validAddEmployeeReturn201() throws Exception {
+
+        this.mockMvc.perform(delete("/api/employee/remove/testEmployee")); //undoes the @Beforeeach method
 
         EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
 
@@ -55,15 +74,12 @@ class EmployeeTests {
                 .content(objectMapper.writeValueAsString(employeeDTO)))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     @DirtiesContext
     void invalidAddEmployeeReturn400_existingUsername() throws Exception {
 
         EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         mockMvc.perform(post("/api/employee/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,12 +90,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void validEmployeeLoginReturn200() throws Exception{
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         LoginDTO loginDTO = new LoginDTO("testEmployee", "password");
 
@@ -93,12 +103,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeLoginReturn400_wrongUsername() throws Exception{
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         LoginDTO loginDTO = new LoginDTO("testEpmloyee", "password");
 
         mockMvc.perform(post("/api/login")
@@ -110,12 +114,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeLoginReturn400_wrongPassword() throws Exception{
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         LoginDTO loginDTO = new LoginDTO("testEmployee", "passwrod");
 
@@ -129,12 +127,6 @@ class EmployeeTests {
     @DirtiesContext
     void validEmployeeGetReturn200() throws Exception{
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         this.mockMvc.perform(get("/api/employee/get/testEmployee"))
                 .andExpect(status().isOk());
     }
@@ -143,12 +135,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeGetReturn404() throws Exception{
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         this.mockMvc.perform(get("/api/employee/get/tsetEmployee"))
                 .andExpect(status().isNotFound());
     }
@@ -156,12 +142,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void validEmployeeAddAvailabilityReturn200() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");
@@ -176,12 +156,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn400_existingDay() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");
@@ -201,12 +175,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn400_invalidDay() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");
         updatedDetails.put("dayOfWeek", "MDAY");
@@ -221,13 +189,7 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn404_invalidEmployee() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
-        Map<String,String> updatedDetails = new HashMap<>();
+        Map<String, String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "tsetEmployee");
         updatedDetails.put("dayOfWeek", "MONDAY");
 
@@ -240,12 +202,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void validEmployeeRemoveAvailabilityReturn200() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");
@@ -264,12 +220,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn404_notFound() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails1 = new HashMap<>();
         updatedDetails1.put("username", "testEmployee");
@@ -293,12 +243,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn400_invalidDay() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         Map<String,String> updatedDetails1 = new HashMap<>();
         updatedDetails1.put("username", "testEmployee");
         updatedDetails1.put("dayOfWeek", "MONDAY");
@@ -320,12 +264,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn404_invalidEmployee() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails1 = new HashMap<>();
         updatedDetails1.put("username", "testEmployee");
@@ -349,12 +287,6 @@ class EmployeeTests {
     @DirtiesContext
     void validEmployeeAddServiceReturn200() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
 
         this.mockMvc.perform(post("/api/service/add")
@@ -375,12 +307,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeAddServiceReturn400_invalidService() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
 
         this.mockMvc.perform(post("/api/service/add")
@@ -400,12 +326,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeAddServiceReturn400_existingService() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
 
@@ -431,12 +351,6 @@ class EmployeeTests {
     @DirtiesContext
     void validEmployeeUpdatePasswordReturn200() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");
         updatedDetails.put("oldPassword", "password");
@@ -452,12 +366,6 @@ class EmployeeTests {
     @DirtiesContext
     void invalidEmployeeUpdatePasswordReturn404_notFound() throws Exception {
 
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
-
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "tsetEmployee");
         updatedDetails.put("oldPassword", "password");
@@ -472,12 +380,6 @@ class EmployeeTests {
     @Test
     @DirtiesContext
     void invalidEmployeeUpdatePasswordReturn400_wrongPassword() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)));
 
         Map<String,String> updatedDetails = new HashMap<>();
         updatedDetails.put("username", "testEmployee");

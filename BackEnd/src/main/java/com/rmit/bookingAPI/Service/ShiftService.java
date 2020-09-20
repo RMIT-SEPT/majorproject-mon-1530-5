@@ -57,6 +57,10 @@ public class ShiftService {
         shiftRepository.save(shift);
     }
 
+    public void removeShift(Shift shift) {
+        shiftRepository.delete(shift);
+    }
+
     //helper method to determine if shift received from Front-end is workable given the employees availability
     public boolean isShiftWorkable(Shift shift, List<DayOfWeek> availability) {
 

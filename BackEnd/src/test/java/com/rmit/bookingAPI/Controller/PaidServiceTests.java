@@ -6,6 +6,8 @@ import com.rmit.bookingAPI.Controller.DTO.CustomerDTO;
 import com.rmit.bookingAPI.Controller.DTO.LoginDTO;
 import com.rmit.bookingAPI.Model.PaidService;
 import com.rmit.bookingAPI.Service.PaidServiceService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -35,9 +36,28 @@ class PaidServiceTests {
     @Autowired
     private PaidServiceService paidServiceService;
 
+    @BeforeEach
+    void setupEach() throws Exception {
+
+        PaidService paidService = new PaidService("Test Service", "Test Service Description");
+
+        this.mockMvc.perform(post("/api/service/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(paidService)));
+    }
+
+    @AfterEach
+    void breakdownEach() throws Exception {
+
+        Long serviceId = paidServiceService.findPaidServiceByName("Test Service").getId();
+        this.mockMvc.perform(delete("/api/customer/remove/" + Long.toString(serviceId)));
+    }
+
     @Test
     @DirtiesContext
     void validAddServiceReturn201() throws Exception {
+
+        breakdownEach();
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
 
@@ -67,10 +87,6 @@ class PaidServiceTests {
 
         this.mockMvc.perform(post("/api/service/add")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(paidService)));
-
-        this.mockMvc.perform(post("/api/service/add")
-                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(paidService)))
                 .andExpect(status().isBadRequest());
     }
@@ -78,12 +94,6 @@ class PaidServiceTests {
     @Test
     @DirtiesContext
     void validGetServiceReturn200() throws Exception {
-
-        PaidService paidService = new PaidService("Test Service", "Test Service Description");
-
-        this.mockMvc.perform(post("/api/service/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(paidService)));
 
         Long serviceId = paidServiceService.findPaidServiceByName("Test Service").getId();
 

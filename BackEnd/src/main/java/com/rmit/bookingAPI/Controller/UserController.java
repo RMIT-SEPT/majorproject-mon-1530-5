@@ -79,6 +79,15 @@ public class UserController {
         return new ResponseEntity<CustomerDetails>(userService.findCustomerDetailsByUsername(customerDTO.getUsername()), HttpStatus.CREATED);
     }
 
+    @DeleteMapping(value = "/customer/remove/{username}")
+    public ResponseEntity<String> removeCustomer(@PathVariable("username") String username) {
+        if (null == userService.findCustomerDetailsByUsername(username)) {
+            return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
+        }
+        userService.removeCustomer(username);
+        return new ResponseEntity<String>("Customer " + username + " removed", HttpStatus.OK);
+    }
+
     @PutMapping(value = "/customer/updateDetails/{username}")
     public ResponseEntity<?> updateCustomerDetails(@RequestBody CustomerDetails updateDetails) {
         if (null == userService.findCustomerDetailsByUsername(updateDetails.getUsername())) {
@@ -120,6 +129,15 @@ public class UserController {
         return new ResponseEntity<EmployeeDetails>(userService.findEmployeeDetailsByUsername(employeeDTO.getUsername()), HttpStatus.CREATED);
     }
 
+    @DeleteMapping(value = "/employee/remove/{username}")
+    public ResponseEntity<String> removeEmployee(@PathVariable("username") String username) {
+        if (null == userService.findEmployeeDetailsByUsername(username)) {
+            return new ResponseEntity<String>("Employee not found", HttpStatus.NOT_FOUND);
+        }
+        userService.removeEmployee(username);
+        return new ResponseEntity<String>("Employee " + username + " removed", HttpStatus.OK);
+    }
+
     @GetMapping(value="/employee/all")
     public ResponseEntity<List<Map<String,String>>> getAllEmployees() {
         return new ResponseEntity<List<Map<String, String>>>(userService.getAllEmployeeDetailsSimplified(), HttpStatus.OK);
@@ -134,10 +152,10 @@ public class UserController {
     }
 
     @PostMapping(value = "/employee/addService")
-    public ResponseEntity<?> addServiceToEmployee(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> addServiceToEmployee(@RequestBody Map<String, String> updatedDetails) {
 
-        String username = body.get("username");
-        Long serviceId = Long.valueOf(body.get("serviceId"));
+        String username = updatedDetails.get("username");
+        Long serviceId = Long.valueOf(updatedDetails.get("serviceId"));
 
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("Employee with that username does not exist", HttpStatus.NOT_FOUND);

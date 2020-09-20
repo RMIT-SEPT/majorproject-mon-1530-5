@@ -2,8 +2,11 @@ package com.rmit.bookingAPI.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.Controller.DTO.CustomerDTO;
+import com.rmit.bookingAPI.Controller.DTO.EmployeeDTO;
 import com.rmit.bookingAPI.Controller.DTO.LoginDTO;
 import com.rmit.bookingAPI.Model.CustomerDetails;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +32,26 @@ class CustomerControllerTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@BeforeEach
+	void setupEach() throws Exception {
+
+		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
+
+		this.mockMvc.perform(post("/api/customer/add")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(customerDTO)));
+	}
+
+	@AfterEach
+	void breakdownEach() throws Exception {
+		this.mockMvc.perform(delete("/api/customer/remove/testCustomer"));
+	}
+
 	@Test
 	@DirtiesContext
 	void validCustomerRegisterReturn201() throws Exception {
+
+		this.mockMvc.perform(delete("/api/customer/remove/testCustomer"));
 
 		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
 
@@ -61,10 +81,6 @@ class CustomerControllerTests {
 
 		this.mockMvc.perform(post("/api/customer/add")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(customerDTO)))
 				.andExpect(status().isBadRequest());
 	}
@@ -72,12 +88,6 @@ class CustomerControllerTests {
 	@Test
 	@DirtiesContext
 	void validCustomerLoginReturn200() throws Exception{
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
 
 		LoginDTO loginDTO = new LoginDTO("testCustomer", "password");
 
@@ -91,12 +101,6 @@ class CustomerControllerTests {
 	@DirtiesContext
 	void invalidCustomerLoginReturn400_wrongUsername() throws Exception{
 
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
-
 		LoginDTO loginDTO = new LoginDTO("tsetCustomer", "password");
 
 		this.mockMvc.perform(post("/api/login")
@@ -108,12 +112,6 @@ class CustomerControllerTests {
 	@Test
 	@DirtiesContext
 	void invalidCustomerLoginReturn400_wrongPassword() throws Exception{
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
 
 		LoginDTO loginDTO = new LoginDTO("testCustomer", "passwrod");
 
@@ -127,12 +125,6 @@ class CustomerControllerTests {
 	@DirtiesContext
 	void validCustomerGetReturn200() throws Exception{
 
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
-
 		this.mockMvc.perform(get("/api/customer/get/testCustomer"))
 				.andExpect(status().isOk());
 	}
@@ -141,12 +133,6 @@ class CustomerControllerTests {
 	@DirtiesContext
 	void invalidCustomerGetReturn404() throws Exception{
 
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
-
 		this.mockMvc.perform(get("/api/customer/get/tsetCustomer"))
 				.andExpect(status().isNotFound());
 	}
@@ -154,12 +140,6 @@ class CustomerControllerTests {
 	@Test
 	@DirtiesContext
 	void validCustomerUpdateReturn200() throws Exception{
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
 
 		CustomerDetails customerDetails = new CustomerDetails("testCustomer", "Test Name", "1 Victoria Street", "0412121212");
 
@@ -172,12 +152,6 @@ class CustomerControllerTests {
 	@Test
 	@DirtiesContext
 	void invalidCustomerUpdateReturn404_notFound() throws Exception{
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)));
 
 		CustomerDetails customerDetails = new CustomerDetails("tsetCustomer", "Test Name", "1 Victoria Street", "0412121212");
 

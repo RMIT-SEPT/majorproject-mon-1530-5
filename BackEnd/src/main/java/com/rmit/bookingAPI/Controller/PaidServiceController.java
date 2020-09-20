@@ -26,8 +26,22 @@ public class PaidServiceController {
         if (null != paidServiceService.findPaidServiceByName(paidService.getName())) {
             return new ResponseEntity<String>("Service already exists", HttpStatus.BAD_REQUEST);
         }
-        paidServiceService.addPaidService(paidService);
+        paidServiceService.addOrUpdatePaidService(paidService);
         return new ResponseEntity<PaidService>(paidServiceService.findPaidServiceByName(paidService.getName()), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/service/remove/{serviceId}")
+    public ResponseEntity<String> removeService(@PathVariable("serviceId") String serviceIdString) {
+        try{
+            Long serviceId = Long.parseLong(serviceIdString);
+            if (null == paidServiceService.findPaidServiceById(serviceId)) {
+                return new ResponseEntity<String>("Service not found", HttpStatus.NOT_FOUND);
+            }
+            paidServiceService.removePaidService(serviceId);
+            return new ResponseEntity<String>("Service " + serviceIdString + " removed", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Invalid serviceId", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(value="/service/all")

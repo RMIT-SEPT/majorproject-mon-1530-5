@@ -12,9 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -68,12 +69,14 @@ public class BookingController {
             multiple bookings at once.
             */
             boolean isBooked = false;
-            for (Booking tempBooking_service : desiredBookings) {
+            Iterator<Booking> i = desiredBookings.iterator();
+            while(i.hasNext()) {
+                Booking tempBooking_service = i.next();
                 if (tempBooking_service.getServiceId().equals(bookingDTO.returnServiceIdAsLong())) {
                     if (null == tempBooking_service.getCustomerUsername()) {
                         tempBooking_service.setCustomerUsername(bookingDTO.getCustomerUsername());
                         bookingService.addOrUpdateBooking(tempBooking_service);
-                        desiredBookings.remove(tempBooking_service);
+                        i.remove();
                         isBooked = true;
                     } else {
                         return new ResponseEntity<String>("Booking already occupied", HttpStatus.BAD_REQUEST);
@@ -81,33 +84,57 @@ public class BookingController {
                 }
             }
             if (isBooked) {
-                for (Booking tempBooking : desiredBookings) {
+                while(i.hasNext()) {
+                    Booking tempBooking = i.next();
                     bookingService.removeBooking(tempBooking);
+                    i.remove();
                 }
                 return new ResponseEntity<String>("Booking filled, and consequent bookings removed!", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<String>("Invalid serviceId", HttpStatus.NOT_FOUND);
             }
         }
-        catch (Exception e) {
+        catch (NumberFormatException e) {
             return new ResponseEntity<String>("Invalid date format", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @DeleteMapping (value = "/booking/remove/{bookingId}")
-    public ResponseEntity<?> removeBooking(@PathVariable("bookingId") String bookingIdString) {
+    /*
+    *   This method, if successful will remove the booking from the customer and add the now available bookings
+    *   for the employees services
+    */
+    @DeleteMapping (value = "/booking/cancel")
+    public ResponseEntity<?> cancelBooking(@RequestBody Map<String, String> bookingDetails) {
 
+        if (null == userService.findEmployeeDetailsByUsername(bookingDetails.get("employeeUsername"))) {
+            return new ResponseEntity<String>("Employee not found", HttpStatus.NOT_FOUND);
+        }
+        if (null == userService.findCustomerDetailsByUsername(bookingDetails.get("customerUsername"))) {
+            return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
+        }
         try {
-            Long bookingId = Long.parseLong(bookingIdString);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date bookingDate = new Date(dateFormat.parse(bookingDetails.get("bookingDate")).getTime());
 
-            if (null == bookingService.findBookingById(bookingId)) {
-                return new ResponseEntity<String>("Booking with that bookingId does not exist", HttpStatus.NOT_FOUND);
-            }
-            if (null == bookingService.findBookingById(bookingId).getCustomerUsername()) {
-                return new ResponseEntity<String>("Booking with that bookingId is not occupied", HttpStatus.BAD_REQUEST);
+            Booking oldBooking = null;
+
+            for (Booking booking : bookingService.getAllBookings()) {
+                if (booking.getEmployeeUsername().equals(bookingDetails.get("employeeUsername"))) {
+                    if (booking.getDate().compareTo(bookingDate) == 0) {
+                        if (booking.getCustomerUsername().equals(bookingDetails.get("customerUsername"))) {
+                            oldBooking = booking;
+                        }
+                        else {
+                            return new ResponseEntity<String>("Booking is not occupied", HttpStatus.BAD_REQUEST);
+                        }
+                    }
+                }
             }
 
-            Booking oldBooking = bookingService.findBookingById(bookingId);
+            if (null == oldBooking) {
+                return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
+            }
+
             oldBooking.setCustomerUsername(null);
             bookingService.addOrUpdateBooking(oldBooking);
 
@@ -122,10 +149,10 @@ public class BookingController {
                     bookingService.addOrUpdateBooking(tempBooking);
                 }
             }
-            return new ResponseEntity<String>("Booking removed and vacant bookings added", HttpStatus.OK);
+            return new ResponseEntity<String>("Booking cancelled and vacant bookings added", HttpStatus.OK);
         }
-        catch (NumberFormatException e) {
-            return new ResponseEntity<String>("A numerical bookingId value must be given", HttpStatus.BAD_REQUEST);
+        catch (ParseException e) {
+            return new ResponseEntity<String>("Invalid date", HttpStatus.BAD_REQUEST);
         }
     }
 

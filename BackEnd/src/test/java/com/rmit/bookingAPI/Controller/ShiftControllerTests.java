@@ -1,8 +1,11 @@
 package com.rmit.bookingAPI.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rmit.bookingAPI.Controller.DTO.EmployeeDTO;
 import com.rmit.bookingAPI.Controller.DTO.ShiftDTO;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -52,25 +58,55 @@ class ShiftControllerTests {
         invalidWorkDateString = dateFormat.format(workDate);
     }
 
+    @BeforeEach
+    void setupEach() throws Exception {
+
+        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
+
+        this.mockMvc.perform(post("/api/employee/add")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(employeeDTO)));
+
+        Map<String,String> updatedDetails = new HashMap<>();
+        updatedDetails.put("username", "testEmployee");
+        updatedDetails.put("dayOfWeek", "MONDAY");
+
+        this.mockMvc.perform(post("/api/employee/addAvailability")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updatedDetails)));
+    }
+
+    @AfterEach
+    void breakdownEach() throws Exception {
+        this.mockMvc.perform(delete("/api/employee/remove/testEmployee"));
+    }
+
     @Test
     @DirtiesContext
     void validAddShiftReturn200() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 validWorkDateString, " 12:30"," 14:30");
 
         this.mockMvc.perform(post("/api/shift/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(shiftDTO)))
                 .andExpect(status().isOk());
+//
+        Map<String,String> body = new HashMap<>();
+        body.put("username", "testEmployee");
+        body.put("shiftDate", validWorkDateString);
 
+        this.mockMvc.perform(delete("/api/shift/remove")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body)));
     }
 
     @Test
     @DirtiesContext
     void invalidAddShiftReturn400_existingShift() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 validWorkDateString, " 12:30"," 14:30");
 
         this.mockMvc.perform(post("/api/shift/add")
@@ -81,13 +117,21 @@ class ShiftControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(shiftDTO)))
                 .andExpect(status().isBadRequest());
+
+        Map<String,String> body = new HashMap<>();
+        body.put("username", "testEmployee");
+        body.put("shiftDate", validWorkDateString);
+
+        this.mockMvc.perform(delete("/api/shift/remove")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body)));
     }
 
     @Test
     @DirtiesContext
     void invalidAddShiftReturn400_outsideOfAvailability() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 invalidWorkDateString, " 12:30"," 14:30");
 
         this.mockMvc.perform(post("/api/shift/add")
@@ -100,7 +144,7 @@ class ShiftControllerTests {
     @DirtiesContext
     void invalidAddShiftReturn404_invalidUsername() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("tesEmployee",
                 validWorkDateString, " 12:30"," 14:30");
 
         this.mockMvc.perform(post("/api/shift/add")
@@ -113,7 +157,7 @@ class ShiftControllerTests {
     @DirtiesContext
     void invalidAddShiftReturn400_invalidDateFormat() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 invalidWorkDateString, "16:30","18:30");
 
         this.mockMvc.perform(post("/api/shift/add")
@@ -126,7 +170,7 @@ class ShiftControllerTests {
     @DirtiesContext
     void invalidAddShiftReturn400_invalidFutureDate() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 "01-01-2021", "12:30",
                 "14:30");
 
@@ -140,7 +184,7 @@ class ShiftControllerTests {
     @DirtiesContext
     void invalidAddShiftReturn400_invalidPastDate() throws Exception {
 
-        ShiftDTO shiftDTO = new ShiftDTO("janeDoe",
+        ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
                 "01-01-2020", "12:30",
                 "14:30");
 

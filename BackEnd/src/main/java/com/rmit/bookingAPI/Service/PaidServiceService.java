@@ -36,7 +36,11 @@ public class PaidServiceService {
         return paidServices;
     }
 
-    public void addPaidService(PaidService paidService) {
+    public void addOrUpdatePaidService(PaidService paidService) {
         paidServiceRepository.save(paidService);
+    }
+
+    public void removePaidService(Long serviceId) {
+        paidServiceRepository.delete(findPaidServiceById(serviceId));
     }
 }

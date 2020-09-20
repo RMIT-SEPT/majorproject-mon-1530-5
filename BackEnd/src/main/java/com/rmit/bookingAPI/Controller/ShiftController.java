@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.awt.print.Book;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -97,6 +98,41 @@ public class ShiftController {
             return new ResponseEntity<String>("Invalid date format", HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping(value = "/shift/remove")
+    public ResponseEntity<String> removeShift(@RequestBody Map<String, String> shiftDetails) {
+        //remove all bookings
+        //remove shift
+        if (null == userService.findEmployeeDetailsByUsername(shiftDetails.get("username"))) {
+            return new ResponseEntity<String>("Employee not found", HttpStatus.NOT_FOUND);
+        }
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date desiredDate = new Date(dateFormat.parse(shiftDetails.get("shiftDate")).getTime());
+
+            for (Booking booking : bookingService.getAllBookings()) {
+                if (booking.getEmployeeUsername().equals(shiftDetails.get("username"))) {
+                    if (booking.getDate().compareTo(desiredDate) == 0) {
+                        bookingService.removeBooking(booking);
+                    }
+                }
+            }
+
+            for (Shift shift : shiftService.getAllShifts()) {
+                if (shift.getEmployeeUsername().equals(shiftDetails.get("username"))) {
+                    if (shift.getShiftDate().compareTo(desiredDate) == 0) {
+                        shiftService.removeShift(shift);
+                    }
+                }
+            }
+
+            return new ResponseEntity<String>("Shift and bookings removed", HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<String>("Invalid date", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @GetMapping(value="/shift/all")
     public ResponseEntity<List<Shift>> getAllShifts() {
