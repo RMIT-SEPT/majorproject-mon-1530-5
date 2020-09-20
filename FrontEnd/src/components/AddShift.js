@@ -48,6 +48,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
   componentDidMount(){
     this.props.getService()
     this.props.getEmployees()
+    this.props.resetFeedback();
   }
 
 

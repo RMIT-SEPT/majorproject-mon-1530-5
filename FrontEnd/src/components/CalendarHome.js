@@ -59,6 +59,7 @@ export class CalendarHome extends Component {
     //Sets up the calendar for the current month
     this.calendarHome();
     this.props.getService();
+    this.props.resetFeedback();
   }
   //Sets up the values for the calendar
   calendarHome = () => {
@@ -87,6 +88,7 @@ export class CalendarHome extends Component {
         vacantBookings: []
       })
     }
+    this.props.resetFeedback();
   }
   //Get vacant bookings and set vacantBookings[] to api data
   getVacantBookings = (e) => {
@@ -109,6 +111,7 @@ export class CalendarHome extends Component {
         selectedEmployee: this.state.vacantBookings[i].employeeUsername
       })
     })
+    this.props.resetFeedback();
   }
   // Get index of the booking selected on calendar in vacantBookings[]
   getBookingIndex = () => {
