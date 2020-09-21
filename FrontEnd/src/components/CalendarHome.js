@@ -230,7 +230,7 @@ export class CalendarHome extends Component {
       const previousDays = [];
       for (let i = this.state.firstDayIndex; i > 0; i--) {
         previousDays.push(
-          <td className="border pr-40 pb-20 bg-gray-400" key={i}>
+          <td className="border w-48 h-32 bg-gray-400 align-top" key={i}>
             {this.state.prevLastDay - i + 1}
           </td>
         );
@@ -241,7 +241,7 @@ export class CalendarHome extends Component {
       const nextMonthDays = [];
       let nextDays = 7 - this.state.lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td className="border pr-40 pb-20 bg-gray-400" key={i}>{i}</td>);
+        nextMonthDays.push(<td className="border w-48 h-32 bg-gray-400 align-top" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
@@ -250,7 +250,7 @@ export class CalendarHome extends Component {
       rows.push(previousMonthLastDays());
       for (let i = 1; i <= 7 - previousMonthLastDays().length; i++) {
         newDate.setDate(i);
-        rows.push(<td className="border pr-40 pb-20 text-left hover:bg-blue-500" key={i}>{i}{bookingButtons(newDate)}</td>);
+        rows.push(<td className="border w-48 h-32 text-left hover:bg-blue-500 align-top" key={i}>{i}{bookingButtons(newDate)}</td>);
       }
 
       return rows;
@@ -261,9 +261,9 @@ export class CalendarHome extends Component {
         if (7 - previousMonthLastDays().length + i + n <= this.state.lastDay) {
           newDate.setDate(7 - previousMonthLastDays().length + i + n);
           rows.push(
-            <td className="border pr-40 pb-20 hover:bg-blue-500" key={i}>
+            <td className="border w-48 h-32 hover:bg-blue-500 align-top" key={i}>
               {7 - previousMonthLastDays().length + i + n}
-              {bookingButtons(newDate)}
+              <div className="">{bookingButtons(newDate)}</div>
             </td>
           );
         }
@@ -275,18 +275,18 @@ export class CalendarHome extends Component {
       if (previousMonthLastDays().length === 5) {
         newDate.setDate(31);
         rows.push(
-          <td className="border pr-40 pb-20 hover:bg-blue-500"key={31} >31
+          <td className="border w-48 h-32 hover:bg-blue-500 align-top"key={31} >31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
       } else if (previousMonthLastDays().length === 6) {
         newDate.setDate(30);
         rows.push(
-          <td className="border pr-40 pb-20 hover:bg-blue-500" key={30}>30
+          <td className="border w-48 h-32 hover:bg-blue-500 align-top" key={30}>30
           {bookingButtons(newDate)}</td>);
         newDate.setDate(31);
         rows.push(
-          <td className="border pr-40 pb-20 hover:bg-blue-500" key={31}>31
+          <td className="border w-48 h-32 hover:bg-blue-500 align-top" key={31}>31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
