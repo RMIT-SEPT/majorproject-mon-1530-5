@@ -109,23 +109,40 @@ public class ShiftController {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             Date desiredDate = new Date(dateFormat.parse(shiftDetails.get("shiftDate")).getTime());
+            Calendar cal = Calendar.getInstance();
 
-            for (Booking booking : bookingService.getAllBookings()) {
+            boolean shiftFound = false;
+
+            if (cal.getTime().after(desiredDate)) {
+                return new ResponseEntity<String>("Cannot remove past shift", HttpStatus.BAD_REQUEST);
+            }
+
+            Iterator<Shift> shiftIterator = shiftService.getAllShifts().iterator();
+            while(shiftIterator.hasNext()) {
+                Shift shift = shiftIterator.next();
+                if (shift.getEmployeeUsername().equals(shiftDetails.get("username"))) {
+                    if (shift.getShiftDate().compareTo(desiredDate) == 0) {
+                        shiftService.removeShift(shift);
+                        shiftFound = true;
+                    }
+                }
+                shiftIterator.remove();
+            }
+
+            if (!shiftFound) {
+                return new ResponseEntity<String>("Shift not found", HttpStatus.NOT_FOUND);
+            }
+
+            Iterator<Booking> bookingIterator = bookingService.getAllBookings().iterator();
+            while(bookingIterator.hasNext()) {
+                Booking booking = bookingIterator.next();
                 if (booking.getEmployeeUsername().equals(shiftDetails.get("username"))) {
                     if (booking.getDate().compareTo(desiredDate) == 0) {
                         bookingService.removeBooking(booking);
                     }
                 }
+                bookingIterator.remove();
             }
-
-            for (Shift shift : shiftService.getAllShifts()) {
-                if (shift.getEmployeeUsername().equals(shiftDetails.get("username"))) {
-                    if (shift.getShiftDate().compareTo(desiredDate) == 0) {
-                        shiftService.removeShift(shift);
-                    }
-                }
-            }
-
             return new ResponseEntity<String>("Shift and bookings removed", HttpStatus.OK);
 
         } catch (Exception e) {

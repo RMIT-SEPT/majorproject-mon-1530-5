@@ -8,17 +8,17 @@ services:
     ports:
       - 8080:8080
 
-  db:
-    restart: always
-    container_name: bookingapi_mysql
-    image: mysql:latest
-    ports:
-      - 6033:3306
-    volumes:
-      - mysql-datavolume:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=bookingapi_db
-
-volumes:
-  mysql-datavolume:
+#  db:
+#    restart: always
+#    container_name: bookingapi_mysql
+#    image: mysql:latest
+#    ports:
+#      - 6033:3306
+#    volumes:
+#      - mysql-datavolume:/var/lib/mysql
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=password
+#      - MYSQL_DATABASE=bookingapi_db
+#
+#volumes:
+#  mysql-datavolume:
