@@ -1,0 +1,37 @@
+version: '3.2'
+services:
+  bookingapi:
+   build: ./BackEnd
+   container_name: bookingapi_springboot
+   environment:
+     SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bookingapi_db?useLegacyDatetimeCode=false&serverTimezone=UTC
+   ports:
+     - 8080:8080
+
+  db:
+   build: ./BackEnd
+   restart: always
+   container_name: bookingapi_mysql
+   image: mysql:latest
+   ports:
+     - 6033:3306
+   volumes:
+     - mysql-datavolume:/var/lib/mysql
+   environment:
+     - MYSQL_ROOT_PASSWORD=password
+     - MYSQL_DATABASE=bookingapi_db
+     
+  ui:
+    build: ./FrontEnd
+    container_name: frontend
+    ports:
+       - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    
+  
+     
+
+volumes:
+ mysql-datavolume:
