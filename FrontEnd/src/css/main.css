@@ -87374,9 +87374,3 @@ video {
             animation: bounce 1s infinite;
   }
 }
-
-img {
-  max-width: 100%;
-}
-
-.space { margin-top: 200px; }
