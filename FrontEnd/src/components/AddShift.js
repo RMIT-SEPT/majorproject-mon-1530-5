@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Calendar from "./Calendar";
 import {connect} from 'react-redux'
-import {getEmployees} from "../actions/employeeActions"
+import {getAvailability, getEmployees} from "../actions/employeeActions"
 import { getService } from "../actions/servicesActions";
 import { addShift, resetFeedback } from "../actions/shiftActions";
 
@@ -43,12 +43,16 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
     this.setState({
       [e.target.id]: e.target.value,
     });
+    if(e.target.id === 'selectedEmployee'){
+      console.log(e.target.value)
+      this.props.getAvailability(e.target.value)
+    }
+   
   }
 
   componentDidMount(){
     this.props.getService()
     this.props.getEmployees()
-    this.props.resetFeedback();
   }
 
 
@@ -137,8 +141,23 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
           </div>
         </div>
          {msg === "" ? null: <p className={msgStyle}>{msg}</p>}
+
+         <div className="flex flex-col space-y-4 container mx-auto flex-inital">
+           <div className="flex space-x-2">
+           <button class=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
+            <p className="text-lg"> - Available days</p>
+           </div>
+           <div className="flex space-x-2">
+           <button class=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
+           <p className="text-lg"> - Unavailable days</p>
+           </div>
+           <div className="flex space-x-2">
+           <button class=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
+           <p className="text-lg"> - Selected day/Current day</p>
+           </div>
+         </div>
         <div className="flex justify-evenly mx-5 my-5 py-5">
-        <Calendar changeSelectedDate={this.changeSelectedDate}/>
+        <Calendar changeSelectedDate={this.changeSelectedDate} />
 
           <div className="self-center mx-5 px-5">
             <div className="flex space-x-6">
@@ -188,7 +207,8 @@ return{
   getEmployees:()=> dispatch(getEmployees()),
   getService:() => dispatch(getService()),
   addShift:(shift) => dispatch(addShift(shift)),
-  resetFeedback:() =>dispatch(resetFeedback())
+  resetFeedback:() =>dispatch(resetFeedback()),
+  getAvailability:(username) => dispatch(getAvailability(username))
 }
 }
 

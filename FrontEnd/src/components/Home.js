@@ -15,7 +15,8 @@ function Home() {
 
       {/*Booking Calender*/}
       <div className="flex justify-evenly mx-5 my-5 py-5">
-      <CalendarHome/></div>
+      <CalendarHome/>
+      </div>
 
     </div>
   );

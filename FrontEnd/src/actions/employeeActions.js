@@ -6,7 +6,7 @@ export const getEmployees = () =>{
      axios.get('http://localhost:8080/api/employee/all')
         .then((response)=>{
             dispatch({
-                type:'GET_EMPLOYEE', response:response.data
+                type:'GET_EMPLOYEES', response:response.data
             })
         })
         .catch((err) =>{ 
@@ -45,6 +45,23 @@ export const resetFeedback = () =>{
             })
 
     
+    }
+}
+
+export const getAvailability = (username) =>{
+    return(dispatch) =>{
+        axios.get(`http://localhost:8080/api/employee/getAvailability/${username}`)
+        .then((response)=>{
+            dispatch({
+                type:'GET_AVAILABILITY', response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
     }
 }
 

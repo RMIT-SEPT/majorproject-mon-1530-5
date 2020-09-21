@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {getAvailability} from "../actions/employeeActions"
+import {connect} from 'react-redux'
 
 export class Calendar extends Component {
  
@@ -25,12 +27,14 @@ export class Calendar extends Component {
     lastDayIndex: "",
     date: new Date(), // date object that contains all date related functions
     selectedDay:new Date().getDate(),
+    weekdays:["SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"],
+    availableDays:[]
   };
+
 
   //Sets up the values for the calendar
   calendar = () => {
     const date = this.state.date;
-
     const currentDate = new Date()
     currentDate.setFullYear(this.state.date.getFullYear())
     // Setting the current day of the month to first day on the date object
@@ -50,8 +54,8 @@ export class Calendar extends Component {
         date.getMonth() + 1,
         0
       ).getDay(), 
+      availableDays: this.availableDays(date.getMonth())
     });
-    
   }
 
   componentDidMount() {
@@ -59,6 +63,22 @@ export class Calendar extends Component {
     this.calendar();
   }
 
+  availableDays =(month) =>{
+    let  availableDays = []
+    for(let i=this.state.lastDay; i>=0;i--){
+      let date = new Date
+      date.setMonth(month)
+      date.setDate(i)
+      for(let j = 3;j>-1;j--){
+        if(this.props.availability[j] === this.state.weekdays[date.getDay()]){
+           availableDays.push(date.getDate())
+        }
+      }
+    }
+  
+    return availableDays
+    
+  }
 
   //Change current month to next month
   nextMonth = () => {
@@ -96,10 +116,11 @@ export class Calendar extends Component {
 
   // sets the day that the user clicked as the current day 
   setDay = (e)=>{
-   const date = this.state.date
+    const date = this.state.date
     date.setDate(e.target.innerHTML)
     this.setState({
       selectedDay: date.getDate(),
+
     })
     // send selected date to addshift.js
     this.props.changeSelectedDate(`${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`)
@@ -138,10 +159,20 @@ export class Calendar extends Component {
     // Creats a first row of the calendar 
     const createFirstRow = () => {
       const rows = [];
+      const availableDays = this.availableDays(this.state.date.getMonth())
       // previousMontLastDays().length = returns the number of the left over last days of the previous month
       rows.push(previousMontLastDays());
       for (let i = 1; i <= 7 - previousMontLastDays().length; i++) {
-        rows.push(<td className="border px-4 py-2 hover:bg-blue-500" key={i}>{i}</td>);
+        if(selectedDay === i){
+          rows.push(<td className="border px-4 py-2 bg-blue-500" onClick={this.setDay} key={i}>{i}</td>);  
+        }
+        else if(availableDays.includes(i)){
+          rows.push(<td className="border px-4 py-2 hover:bg-blue-500"  onClick={this.setDay}>{i}</td>);  
+        }
+        else{
+          rows.push(<td className="border px-4 py-2 bg-gray-400" key={i}>{i}</td>);
+        }
+        
       }
 
       return rows;
@@ -149,6 +180,7 @@ export class Calendar extends Component {
    // Creats a middle rows of the calendar 
     const createMiddleRows = (n) => {
       const rows = [];
+      const availableDays = this.availableDays(this.state.date.getMonth())
       for (let i = 1; i <= 7; i++) {
         if (7 - previousMontLastDays().length + i + n <= lastDay) {
           if(selectedDay === 7 - previousMontLastDays().length + i + n){
@@ -158,9 +190,12 @@ export class Calendar extends Component {
               </td>
             );
           }
+          else if(availableDays.includes(7 - previousMontLastDays().length + i + n)){
+            rows.push(<td className="border px-4 py-2  hover:bg-blue-500" key={7 - previousMontLastDays().length + i + n} onClick={this.setDay}>{7 - previousMontLastDays().length + i + n}</td>);  
+          }
           else{
             rows.push(
-              <td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={i}>
+              <td className="border px-4 py-2 bg-gray-400"  key={7 - previousMontLastDays().length + i + n}>
                 {7 - previousMontLastDays().length + i + n}
               </td>
             );
@@ -189,7 +224,6 @@ export class Calendar extends Component {
 
       return rows;
     };
-
     return (
       <div className="max-w-lg container border-2 border-blue-800">
         <div className="flex justify-evenly bg-blue-500">
@@ -258,4 +292,10 @@ export class Calendar extends Component {
 }
 
 
-export default Calendar;
+const mapStateToProps =(state) =>{
+  return{
+    availability:state.employee.availability, 
+  }
+}
+
+export default connect(mapStateToProps)(Calendar);
