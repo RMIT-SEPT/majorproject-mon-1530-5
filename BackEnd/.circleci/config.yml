@@ -1,0 +1,26 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+
+    working_directory: ~/repofiles/ 
+      
+    steps:
+      - run: pwd
+      - checkout:
+          path: ~/repofiles
+      - restore_cache:
+          keys:
+            - bookingapi-dependencies-{{ checksum "pom.xml" }}
+
+      - run: ./mvnw dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: bookingapi-dependencies-{{ checksum "pom.xml" }}
+      - run: ./mvnw package
+      - store_test_results:
+          path: target/surefire-reports
+      - store_artifacts:
+          path: target/bookingAPI-0.0.1-SNAPSHOT.jar
