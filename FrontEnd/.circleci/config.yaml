@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/src
+    docker:
+        image: majorproject-mon-1530-5
+    
+    steps:
+        - checkout
+        - run: npm test
