@@ -8,6 +8,26 @@ orbs:
 workflows:
   # Name the workflow "welcome"
   welcome:
-    # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
+      build:
+        docker:
+         - image:  "circleci/node:13.11.0"
+            
+        working_directory: ~/repofiles/FrontEnd
+          
+        steps:
+          - checkout:
+              path: ~/repofiles
+          - restore_cache:
+              keys:
+                - v1-dependencies-{{ checksum "package.json" }}
+                - v1-dependencies-
+            
+          - run: npm install
+    
+          - save_cache:
+              paths:
+                - node_modules
+              key: v1-dependencies-{{ checksum "package.json" }}
+            
+          - run: npm test
