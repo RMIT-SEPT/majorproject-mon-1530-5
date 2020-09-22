@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6dfe08a9-7b88-4e49-a5da-b88536e4a2c8" name="Default Changelist" comment="" />
+    <list default="true" id="6dfe08a9-7b88-4e49-a5da-b88536e4a2c8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/dockerfile" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,7 +28,15 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -33,10 +48,17 @@
       <option name="presentableId" value="Default" />
       <updated>1600581030658</updated>
       <workItem from="1600581032726" duration="102000" />
+      <workItem from="1600691910123" duration="925000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600699856276">
+      <screen x="0" y="23" width="1440" height="792" />
+    </state>
+    <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.792@0.23.1440.792" timestamp="1600699856276" />
   </component>
 </project>
