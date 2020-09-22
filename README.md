@@ -10,8 +10,8 @@
 * SURNAME, GivenName (sXXXX)
 
 ## Records
-
-* Github repository : https://github.com/AlanaTobgui/SETP_MON-1530-5
+* New Github Repository: https://github.com/RMIT-SEPT/majorproject-mon-1530-5.git
+* Old Github repository : https://github.com/AlanaTobgui/SETP_MON-1530-5
 * ClickUp Workspace : https://app.clickup.com/6915716
 
 
