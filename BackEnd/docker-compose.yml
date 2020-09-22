@@ -1,12 +1,12 @@
 version: '3.2'
 services:
-  bookingapi:
-    build: .
-    container_name: bookingapi_springboot
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bookingapi_db?useLegacyDatetimeCode=false&serverTimezone=UTC
-    ports:
-      - 8080:8080
+#  bookingapi:
+#    build: .
+#    container_name: bookingapi_springboot
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bookingapi_db?useLegacyDatetimeCode=false&serverTimezone=UTC
+#    ports:
+#      - 8080:8080
   db:
    restart: always
    container_name: bookingapi_mysql
