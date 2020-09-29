@@ -9,9 +9,9 @@ import {BrowserRouter as Router,Route} from 'react-router-dom';
 import Profile from './components/Profile';
 import AddEmployee from './components/AddEmployee';
 import AddShift from './components/AddShift';
-import Feedback from "./components/Feedback"
 import {Provider} from "react-redux"
 import store from "./store"
+import Bookings from './components/Bookings';
 
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
       <Route path="/profile" component= {Profile}/>
       <Route path ="/addEmployee" component ={AddEmployee}/>
       <Route path ="/addShift" component ={AddShift}/>
-      <Route path ="/feedback" component ={Feedback}/>
+      <Route path ="/bookings" component ={Bookings}/>
     </div>
     </Router>
     </Provider>
