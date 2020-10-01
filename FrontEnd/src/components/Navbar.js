@@ -22,7 +22,10 @@ function Navbar() {
           </div>
           <div className="flex justify-end bg-blue-100">
           <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-              <NavLink to="/profile"> Dashboard</NavLink>
+              <NavLink to="/profile"> Admin</NavLink>
+            </div>
+            <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+              <NavLink to="/bookings"> Bookings</NavLink>
             </div>
             <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
               <NavLink to="/login"> Login</NavLink>

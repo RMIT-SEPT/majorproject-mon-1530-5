@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux';
 import { getService } from "../actions/servicesActions";
-import { addBooking, resetFeedback } from "../actions/bookingActions"
+import { addBooking, resetFeedback } from "../actions/bookingActions";
+import { Multiselect } from 'multiselect-react-dropdown';
 import axios from "axios"
 
 export class CalendarHome extends Component {
@@ -27,6 +28,7 @@ export class CalendarHome extends Component {
     prevLastDay: "",
     lastDayIndex: "",
     date: new Date(),
+    selectedServices: [],
     selectedServiceID: "",
     selectedBookingID: "",
     vacantBookings: [ ],
@@ -59,6 +61,7 @@ export class CalendarHome extends Component {
     //Sets up the calendar for the current month
     this.calendarHome();
     this.props.getService();
+    this.getVacantBookings();
     this.props.resetFeedback();
   }
   //Sets up the values for the calendar
@@ -79,20 +82,28 @@ export class CalendarHome extends Component {
     });
   };
   //When a service is selected
-  handleChange = (e) => {
-    this.setState({ selectedServiceID: e.target.value });
-    if (e.target.value > 0) {
-      this.getVacantBookings(e);
-    } else {
-      this.setState({
-        vacantBookings: []
-      })
+  onSelect = (services, selected) => {
+    this.state.selectedServices.push(selected);
+    this.setState({
+      selectedServices: this.state.selectedServices
+    })
+    this.props.resetFeedback();
+  }
+  //When a service is removed
+  onRemove = (services, removed) => {
+    for (var i = 0; i < this.state.selectedServices.length; i++) {
+      if (removed.id === this.state.selectedServices[i].id) {
+        this.state.selectedServices.splice(i,1);
+      }
     }
+    this.setState({
+      selectedServices: this.state.selectedServices
+    })
     this.props.resetFeedback();
   }
   //Get vacant bookings and set vacantBookings[] to api data
-  getVacantBookings = (e) => {
-    axios.get(`http://localhost:8080/api/booking/vacantBookings/${e.target.value}`)
+  getVacantBookings = () => {
+    axios.get(`http://localhost:8080/api/booking/vacantBookings`)
         .then((response)=>{
           this.setState({
             vacantBookings: response.data
@@ -108,6 +119,7 @@ export class CalendarHome extends Component {
       this.setState({
         selectedDate: this.state.vacantBookings[i].date.split('-').reverse().join('-'),
         selectedTime: this.state.vacantBookings[i].bookingTime.substring(0, this.state.vacantBookings[i].bookingTime.length - 3),
+        selectedServiceID: this.state.vacantBookings[i].serviceId,
         selectedEmployee: this.state.vacantBookings[i].employeeUsername
       })
     })
@@ -142,7 +154,7 @@ export class CalendarHome extends Component {
   };
   render() {
     const {services,msgBook,msgStyle} = this.props;
-    const {vacantBookings} = this.state;
+    const {vacantBookings, selectedServices} = this.state;
     const date = this.state.date;
     const newDate = new Date(date);
     // Create booking buttons for calendar
@@ -160,9 +172,13 @@ export class CalendarHome extends Component {
       const formattedDate = [year,month,day].join('-');
       for (let i = 0; i < vacantBookings.length; i++) {
         if (vacantBookings[i].date === formattedDate) {
-          bookings.push(<button className="border px-5 py-5" key={vacantBookings[i].id} 
-          value={vacantBookings[i].id} onClick={this.handleClick}>
-            {vacantBookings[i].bookingTime}</button>)
+          for (let j = 0; j < selectedServices.length; j++) {
+            if (vacantBookings[i].serviceId === selectedServices[j].id)
+            bookings.push(<button className="border px-2 py-2 bg-blue-400 text-xs" key={vacantBookings[i].id} 
+            value={vacantBookings[i].id} onClick={this.handleClick}>
+              {selectedServices[j].name}<br/>
+              {vacantBookings[i].bookingTime.slice(0,5)}</button>)
+          }
         }
       }
       return bookings;
@@ -230,7 +246,7 @@ export class CalendarHome extends Component {
       const previousDays = [];
       for (let i = this.state.firstDayIndex; i > 0; i--) {
         previousDays.push(
-          <td className="border px-20 py-10 bg-gray-400" key={i}>
+          <td className="border w-48 h-32 align-top bg-gray-400" key={i}>
             {this.state.prevLastDay - i + 1}
           </td>
         );
@@ -241,7 +257,7 @@ export class CalendarHome extends Component {
       const nextMonthDays = [];
       let nextDays = 7 - this.state.lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td className="border px-20 py-10 bg-gray-400" key={i}>{i}</td>);
+        nextMonthDays.push(<td className="border w-48 h-32 align-top bg-gray-400" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
@@ -250,7 +266,7 @@ export class CalendarHome extends Component {
       rows.push(previousMonthLastDays());
       for (let i = 1; i <= 7 - previousMonthLastDays().length; i++) {
         newDate.setDate(i);
-        rows.push(<td className="border px-20 py-10 hover:bg-blue-500" key={i}>{i}{bookingButtons(newDate)}</td>);
+        rows.push(<td className="border w-48 h-32 align-top hover:bg-blue-500" key={i}>{i}{bookingButtons(newDate)}</td>);
       }
 
       return rows;
@@ -261,8 +277,9 @@ export class CalendarHome extends Component {
         if (7 - previousMonthLastDays().length + i + n <= this.state.lastDay) {
           newDate.setDate(7 - previousMonthLastDays().length + i + n);
           rows.push(
-            <td className="border px-20 py-10 hover:bg-blue-500 align-text-left" style = {{textAlign: 'right'}} key={i}>
-              {7 - previousMonthLastDays().length + i + n}{bookingButtons(newDate)}
+            <td className="border w-48 h-32 align-top hover:bg-blue-500" key={i}>
+              {7 - previousMonthLastDays().length + i + n}
+              <br/>{bookingButtons(newDate)}
             </td>
           );
         }
@@ -274,18 +291,18 @@ export class CalendarHome extends Component {
       if (previousMonthLastDays().length === 5) {
         newDate.setDate(31);
         rows.push(
-          <td className="border px-20 py-10 hover:bg-blue-500"key={31} >31
+          <td className="border w-48 h-32 align-top hover:bg-blue-500"key={31} >31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
       } else if (previousMonthLastDays().length === 6) {
         newDate.setDate(30);
         rows.push(
-          <td className="border px-20 py-10 hover:bg-blue-500" key={30}>30
+          <td className="border w-48 h-32 align-top hover:bg-blue-500" key={30}>30
           {bookingButtons(newDate)}</td>);
         newDate.setDate(31);
         rows.push(
-          <td className="border px-20 py-10 hover:bg-blue-500" key={31}>31
+          <td className="border w-48 h-32 align-top hover:bg-blue-500" key={31}>31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
@@ -295,16 +312,17 @@ export class CalendarHome extends Component {
     };
     return (
       <div className="max-w-gl px-100 py-10 container ">
-        <div className="text-center">
-          <select className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" 
-          onChange= {this.handleChange}>
-          <option>Please select service</option>
-               {services && services.map(service =>{
-                  return( <option key={service.id} value={service.id}>{service.name}</option>)
-                })}
-          </select>
-        <br/><br/>
+        <div className="text-center max-w-4xl m-auto">
+        <Multiselect 
+          options={services}
+          onSelect={this.onSelect} 
+          onRemove={this.onRemove}
+          onSearch={this.onSearch}
+          displayValue="name" 
+          emptyRecordMsg="No Services Available" 
+          placeholder="Select Services" />
         </div>
+        <br/>
         <div className="flex px-10 py-70 justify-evenly bg-blue-800">
         {/*Left Arrow Month*/}
           <svg

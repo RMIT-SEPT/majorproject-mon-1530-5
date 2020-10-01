@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {getAvailability} from "../actions/employeeActions"
 import {connect} from 'react-redux'
 
 export class Calendar extends Component {
@@ -66,7 +65,7 @@ export class Calendar extends Component {
   availableDays =(month) =>{
     let  availableDays = []
     for(let i=this.state.lastDay; i>=0;i--){
-      let date = new Date
+      let date = new Date();
       date.setMonth(month)
       date.setDate(i)
       for(let j = 3;j>-1;j--){
