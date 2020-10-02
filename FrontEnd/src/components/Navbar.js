@@ -5,6 +5,17 @@ import{ logout } from "../actions/authAction"
 
 function Navbar(props) {
   const {isLoggedIn,user} = props 
+  const adminLink = "/profile"
+  const userLink = "/booking"
+  let link;
+  if(user != null){
+    if(user.role === "ROLE_ADMIN"){
+      link = adminLink
+    }
+    else if (user.role === "ROLE_CUSTOMER"){
+      link = userLink
+    }
+  }
   console.log(props)
   return (
     <div>
@@ -26,10 +37,8 @@ function Navbar(props) {
           </div>
           <div className="flex justify-end bg-blue-100">
           <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-             {isLoggedIn ? <NavLink to="/profile">{user.username} </NavLink>: null}
-            </div>
-            <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-             {isLoggedIn ? null:  <NavLink to="/bookings"> Bookings</NavLink>}
+             {isLoggedIn ? <NavLink to={link}>{user.username} </NavLink>: null}
+             
             </div>
             <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
             {isLoggedIn ? <a onClick={props.logout}>Logout </a>: <NavLink to="/login">Login </NavLink>}

@@ -17,43 +17,12 @@ class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.login(this.state.username,this.state.password)
-    
-
-    // this.props.history.push("/profile")
-
-    // axios
-    //   .post("http://localhost:8080/api/login", {
-    //     username: this.state.username,
-    //     password: this.state.password,
-    //   })
-    //   .then((response) => {
-    //     this.checkCreds(false, false);
-    //     console.log(response)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response)
-    //     if (error.response) {
-    //       if (error.response.data === "Incorrect password") {
-    //         this.checkCreds(true, false);
-    //       } else if (
-    //         error.response.data === `A login with that username doesn't exist`
-    //       ) {
-    //         this.checkCreds(false, true);
-    //       }
-    //     }
-    //   });
-  };
-  checkCreds = (passError, userError) => {
-    this.setState({
-      passError: passError,
-      userError: userError,
-    });
-    if (this.state.passError === false && this.state.userError === false) {
-      this.props.history.push("/profile");
+    if(this.props.isLoggedIn === true){
+      this.props.history.push("/profile")
     }
   };
+  
   render() {
-    const { userError, passError } = this.state;
     const { authError } = this.props
     return (
       <div className="pt-4">
@@ -82,9 +51,6 @@ class Login extends Component {
                 onChange={this.handleChange}
                 required
               />
-              {userError ? (
-                <p className="text-red-500 text-xs italic">Invaid username</p>
-              ) : null}
             </div>
           </div>
           <div className="md:flex md:items-center mb-6">
@@ -105,9 +71,6 @@ class Login extends Component {
                 onChange={this.handleChange}
                 required
               />
-              {passError ? (
-                <p className="text-red-500 text-xs italic">Invalid password</p>
-              ) : null}
             </div>
           </div>
           <div className="md:flex md:items-center">
