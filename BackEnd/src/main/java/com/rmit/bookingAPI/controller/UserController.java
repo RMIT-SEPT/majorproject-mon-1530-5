@@ -48,18 +48,6 @@ public class UserController {
         return new ResponseEntity<String>("Password updated successfully", HttpStatus.OK);
     }
 
-    @PostMapping(value = "/customer/add")
-    public ResponseEntity<?> addCustomer(@Valid @RequestBody CustomerDTO customerDTO, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
-        }
-        if (null != userService.findUserByUsername(customerDTO.getUsername())) { // a null return indicates the username is not being used
-            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.addCustomer(customerDTO);
-        return new ResponseEntity<CustomerDetails>(userService.findCustomerDetailsByUsername(customerDTO.getUsername()), HttpStatus.CREATED);
-    }
-
     @DeleteMapping(value = "/customer/remove/{username}")
     public ResponseEntity<String> removeCustomer(@PathVariable("username") String username) {
         if (null == userService.findCustomerDetailsByUsername(username)) {
@@ -97,18 +85,6 @@ public class UserController {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<CustomerDetails>(userService.findCustomerDetailsByUsername(username), HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/employee/add")
-    public ResponseEntity<?> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
-        }
-        if (null != userService.findUserByUsername(employeeDTO.getUsername())) { // a null return indicates the username is not being used
-            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.addEmployee(employeeDTO);
-        return new ResponseEntity<EmployeeDetails>(userService.findEmployeeDetailsByUsername(employeeDTO.getUsername()), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/employee/remove/{username}")
