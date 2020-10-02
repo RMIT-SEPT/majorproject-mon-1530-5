@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
+import {connect} from 'react-redux'
+import{ login } from "../actions/authAction"
 
 class Login extends Component {
   state = {
@@ -15,27 +16,32 @@ class Login extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/api/login", {
-        username: this.state.username,
-        password: this.state.password,
-      })
-      .then((response) => {
-        this.checkCreds(false, false);
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log(error.response)
-        if (error.response) {
-          if (error.response.data === "Incorrect password") {
-            this.checkCreds(true, false);
-          } else if (
-            error.response.data === `A login with that username doesn't exist`
-          ) {
-            this.checkCreds(false, true);
-          }
-        }
-      });
+    this.props.login(this.state.username,this.state.password)
+    
+
+    // this.props.history.push("/profile")
+
+    // axios
+    //   .post("http://localhost:8080/api/login", {
+    //     username: this.state.username,
+    //     password: this.state.password,
+    //   })
+    //   .then((response) => {
+    //     this.checkCreds(false, false);
+    //     console.log(response)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response)
+    //     if (error.response) {
+    //       if (error.response.data === "Incorrect password") {
+    //         this.checkCreds(true, false);
+    //       } else if (
+    //         error.response.data === `A login with that username doesn't exist`
+    //       ) {
+    //         this.checkCreds(false, true);
+    //       }
+    //     }
+    //   });
   };
   checkCreds = (passError, userError) => {
     this.setState({
@@ -48,9 +54,11 @@ class Login extends Component {
   };
   render() {
     const { userError, passError } = this.state;
+    const { authError } = this.props
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl ">Login</h1>
+        {authError ? <p className="text-red-500 text-xl text-center italic">{authError}</p> : null}
         <form
           onSubmit={this.handleSubmit}
           className="max-w-lg mx-auto px-5 py-5"
@@ -119,4 +127,18 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    login:(username,password) => dispatch(login(username,password))
+  }
+  }
+
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

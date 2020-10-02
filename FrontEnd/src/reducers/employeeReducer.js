@@ -41,6 +41,7 @@ const employeeReducer = (state = initialState,action)=> {
     return Object.assign({}, state, {
       authError:""
     })
+    
     default:
       return state
   }

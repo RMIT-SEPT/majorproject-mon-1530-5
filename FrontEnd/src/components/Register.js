@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { register } from "../actions/authAction";
 
 class Register extends Component {
   state = {
