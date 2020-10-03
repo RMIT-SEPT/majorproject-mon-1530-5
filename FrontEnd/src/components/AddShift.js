@@ -35,7 +35,6 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
       startTime:this.state.selectedTime,
       endTime:this.state.selectedTime
     }
-    console.log(this.state)
     this.props.addShift(newShift)
   }
 

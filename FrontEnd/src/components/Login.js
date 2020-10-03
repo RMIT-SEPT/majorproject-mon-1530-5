@@ -7,8 +7,6 @@ class Login extends Component {
   state = {
     username: "",
     password: "",
-    passError: false,
-    userError: false,
   };
   handleChange = (e) => {
     this.setState({
@@ -19,7 +17,7 @@ class Login extends Component {
     e.preventDefault();
     this.props.login(this.state.username,this.state.password)
     if(this.props.isLoggedIn === true){
-      this.props.history.push("/profile")
+      this.props.history.push("/about")
     }
   };
   

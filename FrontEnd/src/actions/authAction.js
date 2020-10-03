@@ -27,7 +27,6 @@ export const login = (username, password) => (dispatch) => {
       (response) => {
         dispatch({
           type: "REGISTER_SUCCESS",
-          response:response.data
         });
       }).catch((error) =>{
         dispatch({
@@ -48,3 +47,13 @@ export const login = (username, password) => (dispatch) => {
       type: "LOGOUT",
     });
   };
+
+  export const resetFeedback= () =>{
+    return(dispatch)=>{
+            dispatch({
+                type:'RESET'
+            })
+        
+    
+    }
+}

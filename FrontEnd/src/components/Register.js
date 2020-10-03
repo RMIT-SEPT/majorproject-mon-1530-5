@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-import{ register } from "../actions/authAction"
+import{ register, resetFeedback } from "../actions/authAction"
 import { Redirect } from 'react-router-dom'
 
 
@@ -11,7 +11,6 @@ class Register extends Component {
     password: "",
     address: "",
     pNumber: "",
-    authError: false,
   };
   handleChange = (e) => {
     this.setState({
@@ -22,20 +21,11 @@ class Register extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.register(this.state.username, this.state.password,this.state.name,this.state.address,this.state.pNumber)
-    if(this.props.authError === false){
-      this.props.history.push("/login")
-    }
-   
-  };
-  checkUsername = (response) => {
-    this.setState({
-      authError: response,
-    });
   };
   
   render() {
     if(this.props.user != null)  return <Redirect to="/about"/>
-    const { authError } = this.state;
+    const { authError } = this.props
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl">Register</h1>
@@ -74,7 +64,7 @@ class Register extends Component {
               />
               {authError ? (
                 <p className="text-red-500 text-xs italic">
-                  Username already taken
+                 {authError}
                 </p>
               ) : null}
             </div>
@@ -128,7 +118,6 @@ class Register extends Component {
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
-                disabled={this.state.authError}
               >
                 Register
               </button>
@@ -141,16 +130,15 @@ class Register extends Component {
 }
 const mapDispatchToProps=(dispatch) =>{
   return{
-    register:(username, password,name,address,phoneNumber) => dispatch(register(username, password,name,address,phoneNumber))
+    register:(username, password,name,address,phoneNumber) => dispatch(register(username, password,name,address,phoneNumber)),
+    resetFeedback:() =>dispatch(resetFeedback())
   }
   }
 
 function mapStateToProps(state) {
   return{
-   isLoggedIn:state.auth.isLoggedIn,
    authError:state.auth.authError,
    user:state.auth.user,
-   authError:state.auth.authError
   }
 }
 

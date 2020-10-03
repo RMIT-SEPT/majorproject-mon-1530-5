@@ -9,10 +9,10 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case "REGISTER_SUCCESS":
-      console.log(action.response)
       return {
         ...state,
         isLoggedIn: false,
+        authErroe:false
       };
     case "REGISTER_FAIL":
       return {
@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
     }else{
       return Object.assign({}, state, {
         ...state,
-        authError:"Invlavid credentials",
+        authError:action.payload.data,
       })
     }
 
