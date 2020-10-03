@@ -3,7 +3,7 @@ import authHeader from '../services/authHeader';
 
 
 export const getService = () =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
      axios.get('http://localhost:8080/api/service/all', { headers: authHeader() })
         .then((response)=>{
             dispatch({

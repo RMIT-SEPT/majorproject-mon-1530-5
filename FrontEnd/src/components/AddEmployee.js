@@ -141,7 +141,7 @@ class AddEmployee extends Component {
                   // window.location.reload(false); 
                 }}
               >
-                Cancel
+                Back
               </button>
             </div>
           </div>

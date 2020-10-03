@@ -192,7 +192,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
                 // window.location.reload(false);
               }}
             >
-              Cancel
+              Back
             </button>
           </div>
         </div>

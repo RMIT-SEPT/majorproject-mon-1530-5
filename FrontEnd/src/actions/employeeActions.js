@@ -68,7 +68,7 @@ export const getAvailability = (username) =>{
 
 
 export const createEmployees = (employee) =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
      axios.post('http://localhost:8080/api/employee/add',employee,{ headers: authHeader() })
         .then(()=>{
             dispatch({

@@ -3,7 +3,7 @@ import authHeader from '../services/authHeader';
 
 
 export const getShift = () =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
      axios.get('http://localhost:8080/api/shift/all',  { headers: authHeader() })
         .then((response)=>{
             dispatch({
@@ -37,7 +37,7 @@ export const getShiftByUsername = (username) =>{
 }
 
 export const getShiftByDate = (date) =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
      axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${date}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
@@ -54,7 +54,7 @@ export const getShiftByDate = (date) =>{
 }
 
 export const resetFeedback= () =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
             dispatch({
                 type:'RESET'
             })
@@ -64,7 +64,7 @@ export const resetFeedback= () =>{
 }
 export const addShift= (shift) =>{
     return(dispatch)=>{
-     axios.post('http://localhost:8080/api//shift/add',shift,{ headers: authHeader() })
+     axios.post('http://localhost:8080/api/shift/add',shift,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'ADD_SHIFT',response:response.data
