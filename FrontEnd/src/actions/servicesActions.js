@@ -13,7 +13,7 @@ export const getService = () =>{
         .catch((err) =>{ 
             dispatch({
                 type: "GET_ERRORS",
-                payload: err.response
+                payload: err
             })
         })
     }

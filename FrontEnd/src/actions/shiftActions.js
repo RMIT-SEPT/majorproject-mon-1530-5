@@ -13,7 +13,7 @@ export const getShift = () =>{
         .catch((err) =>{ 
             dispatch({
                 type: "GET_ERRORS",
-                payload: err.response
+                payload: err
             })
         })
     }
@@ -47,7 +47,7 @@ export const getShiftByDate = (date) =>{
         .catch((err) =>{ 
             dispatch({
                 type: "GET_ERRORS",
-                payload: err.response
+                payload: err
             })
         })
     }
