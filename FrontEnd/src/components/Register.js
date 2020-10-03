@@ -64,7 +64,7 @@ class Register extends Component {
               />
               {authError ? (
                 <p className="text-red-500 text-xs italic">
-                 {authError}
+                 Username is taken
                 </p>
               ) : null}
             </div>

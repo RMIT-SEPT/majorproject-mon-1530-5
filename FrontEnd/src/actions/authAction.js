@@ -11,12 +11,19 @@ export const login = (username, password) => (dispatch) => {
        console.log(data)
       }
     ).catch((error) =>{
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
             dispatch({
                 type: "LOGIN_FAIL",
               });
             dispatch({
                 type: "GET_ERRORS",
-                payload: error.response
+                payload: message
             })
     })
     
@@ -29,12 +36,19 @@ export const login = (username, password) => (dispatch) => {
           type: "REGISTER_SUCCESS",
         });
       }).catch((error) =>{
+        const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
         dispatch({
             type: "REGISTER_FAIL",
           });
         dispatch({
             type: "GET_ERRORS",
-            payload: error.response
+            payload: message
         })
 })
   }

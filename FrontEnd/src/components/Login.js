@@ -29,7 +29,7 @@ class Login extends Component {
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl ">Login</h1>
-        {authError ? <p className="text-red-500 text-xl text-center italic">{authError}</p> : null}
+        {authError ? <p className="text-red-500 text-xl text-center italic">Incorrect Credentials</p> : null}
         <form
           onSubmit={this.handleSubmit}
           className="max-w-lg mx-auto px-5 py-5"

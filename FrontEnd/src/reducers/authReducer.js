@@ -38,6 +38,7 @@ export default function (state = initialState, action) {
         user: null,
       };
     case'GET_ERRORS': 
+    console.log(action.payload)
     if(typeof action.payload === 'undefined'){
       return  Object.assign({}, state, {
         ...state,
@@ -46,7 +47,7 @@ export default function (state = initialState, action) {
     }else{
       return Object.assign({}, state, {
         ...state,
-        authError:action.payload.data,
+        authError:action.payload,
       })
     }
 

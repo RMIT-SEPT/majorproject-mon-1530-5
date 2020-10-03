@@ -3,8 +3,14 @@ import step1 from '../images/1.png';
 import step2 from '../images/2.png';
 import step3 from '../images/3.png';
 import step4 from '../images/4.png';
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
-function About() {
+
+function About(props) {
+  if(props.user === null)  {
+    return <Redirect to="/login"/>
+  }
   return (
     <div>
       <div className="container mx-auto pt-5">
@@ -34,5 +40,12 @@ function About() {
     </div>
   );
 }
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError,
+   user:state.auth.user
+  }
+}
 
-export default About;
+export default connect(mapStateToProps)(About);
