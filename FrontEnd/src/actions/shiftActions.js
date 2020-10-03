@@ -1,6 +1,7 @@
 import axios from "axios"
 import authHeader from '../services/authHeader';
 
+
 export const getShift = () =>{
     return(dispatch,getState)=>{
      axios.get('http://localhost:8080/api/shift/all',  { headers: authHeader() })
@@ -62,8 +63,8 @@ export const resetFeedback= () =>{
     }
 }
 export const addShift= (shift) =>{
-    return(dispatch,getState)=>{
-     axios.post('http://localhost:8080/api//shift/add',shift)
+    return(dispatch)=>{
+     axios.post('http://localhost:8080/api//shift/add',shift,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'ADD_SHIFT',response:response.data

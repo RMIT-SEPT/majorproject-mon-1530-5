@@ -1,4 +1,5 @@
 import axios from "axios"
+import authHeader from '../services/authHeader';
 
 export const resetFeedback = () =>{
     return (dispatch)=>{
@@ -11,7 +12,7 @@ export const resetFeedback = () =>{
 }
 export const addBooking = (booking) => {
     return (dispatch)=>{
-     axios.post('http://localhost:8080/api/booking/add',booking)
+     axios.post('http://localhost:8080/api/booking/add',booking,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'ADD_BOOKING',response:response.data
