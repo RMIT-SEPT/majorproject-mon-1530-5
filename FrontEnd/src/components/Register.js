@@ -58,7 +58,7 @@ class Register extends Component {
   };
   
   render() {
-    if(this.props.user != null)  return <Redirect to="/about"/>
+    if(this.props.user !== null)  return <Redirect to="/about"/>
     const { authError } = this.state;
     return (
       <div className="pt-4">

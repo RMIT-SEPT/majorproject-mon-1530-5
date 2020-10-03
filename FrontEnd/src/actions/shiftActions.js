@@ -1,8 +1,9 @@
 import axios from "axios"
+import authHeader from '../services/authHeader';
 
 export const getShift = () =>{
     return(dispatch,getState)=>{
-     axios.get('http://localhost:8080/api/shift/all')
+     axios.get('http://localhost:8080/api/shift/all',  { headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data
@@ -19,7 +20,7 @@ export const getShift = () =>{
 
 export const getShiftByUsername = (username) =>{
     return(dispatch,getState)=>{
-     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${username}`)
+     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${username}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data
@@ -36,7 +37,7 @@ export const getShiftByUsername = (username) =>{
 
 export const getShiftByDate = (date) =>{
     return(dispatch,getState)=>{
-     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${date}`)
+     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${date}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data

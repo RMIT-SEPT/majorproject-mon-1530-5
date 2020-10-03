@@ -4,6 +4,7 @@ import { getService } from "../actions/servicesActions";
 import { addBooking, resetFeedback } from "../actions/bookingActions";
 import { Multiselect } from 'multiselect-react-dropdown';
 import axios from "axios"
+import authHeader from '../services/authHeader';
 
 export class CalendarHome extends Component {
   state = {
@@ -103,7 +104,7 @@ export class CalendarHome extends Component {
   }
   //Get vacant bookings and set vacantBookings[] to api data
   getVacantBookings = () => {
-    axios.get(`http://localhost:8080/api/booking/vacantBookings`)
+    axios.get(`http://localhost:8080/api/booking/vacantBookings`,{ headers: authHeader() })
         .then((response)=>{
           this.setState({
             vacantBookings: response.data

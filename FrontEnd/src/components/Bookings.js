@@ -5,8 +5,8 @@ import { Redirect } from 'react-router-dom'
 class Bookings extends Component {
   render() {
     // Route guarding in case the user is not logged in or has a different role 
-    if(this.props.user != null)  {
-      if(this.props.user.role != "ROLE_CUSTOMER"){
+    if(this.props.user !== null)  {
+      if(this.props.user.role !== "ROLE_CUSTOMER"){
         return <Redirect to="/about"/>
       } 
     }else{

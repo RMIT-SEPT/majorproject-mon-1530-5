@@ -1,9 +1,10 @@
 import axios from "axios"
+import authHeader from '../services/authHeader';
 
 
 export const getEmployees = () =>{
-    return(dispatch,getState)=>{
-     axios.get('http://localhost:8080/api/employee/all')
+    return(dispatch)=>{
+     axios.get('http://localhost:8080/api/employee/all',{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_EMPLOYEES', response:response.data
@@ -22,7 +23,7 @@ export const getEmployees = () =>{
 
 export const getIndividualEmployee = (username) =>{
     return(dispatch,getState)=>{
-     axios.get(`http://localhost:8080/api/employee/get/${username}`)
+     axios.get(`http://localhost:8080/api/employee/get/${username}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_EMPLOYEE', response:response.data
@@ -50,7 +51,7 @@ export const resetFeedback = () =>{
 
 export const getAvailability = (username) =>{
     return(dispatch) =>{
-        axios.get(`http://localhost:8080/api/employee/getAvailability/${username}`)
+        axios.get(`http://localhost:8080/api/employee/getAvailability/${username}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_AVAILABILITY', response:response.data

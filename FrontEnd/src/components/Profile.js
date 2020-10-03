@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom'
 
 function Profile(props) {
   // Route guarding in case the user is not logged in or has a different role 
-  if(props.user != null)  {
-    if(props.user.role != "ROLE_ADMIN"){
+  if(props.user !== null)  {
+    if(props.user.role !== "ROLE_ADMIN"){
       return <Redirect to="/about"/>
     } 
   }else{
