@@ -8,6 +8,17 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case "REGISTER_SUCCESS":
+      console.log(action.response)
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
+    case "REGISTER_FAIL":
+      return {
+        ...state,
+        isLoggedIn: false,
+      };
     case "LOGIN_SUCCESS":
       return {
         ...state,

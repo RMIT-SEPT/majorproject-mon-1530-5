@@ -14,6 +14,17 @@ class AuthService {
       });
   }
 
+  register(username, password,name,address,phoneNumber) {
+   return axios
+    .post(API_URL + "customer/add", {
+      username,
+      password,
+      name,
+      address,
+      phoneNumber
+    })
+  }
+
   logout() {
     localStorage.removeItem("user");
   }

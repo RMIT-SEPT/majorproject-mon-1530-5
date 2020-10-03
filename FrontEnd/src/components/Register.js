@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { register } from "../actions/authAction";
 import {connect} from 'react-redux'
+import{ register } from "../actions/authAction"
 import { Redirect } from 'react-router-dom'
+
 
 class Register extends Component {
   state = {
@@ -14,18 +14,6 @@ class Register extends Component {
     authError: false,
   };
   handleChange = (e) => {
-    if (e.target.id === "username" ) {
-      axios
-        .get(`http://localhost:8080/api/customer/${e.target.value}`)
-        .then((response) => {
-          this.checkUsername(true);
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-          this.checkUsername(false);
-        });
-    }
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -33,22 +21,10 @@ class Register extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    axios
-      .post("http://localhost:8080/api/register", {
-        username: this.state.username,
-        password: this.state.password,
-        name: this.state.name,
-        address: this.state.address,
-        phoneNumber: this.state.pNumber,
-      })
-      .then((response) => {
-        console.log(response)    
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      this.props.history.push("/profile");
-    
+    this.props.register(this.state.username, this.state.password,this.state.name,this.state.address,this.state.pNumber)
+    if(this.props.authError === false){
+      this.props.history.push("/login")
+    }
    
   };
   checkUsername = (response) => {
@@ -58,7 +34,7 @@ class Register extends Component {
   };
   
   render() {
-    if(this.props.user !== null)  return <Redirect to="/about"/>
+    if(this.props.user != null)  return <Redirect to="/about"/>
     const { authError } = this.state;
     return (
       <div className="pt-4">
@@ -163,13 +139,20 @@ class Register extends Component {
     );
   }
 }
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    register:(username, password,name,address,phoneNumber) => dispatch(register(username, password,name,address,phoneNumber))
+  }
+  }
+
 function mapStateToProps(state) {
   return{
    isLoggedIn:state.auth.isLoggedIn,
    authError:state.auth.authError,
-   user:state.auth.user
+   user:state.auth.user,
+   authError:state.auth.authError
   }
 }
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps,mapDispatchToProps)(Register);
 
