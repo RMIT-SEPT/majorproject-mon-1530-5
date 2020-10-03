@@ -6,7 +6,7 @@ import{ logout } from "../actions/authAction"
 function Navbar(props) {
   const {isLoggedIn,user} = props 
   const adminLink = "/profile"
-  const userLink = "/booking"
+  const userLink = "/bookings"
   let link;
   if(user != null){
     if(user.role === "ROLE_ADMIN"){
@@ -36,16 +36,21 @@ function Navbar(props) {
             </div>
           </div>
           <div className="flex justify-end bg-blue-100">
+          {isLoggedIn ?
           <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-             {isLoggedIn ? <NavLink to={link}>{user.username} </NavLink>: null}
-             
-            </div>
-            <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-            {isLoggedIn ? <a onClick={props.logout}>Logout </a>: <NavLink to="/login">Login </NavLink>}
-            </div>
-            <div className="text-black-700 text-center hover:bg-blue-500 active:bg-blue-500 px-4 py-2 m-2 rounded-full">
-            {isLoggedIn ? null:  <NavLink to="/register"> Register</NavLink>}
-            </div>
+            <NavLink to={link}>{user.username} </NavLink>
+          </div>
+          :<div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+            <NavLink to="/login"> Login </NavLink>
+          </div>
+        }
+          {isLoggedIn ?
+          <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+            <a onClick={props.logout}>Logout </a>
+          </div>:<div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+          <NavLink to="/register"> Register</NavLink>
+          </div>
+        }
           </div>
         </div>
       </nav>
