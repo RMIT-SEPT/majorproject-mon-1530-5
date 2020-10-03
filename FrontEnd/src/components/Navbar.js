@@ -24,6 +24,7 @@ function Navbar(props) {
           <NavLink to="/" className="text-gray-700 text-center  px-4 py-2 m-2">
             Book.com
           </NavLink>
+          {isLoggedIn ?
           <div className="flex justify-center bg-blue-100">
             <div className="text-black-700 text-center hover:bg-blue-500  px-4 py-2 m-2 rounded-full">
               <NavLink to="/"> Home</NavLink>
@@ -34,7 +35,7 @@ function Navbar(props) {
             <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
               <NavLink to="/contacts"> Contact Us</NavLink>
             </div>
-          </div>
+          </div>:null}
           <div className="flex justify-end bg-blue-100">
           {isLoggedIn ?
           <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
