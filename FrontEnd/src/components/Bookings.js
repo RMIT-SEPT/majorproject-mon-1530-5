@@ -1,7 +1,17 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class Bookings extends Component {
   render() {
+    // Route guarding in case the user is not logged in or has a different role 
+    if(this.props.user != null)  {
+      if(this.props.user.role != "ROLE_CUSTOMER"){
+        return <Redirect to="/about"/>
+      } 
+    }else{
+      return <Redirect to="/login"/>
+    }
     return (
       <div className="container mx-auto py-5 flex flew-row justify-evenly">
         <div class="max-w-md rounded overflow-hidden shadow-xl">
@@ -95,4 +105,13 @@ class Bookings extends Component {
     );
   }
 }
-export default Bookings;
+
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError,
+   user:state.auth.user
+  }
+}
+
+export default connect(mapStateToProps)(Bookings);

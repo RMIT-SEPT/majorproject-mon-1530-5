@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { register } from "../actions/authAction";
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
   state = {
@@ -56,6 +58,7 @@ class Register extends Component {
   };
   
   render() {
+    if(this.props.user != null)  return <Redirect to="/about"/>
     const { authError } = this.state;
     return (
       <div className="pt-4">
@@ -160,6 +163,13 @@ class Register extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError,
+   user:state.auth.user
+  }
+}
 
-export default Register;
+export default connect(mapStateToProps)(Register);
 

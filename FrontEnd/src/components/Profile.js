@@ -1,6 +1,17 @@
 import React from "react";
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 function Profile(props) {
+  // Route guarding in case the user is not logged in or has a different role 
+  if(props.user != null)  {
+    if(props.user.role != "ROLE_ADMIN"){
+      return <Redirect to="/about"/>
+    } 
+  }else{
+    return <Redirect to="/login"/>
+  }
+  
   return (
     <div>
       <div className="container mx-auto pt-5">
@@ -37,4 +48,12 @@ function Profile(props) {
   );
 }
 
-export default Profile;
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError,
+   user:state.auth.user
+  }
+}
+
+export default connect(mapStateToProps)(Profile);

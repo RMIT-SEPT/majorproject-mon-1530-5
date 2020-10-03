@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
 import{ login } from "../actions/authAction"
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
   state = {
@@ -23,6 +24,9 @@ class Login extends Component {
   };
   
   render() {
+   // Route guarding in case the user is not logged in or has a different role 
+    if(this.props.user != null)  return <Redirect to="/about"/>
+
     const { authError } = this.props
     return (
       <div className="pt-4">
@@ -99,7 +103,8 @@ const mapDispatchToProps=(dispatch) =>{
 function mapStateToProps(state) {
   return{
    isLoggedIn:state.auth.isLoggedIn,
-   authError:state.auth.authError
+   authError:state.auth.authError,
+   user:state.auth.user
   }
 }
 
