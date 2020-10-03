@@ -15,6 +15,9 @@ function Navbar(props) {
     else if (user.role === "ROLE_CUSTOMER"){
       link = userLink
     }
+    else if (user.role === "ROLE_EMPLOYEE"){
+      link = '/about'
+    }
   }
   console.log(props)
   return (
