@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 function Home(props) {
   if(props.user !== null)  {
-    if(props.user.role !== "ROLE_CUSTOMER"){
+    if(props.user.role === "ROLE_EMPLOYEE"){
       return <Redirect to="/about"/>
     } 
   }else{
