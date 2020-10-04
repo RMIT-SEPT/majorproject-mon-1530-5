@@ -38,7 +38,7 @@ class Login extends Component {
             <div className="md:w-1/3">
               <label
                 className="block text-gray-700 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                for="username"
+                htmlFor="username"
                 id="username"
               >
                 Username

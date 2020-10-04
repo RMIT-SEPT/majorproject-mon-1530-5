@@ -10,6 +10,12 @@ const bookingReducer = (state = initialState,action)=> {
         msgBook: action.response,
         msgStyle:"text-green-500 text-xl text-center italic"
       })
+    case'GET_BOOKINGS':{
+      console.log(action.response)
+      return  Object.assign({}, state, {
+        bookings:action.response
+      })
+    }
     case'GET_ERRORS':{
       console.log(action.payload)
       if(typeof action.payload === 'undefined'){
@@ -25,9 +31,9 @@ const bookingReducer = (state = initialState,action)=> {
       }
       }
     case"RESET":
-    return Object.assign({}, state, {
-      msgBook:""
-    })
+      return Object.assign({}, state, {
+        msgBook:""
+      })
     default:
       return state
   }

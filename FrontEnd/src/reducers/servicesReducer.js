@@ -9,8 +9,7 @@ const initialState = {
         console.log(action.response)
         return  Object.assign({}, state, {
           services:action.response
-        })
-        
+        }) 
       }
 
       case'GET_ERRORS':

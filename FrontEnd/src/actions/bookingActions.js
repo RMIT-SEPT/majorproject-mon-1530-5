@@ -3,11 +3,9 @@ import authHeader from '../services/authHeader';
 
 export const resetFeedback = () =>{
     return (dispatch)=>{
-            dispatch({
-                type:'RESET'
-            })
-        
-    
+        dispatch({
+            type:'RESET'
+        })
     }
 }
 export const addBooking = (booking) => {
@@ -24,5 +22,24 @@ export const addBooking = (booking) => {
                 payload: err.response
             })
         })
+    }
+}
+
+export const getOccupiedBookings = (username) =>{
+    return(dispatch)=>{
+     axios.get(`http://localhost:8080/api/booking/occupiedBookings/${username}`,{ headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'GET_BOOKINGS', response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+        
+    
     }
 }

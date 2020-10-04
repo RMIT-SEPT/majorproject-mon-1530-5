@@ -50,7 +50,7 @@ function Navbar(props) {
         }
           {isLoggedIn ?
           <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
-            <a onClick={props.logout}>Logout </a>
+            <NavLink onClick={props.logout} to="/login">Logout </NavLink>
           </div>:<div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
           <NavLink to="/register"> Register</NavLink>
           </div>
