@@ -1,6 +1,8 @@
-package com.rmit.bookingAPI.Model;
+package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
 * User Entity class design reasoning:
@@ -27,12 +29,12 @@ public class User{
     @Column(unique = true)
     private String username;
     private String password;
-    private String authGroup;
+    private RoleEnum role;
 
-    public User(String username, String password, String authGroup) {
+    public User(String username, String password, RoleEnum role) {
         this.username = username;
         this.password = password;
-        this.authGroup = authGroup;
+        this.role = role;
     }
     public User() {
     }
@@ -61,11 +63,11 @@ public class User{
         this.password = password;
     }
 
-    public String getAuthGroup() {
-        return authGroup;
+    public RoleEnum getRole() {
+        return role;
     }
 
-    public void setAuthGroup(String authGroup) {
-        this.authGroup = authGroup;
+    public void setRoles(RoleEnum role) {
+        this.role = role;
     }
 }

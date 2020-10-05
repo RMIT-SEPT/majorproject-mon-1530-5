@@ -1,7 +1,7 @@
-package com.rmit.bookingAPI.Service;
+package com.rmit.bookingAPI.service;
 
-import com.rmit.bookingAPI.Model.*;
-import com.rmit.bookingAPI.Repository.*;
+import com.rmit.bookingAPI.model.*;
+import com.rmit.bookingAPI.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

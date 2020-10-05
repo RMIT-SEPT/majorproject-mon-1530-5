@@ -1,4 +1,4 @@
-package com.rmit.bookingAPI.Model;
+package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
 import java.sql.Date;

@@ -1,7 +1,7 @@
-package com.rmit.bookingAPI.Service;
+package com.rmit.bookingAPI.service;
 
-import com.rmit.bookingAPI.Model.Shift;
-import com.rmit.bookingAPI.Repository.ShiftRepository;
+import com.rmit.bookingAPI.model.Shift;
+import com.rmit.bookingAPI.repository.ShiftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

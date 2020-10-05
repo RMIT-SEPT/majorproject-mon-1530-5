@@ -1,10 +1,12 @@
-package com.rmit.bookingAPI.Controller.DTO;
+package com.rmit.bookingAPI.controller.dto;
 
-import com.rmit.bookingAPI.Model.EmployeeDetails;
-import com.rmit.bookingAPI.Model.User;
+import com.rmit.bookingAPI.model.EmployeeDetails;
+import com.rmit.bookingAPI.model.RoleEnum;
+import com.rmit.bookingAPI.model.User;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmployeeDTO {
 
@@ -29,12 +31,16 @@ public class EmployeeDTO {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
 
     public User returnUserObject() {
-        return new User(this.username, this.password, "ROLE_EMPLOYEE");
+        return new User(this.username, this.password, RoleEnum.ROLE_EMPLOYEE);
     }
 
     public EmployeeDetails returnEmployeeDetailsObject() {

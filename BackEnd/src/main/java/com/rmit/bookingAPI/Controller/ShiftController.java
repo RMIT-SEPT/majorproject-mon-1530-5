@@ -1,14 +1,12 @@
-package com.rmit.bookingAPI.Controller;
+package com.rmit.bookingAPI.controller;
 
-import com.rmit.bookingAPI.Controller.DTO.EmployeeDTO;
-import com.rmit.bookingAPI.Controller.DTO.ShiftDTO;
-import com.rmit.bookingAPI.Model.Booking;
-import com.rmit.bookingAPI.Model.EmployeeDetails;
-import com.rmit.bookingAPI.Model.Shift;
-import com.rmit.bookingAPI.Model.User;
-import com.rmit.bookingAPI.Service.BookingService;
-import com.rmit.bookingAPI.Service.ShiftService;
-import com.rmit.bookingAPI.Service.UserService;
+import com.rmit.bookingAPI.controller.dto.ShiftDTO;
+import com.rmit.bookingAPI.model.Booking;
+import com.rmit.bookingAPI.model.EmployeeDetails;
+import com.rmit.bookingAPI.model.Shift;
+import com.rmit.bookingAPI.service.BookingService;
+import com.rmit.bookingAPI.service.ShiftService;
+import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.print.Book;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -156,12 +153,28 @@ public class ShiftController {
         return new ResponseEntity<List<Shift>>(shiftService.getAllShifts(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/shift/findByUsername/{username}")
-    public ResponseEntity<?> getShiftsByUsername(@PathVariable("username") String username) {
-        if (null != userService.findEmployeeDetailsByUsername(username)) {
-            return new ResponseEntity<List<Shift>>(shiftService.getShiftsByUsername(username), HttpStatus.OK);
+    @GetMapping(value = "/shift/findAllByUsername/{username}")
+    public ResponseEntity<?> getAllShiftsByUsername(@PathVariable("username") String username) {
+        if (null == userService.findEmployeeDetailsByUsername(username)) {
+            return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<List<Shift>>(shiftService.getShiftsByUsername(username), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/shift/findFutureByUsername/{username}")
+    public ResponseEntity<?> getFutureShiftsByUsername(@PathVariable("username") String username) {
+        if (null == userService.findEmployeeDetailsByUsername(username)) {
+            return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
+        }
+
+        List<Shift> desiredShifts = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for (Shift shift : shiftService.getShiftsByUsername(username)) {
+            if (shift.getShiftDate().after(cal.getTime())) {
+                desiredShifts.add(shift);
+            }
+        }
+        return new ResponseEntity<List<Shift>>(desiredShifts, HttpStatus.OK);
     }
 
     @GetMapping(value = "shift/getAvailableEmployees/{date}")

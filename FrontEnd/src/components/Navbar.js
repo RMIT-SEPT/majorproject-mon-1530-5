@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {connect} from 'react-redux'
 import{ logout } from "../actions/authAction"
+import '../css/NavBar.css';
 
 function Navbar(props) {
   const {isLoggedIn,user} = props 
@@ -23,35 +24,35 @@ function Navbar(props) {
   return (
     <div>
       <nav>
-        <div className="flex justify-between bg-blue-100">
-          <NavLink to="/" className="text-gray-700 text-center  px-4 py-2 m-2">
+        <div className="MainContainer">
+          <NavLink to="/" className="WebsiteName">
             Book.com
           </NavLink>
           {isLoggedIn ?
-          <div className="flex justify-center bg-blue-100">
-            <div className="text-black-700 text-center hover:bg-blue-500  px-4 py-2 m-2 rounded-full">
+          <div className="LoggedButtons">
+            <div className="NavBarButton" className="hover:bg-blue-900  px-4 py-2 m-2 rounded-full">
               <NavLink to="/"> Home</NavLink>
             </div>
-            <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+            <div className="NavBarButton" className=" hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
               <NavLink to="/about"> About</NavLink>
             </div>
-            <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+            <div className="NavBarButton" className="hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
               <NavLink to="/contacts"> Contact Us</NavLink>
             </div>
           </div>:null}
-          <div className="flex justify-end bg-blue-100">
+          <div className="NonLoggedButtons">
           {isLoggedIn ?
-          <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+          <div className="NavBarButton" className="hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
             <NavLink to={link}>{user.username} </NavLink>
           </div>
-          :<div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+          :<div className="NavBarButton" className="hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
             <NavLink to="/login"> Login </NavLink>
           </div>
         }
           {isLoggedIn ?
-          <div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+          <div className="NavBarButton" className="hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
             <NavLink onClick={props.logout} to="/login">Logout </NavLink>
-          </div>:<div className="text-black-700 text-center hover:bg-blue-500 px-4 py-2 m-2 rounded-full">
+          </div>:<div className="NavBarButton" className="hover:bg-blue-900 px-4 py-2 m-2 rounded-full">
           <NavLink to="/register"> Register</NavLink>
           </div>
         }

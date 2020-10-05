@@ -1,11 +1,8 @@
-package com.rmit.bookingAPI.Controller;
+package com.rmit.bookingAPI.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rmit.bookingAPI.Controller.BookingController;
-import com.rmit.bookingAPI.Controller.DTO.CustomerDTO;
-import com.rmit.bookingAPI.Controller.DTO.LoginDTO;
-import com.rmit.bookingAPI.Model.PaidService;
-import com.rmit.bookingAPI.Service.PaidServiceService;
+import com.rmit.bookingAPI.model.PaidService;
+import com.rmit.bookingAPI.service.PaidServiceService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

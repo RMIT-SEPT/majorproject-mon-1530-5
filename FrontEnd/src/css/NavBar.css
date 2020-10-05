@@ -1,0 +1,41 @@
+.MainContainer{
+    background-color: #3E5C76;
+    color: white;
+    top:0;
+    left:0;
+    width:100%;
+    display:flex;
+    text-align: center;
+
+}
+
+.WebsiteName{
+    background-color: #3E5C76;
+    color: white;
+    line-height: 55px;
+}
+
+.NonLoggedButtons{
+    display:flex;
+    color: white;
+    position: absolute;
+    right:0px;
+    height:54px;
+    vertically-align: middle;
+}
+
+.LoggedButtons{
+    display:flex;
+    color: white;
+    position: absolute;
+    left:45%;
+    height:54px;
+    vertically-align: middle;
+}
+
+
+.NavBarButton{
+    line-height: 55px;
+    background-color: #3E5C76;
+
+}

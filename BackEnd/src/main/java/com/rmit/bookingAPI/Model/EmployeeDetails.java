@@ -1,7 +1,6 @@
-package com.rmit.bookingAPI.Model;
+package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.time.DayOfWeek;
 import java.util.List;
 

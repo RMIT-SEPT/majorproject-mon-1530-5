@@ -1,8 +1,7 @@
-package com.rmit.bookingAPI.Model;
+package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Set;
 
 @Entity
 public class PaidService {

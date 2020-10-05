@@ -1,0 +1,16 @@
+.imgMobile{
+display:none;
+}
+
+@media(max-width: 800px){
+
+.img{
+    display: none;
+}
+
+.imgMobile{
+display:block;
+margin: 0 auto;
+}
+
+}

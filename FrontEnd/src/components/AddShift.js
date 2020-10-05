@@ -174,7 +174,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
         <div className="flex justify-center space-x-5">
           <div>
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
+              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
               type="submit"
             >
               Add Shift
@@ -182,7 +182,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
           </div>
           <div className="pl-5">
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
               onClick={() => {
                 this.props.resetFeedback()

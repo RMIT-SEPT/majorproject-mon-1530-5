@@ -1,5 +1,5 @@
-package com.rmit.bookingAPI.Controller.DTO;
-import com.rmit.bookingAPI.Model.Shift;
+package com.rmit.bookingAPI.controller.dto;
+import com.rmit.bookingAPI.model.Shift;
 
 import javax.validation.constraints.NotBlank;
 import java.sql.Time;

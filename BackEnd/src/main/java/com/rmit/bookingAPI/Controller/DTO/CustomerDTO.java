@@ -1,9 +1,12 @@
-package com.rmit.bookingAPI.Controller.DTO;
+package com.rmit.bookingAPI.controller.dto;
 
-import com.rmit.bookingAPI.Model.CustomerDetails;
-import com.rmit.bookingAPI.Model.User;
+import com.rmit.bookingAPI.model.CustomerDetails;
+import com.rmit.bookingAPI.model.RoleEnum;
+import com.rmit.bookingAPI.model.User;
 
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CustomerDTO {
 
@@ -34,6 +37,10 @@ public class CustomerDTO {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,7 +54,7 @@ public class CustomerDTO {
     }
 
     public User returnUserObject() {
-        return new User(this.username, this.password, "ROLE_CUSTOMER");
+        return new User(this.username, this.password, RoleEnum.ROLE_CUSTOMER);
     }
 
     public CustomerDetails returnCustomerDetailsObject() {

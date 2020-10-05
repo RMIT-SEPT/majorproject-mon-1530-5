@@ -1,7 +1,7 @@
-package com.rmit.bookingAPI.Controller;
+package com.rmit.bookingAPI.controller;
 
-import com.rmit.bookingAPI.Model.PaidService;
-import com.rmit.bookingAPI.Service.PaidServiceService;
+import com.rmit.bookingAPI.model.PaidService;
+import com.rmit.bookingAPI.service.PaidServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

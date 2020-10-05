@@ -1,12 +1,12 @@
-package com.rmit.bookingAPI.Service;
+package com.rmit.bookingAPI.service;
 
-import com.rmit.bookingAPI.Controller.DTO.*;
-import com.rmit.bookingAPI.Model.CustomerDetails;
-import com.rmit.bookingAPI.Model.EmployeeDetails;
-import com.rmit.bookingAPI.Model.User;
-import com.rmit.bookingAPI.Repository.CustomerDetailsRepository;
-import com.rmit.bookingAPI.Repository.EmployeeDetailsRepository;
-import com.rmit.bookingAPI.Repository.UserRepository;
+import com.rmit.bookingAPI.controller.dto.*;
+import com.rmit.bookingAPI.model.CustomerDetails;
+import com.rmit.bookingAPI.model.EmployeeDetails;
+import com.rmit.bookingAPI.model.User;
+import com.rmit.bookingAPI.repository.CustomerDetailsRepository;
+import com.rmit.bookingAPI.repository.EmployeeDetailsRepository;
+import com.rmit.bookingAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

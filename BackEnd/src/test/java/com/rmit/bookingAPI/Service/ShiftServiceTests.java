@@ -1,4 +1,4 @@
-package com.rmit.bookingAPI.Service;
+package com.rmit.bookingAPI.service;
 
 public class ShiftServiceTests {
 }

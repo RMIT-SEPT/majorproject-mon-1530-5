@@ -1,13 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6dfe08a9-7b88-4e49-a5da-b88536e4a2c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/CalendarHome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/NavBar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/css/About.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/majorproject-mon-1530-5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/BookingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/BookingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/EmployeeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/EmployeeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/LoginDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/ShiftDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/ShiftDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/PaidServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/PaidServiceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/ShiftController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/ShiftController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/CustomerDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/CustomerDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/EmployeeDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/EmployeeDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/PaidService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/PaidService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Shift.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Shift.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/BookingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/CustomerDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/CustomerDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/EmployeeDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/EmployeeDetailsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/PaidServiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/PaidServiceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/ShiftRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/ShiftRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/UserDetailsImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/UserDetailsServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/BookingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/PaidServiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/PaidServiceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/ShiftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/ShiftService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/resources/data.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/BookingControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/BookingControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/CustomerControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/CustomerControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/EmployeeControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/EmployeeControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/PaidServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/PaidServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/ShiftControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/ShiftControllerTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/BookingServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/BookingServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/PaidServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/PaidServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/ShiftServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/ShiftServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/UserServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/UserServiceTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/About.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/AddEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/AddEmployee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +93,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectId" id="1hlM42deupG02SQ7IaiBabnpDFS" />
   <component name="ProjectViewState">
@@ -35,6 +119,34 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/FrontEnd/src/images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="BookingApplicationAPI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.rmit.bookingAPI.BookingApplicationAPI" />
+      <module name="bookingAPI" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rmit.bookingAPI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.BookingApplicationAPI" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -55,10 +167,50 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="1888" y="133" key="#Project_Structure" timestamp="1601859853151">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="1888" y="133" key="#Project_Structure/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601859853151" />
     <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600699856276">
       <screen x="0" y="23" width="1440" height="792" />
     </state>
     <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.792@0.23.1440.792" timestamp="1600699856276" />
+    <state width="1878" height="290" key="GridCell.Tab.0.bottom" timestamp="1601863359040">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="290" key="GridCell.Tab.0.bottom/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359040" />
+    <state width="1878" height="290" key="GridCell.Tab.0.center" timestamp="1601863359039">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="290" key="GridCell.Tab.0.center/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359039" />
+    <state width="1878" height="290" key="GridCell.Tab.0.left" timestamp="1601863359038">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="290" key="GridCell.Tab.0.left/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359038" />
+    <state width="1878" height="290" key="GridCell.Tab.0.right" timestamp="1601863359039">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1878" height="290" key="GridCell.Tab.0.right/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359039" />
+    <state x="2107" y="306" width="619" height="490" key="find.popup" timestamp="1601863919977">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="2107" y="306" width="619" height="490" key="find.popup/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863919977" />
+    <state x="2065" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1601866219002">
+      <screen x="1440" y="23" width="1920" height="1057" />
+    </state>
+    <state x="2065" y="258" width="670" height="676" key="search.everywhere.popup/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601866219002" />
   </component>
 </project>

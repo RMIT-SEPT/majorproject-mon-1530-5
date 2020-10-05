@@ -124,7 +124,7 @@ class AddEmployee extends Component {
           <div class="flex justify-center">
             <div>
               <button
-                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >
                 Create
@@ -132,7 +132,7 @@ class AddEmployee extends Component {
             </div>
             <div className="pl-5">
               <button
-                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
                 onClick = {() =>{
                   this.props.resetFeedback()

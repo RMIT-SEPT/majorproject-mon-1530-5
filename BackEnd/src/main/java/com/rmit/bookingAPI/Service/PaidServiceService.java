@@ -1,11 +1,10 @@
-package com.rmit.bookingAPI.Service;
+package com.rmit.bookingAPI.service;
 
-import com.rmit.bookingAPI.Model.PaidService;
-import com.rmit.bookingAPI.Repository.PaidServiceRepository;
+import com.rmit.bookingAPI.model.PaidService;
+import com.rmit.bookingAPI.repository.PaidServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 

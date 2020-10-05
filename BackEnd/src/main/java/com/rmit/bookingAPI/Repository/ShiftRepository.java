@@ -1,6 +1,6 @@
-package com.rmit.bookingAPI.Repository;
+package com.rmit.bookingAPI.repository;
 
-import com.rmit.bookingAPI.Model.Shift;
+import com.rmit.bookingAPI.model.Shift;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

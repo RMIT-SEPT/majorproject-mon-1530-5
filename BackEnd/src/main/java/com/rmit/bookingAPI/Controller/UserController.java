@@ -1,16 +1,17 @@
-package com.rmit.bookingAPI.Controller;
+package com.rmit.bookingAPI.controller;
 
-import com.rmit.bookingAPI.Controller.DTO.CustomerDTO;
-import com.rmit.bookingAPI.Controller.DTO.EmployeeDTO;
-import com.rmit.bookingAPI.Controller.DTO.LoginDTO;
-import com.rmit.bookingAPI.Model.CustomerDetails;
-import com.rmit.bookingAPI.Model.EmployeeDetails;
-import com.rmit.bookingAPI.Model.User;
-import com.rmit.bookingAPI.Service.PaidServiceService;
-import com.rmit.bookingAPI.Service.UserService;
+import com.rmit.bookingAPI.controller.dto.CustomerDTO;
+import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
+import com.rmit.bookingAPI.controller.dto.LoginDTO;
+import com.rmit.bookingAPI.model.CustomerDetails;
+import com.rmit.bookingAPI.model.EmployeeDetails;
+import com.rmit.bookingAPI.model.User;
+import com.rmit.bookingAPI.service.PaidServiceService;
+import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,26 +32,6 @@ public class UserController {
     @Autowired
     PaidServiceService paidServiceService;
 
-
-    @PostMapping(value = "/login")
-    public ResponseEntity<?> userLogin(@RequestBody LoginDTO loginDTO, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
-        }
-        User user = userService.findUserByUsername(loginDTO.getUsername());
-        if (null != user) {
-            if (user.getPassword().equals(loginDTO.getPassword())) {
-
-                Map<String,String> userSimplified = new HashMap<>();
-                userSimplified.put("username", user.getUsername());
-                userSimplified.put("authGroup", user.getAuthGroup());
-                return new ResponseEntity<Map<String,String>>(userSimplified, HttpStatus.OK);
-            }
-            return new ResponseEntity<String>("Incorrect password", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<String>("A login with that username doesn't exist", HttpStatus.NOT_FOUND);
-    }
-
     @PutMapping(value = "/user/updatePassword")
     public ResponseEntity<String> updatePassword(@RequestBody Map<String,String> updatedDetails) {
         if (null == userService.findUserByUsername(updatedDetails.get("username"))) {
@@ -65,18 +46,6 @@ public class UserController {
         desiredUser.setPassword(updatedDetails.get("newPassword"));
         userService.updateUser(desiredUser);
         return new ResponseEntity<String>("Password updated successfully", HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/customer/add")
-    public ResponseEntity<?> addCustomer(@Valid @RequestBody CustomerDTO customerDTO, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
-        }
-        if (null != userService.findUserByUsername(customerDTO.getUsername())) { // a null return indicates the username is not being used
-            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.addCustomer(customerDTO);
-        return new ResponseEntity<CustomerDetails>(userService.findCustomerDetailsByUsername(customerDTO.getUsername()), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/customer/remove/{username}")
@@ -105,6 +74,7 @@ public class UserController {
     }
 
     @GetMapping(value="/customer/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CustomerDetails>> getAllCustomers() {
         return new ResponseEntity<List<CustomerDetails>>(userService.getAllCustomerDetails(), HttpStatus.OK);
     }
@@ -115,18 +85,6 @@ public class UserController {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<CustomerDetails>(userService.findCustomerDetailsByUsername(username), HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/employee/add")
-    public ResponseEntity<?> addEmployee(@Valid @RequestBody EmployeeDTO employeeDTO, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
-        }
-        if (null != userService.findUserByUsername(employeeDTO.getUsername())) { // a null return indicates the username is not being used
-            return new ResponseEntity<String>("Username already exists", HttpStatus.BAD_REQUEST);
-        }
-        userService.addEmployee(employeeDTO);
-        return new ResponseEntity<EmployeeDetails>(userService.findEmployeeDetailsByUsername(employeeDTO.getUsername()), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/employee/remove/{username}")

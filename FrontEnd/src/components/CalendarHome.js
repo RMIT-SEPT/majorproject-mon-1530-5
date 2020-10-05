@@ -5,7 +5,7 @@ import { addBooking, resetFeedback } from "../actions/bookingActions";
 import { Multiselect } from 'multiselect-react-dropdown';
 import axios from "axios"
 import authHeader from '../services/authHeader';
-
+import "../css/CalendarHome.css";
 export class CalendarHome extends Component {
   state = {
     months: [
@@ -175,7 +175,7 @@ export class CalendarHome extends Component {
         if (vacantBookings[i].date === formattedDate) {
           for (let j = 0; j < selectedServices.length; j++) {
             if (vacantBookings[i].serviceId === selectedServices[j].id)
-            bookings.push(<button className="border px-2 py-2 bg-blue-400 text-xs" key={vacantBookings[i].id} 
+            bookings.push(<button className="border px-1 py-2 bg-blue-900 text-xs text-white text-left mx-1" key={vacantBookings[i].id}
             value={vacantBookings[i].id} onClick={this.handleClick}>
               {selectedServices[j].name}<br/>
               {vacantBookings[i].bookingTime.slice(0,5)}</button>)
@@ -230,7 +230,7 @@ export class CalendarHome extends Component {
               <div className="md:w-1/3"></div>
               <div className="md:w-2/3">
                 <button
-                  className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                   type="submit"
                 >
                   Book
@@ -241,13 +241,14 @@ export class CalendarHome extends Component {
         </div>)
         } 
       }
-      return (<div className="text-center text-4xl">Please Select a Booking</div>);
+
     }
+
     const previousMonthLastDays = () => {
       const previousDays = [];
       for (let i = this.state.firstDayIndex; i > 0; i--) {
         previousDays.push(
-          <td className="border w-48 h-32 align-top bg-gray-400" key={i}>
+          <td className="nextPreviousMonthDays" key={i}>
             {this.state.prevLastDay - i + 1}
           </td>
         );
@@ -258,7 +259,7 @@ export class CalendarHome extends Component {
       const nextMonthDays = [];
       let nextDays = 7 - this.state.lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td className="border w-48 h-32 align-top bg-gray-400" key={i}>{i}</td>);
+        nextMonthDays.push(<td className="nextPreviousMonthDays" key={i}>{i}</td>);
       }
       return nextMonthDays;
     };
@@ -267,7 +268,7 @@ export class CalendarHome extends Component {
       rows.push(previousMonthLastDays());
       for (let i = 1; i <= 7 - previousMonthLastDays().length; i++) {
         newDate.setDate(i);
-        rows.push(<td className="border w-48 h-32 align-top hover:bg-blue-500" key={i}>{i}{bookingButtons(newDate)}</td>);
+        rows.push(<td className="currentMonthDays" key={i}>{i}{bookingButtons(newDate)}</td>);
       }
 
       return rows;
@@ -278,7 +279,7 @@ export class CalendarHome extends Component {
         if (7 - previousMonthLastDays().length + i + n <= this.state.lastDay) {
           newDate.setDate(7 - previousMonthLastDays().length + i + n);
           rows.push(
-            <td className="border w-48 h-32 align-top hover:bg-blue-500" key={i}>
+            <td className="currentMonthDays" key={i}>
               {7 - previousMonthLastDays().length + i + n}
               <br/>{bookingButtons(newDate)}
             </td>
@@ -292,18 +293,18 @@ export class CalendarHome extends Component {
       if (previousMonthLastDays().length === 5) {
         newDate.setDate(31);
         rows.push(
-          <td className="border w-48 h-32 align-top hover:bg-blue-500"key={31} >31
+          <td className="nextPreviousMonthDays"key={31} >31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
       } else if (previousMonthLastDays().length === 6) {
         newDate.setDate(30);
         rows.push(
-          <td className="border w-48 h-32 align-top hover:bg-blue-500" key={30}>30
+          <td className="nextPreviousMonthDays" key={30}>30
           {bookingButtons(newDate)}</td>);
         newDate.setDate(31);
         rows.push(
-          <td className="border w-48 h-32 align-top hover:bg-blue-500" key={31}>31
+          <td className="nextPreviousMonthDays" key={31}>31
           {bookingButtons(newDate)}</td>,
           nextMonthDays()
         );
@@ -324,10 +325,10 @@ export class CalendarHome extends Component {
           placeholder="Select Services" />
         </div>
         <br/>
-        <div className="flex px-10 py-70 justify-evenly bg-blue-800">
+        <div className="calendarHeading">
         {/*Left Arrow Month*/}
           <svg
-            className="fill-current text-white inline-block pr-4 w-20"
+            className="leftArrow"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -342,12 +343,12 @@ export class CalendarHome extends Component {
             />
           </svg>
           <div className="date">
-            <p className="text-5xl text-white">{this.state.currentMonth}</p>
-            <p className="text-white mb-5">{this.state.currentDate}</p>
+            <p className="monthTitle">{this.state.currentMonth}</p>
+            <p className="currentDateTitle">{this.state.currentDate}</p>
           </div>
           {/*Right Arrow Month*/}
           <svg
-            className="fill-current text-white inline-block pl-4 w-20"
+            className="rightArrow"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -362,16 +363,16 @@ export class CalendarHome extends Component {
             />
           </svg>
         </div>
-        <table className="table-auto ">
+        <table className="tableMain">
           <thead>
             <tr>
-              <th className="px-6 py-2">Sun</th>
-              <th className="px-6 py-2">Mon</th>
-              <th className="px-6 py-2">Tue</th>
-              <th className="px-6 py-2">Wed</th>
-              <th className="px-6 py-2">Thu</th>
-              <th className="px-6 py-2">Fri</th>
-              <th className="px-6 py-2">Sat</th>
+              <th className="calendarDays">Sun</th>
+              <th className="calendarDays">Mon</th>
+              <th className="calendarDays">Tue</th>
+              <th className="calendarDays">Wed</th>
+              <th className="calendarDays">Thu</th>
+              <th className="calendarDays">Fri</th>
+              <th className="calendarDays">Sat</th>
             </tr>
           </thead>
           <tbody>

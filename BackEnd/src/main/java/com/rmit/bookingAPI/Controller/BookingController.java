@@ -1,10 +1,10 @@
-package com.rmit.bookingAPI.Controller;
+package com.rmit.bookingAPI.controller;
 
-import com.rmit.bookingAPI.Controller.DTO.BookingDTO;
-import com.rmit.bookingAPI.Model.*;
-import com.rmit.bookingAPI.Service.BookingService;
-import com.rmit.bookingAPI.Service.PaidServiceService;
-import com.rmit.bookingAPI.Service.UserService;
+import com.rmit.bookingAPI.controller.dto.BookingDTO;
+import com.rmit.bookingAPI.model.*;
+import com.rmit.bookingAPI.service.BookingService;
+import com.rmit.bookingAPI.service.PaidServiceService;
+import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

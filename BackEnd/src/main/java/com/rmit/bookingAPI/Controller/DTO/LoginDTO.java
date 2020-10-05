@@ -1,4 +1,4 @@
-package com.rmit.bookingAPI.Controller.DTO;
+package com.rmit.bookingAPI.controller.dto;
 
 import javax.validation.constraints.NotBlank;
 
