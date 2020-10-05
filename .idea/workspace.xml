@@ -23,68 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dfe08a9-7b88-4e49-a5da-b88536e4a2c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/CalendarHome.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/NavBar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/a3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/adminMobile5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/css/About.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/majorproject-mon-1530-5.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/BookingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/BookingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/BookingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/EmployeeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/EmployeeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/ShiftDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/DTO/ShiftDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/PaidServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/PaidServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/ShiftController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/ShiftController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Booking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/CustomerDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/CustomerDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/EmployeeDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/EmployeeDetails.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/PaidService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/PaidService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Shift.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/Shift.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/BookingRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/CustomerDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/CustomerDetailsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/EmployeeDetailsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/EmployeeDetailsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/PaidServiceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/PaidServiceRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/ShiftRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/ShiftRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/UserDetailsImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Security/UserDetailsServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/BookingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/BookingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/PaidServiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/PaidServiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/ShiftService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/ShiftService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/com/rmit/bookingAPI/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/resources/data.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/resources/data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/BookingControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/BookingControllerTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/CustomerControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/CustomerControllerTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/EmployeeControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/EmployeeControllerTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/PaidServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/PaidServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/ShiftControllerTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Controller/ShiftControllerTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/BookingServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/BookingServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/PaidServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/PaidServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/ShiftServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/ShiftServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/UserServiceTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/test/java/com/rmit/bookingAPI/Service/UserServiceTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/About.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/AddEmployee.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/AddEmployee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

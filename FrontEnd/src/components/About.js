@@ -59,6 +59,11 @@ function About(props) {
         <img className="img" src={adminMobile5} alt="step4"/>
         <img className="imgMobile" src={adminMobile5} alt="aM5"/>
         <p>5. You have successfully booked! </p>
+
+        <h3 className="text-center text-2xl font-mono">How To View Past or Future Bookings</h3>
+        <br />
+        <p>1. To view all of your past and current bookings, click on your username on the top right corner</p> <br />
+          
         </>:null}
 
         {isLoggedIn && user.role === "ROLE_ADMIN" ?
@@ -81,9 +86,6 @@ function About(props) {
 
         {isLoggedIn && user.role === "ROLE_EMPLOYEE" ?
         <>
-        <h3 className="text-center text-2xl font-mono">How To Book On Behalf of a Customer</h3>
-        <br />
-        <p>1. To view all of your past and current bookings, click on your username on the top right corner</p> <br />
         </>:null}
 
       </div>
