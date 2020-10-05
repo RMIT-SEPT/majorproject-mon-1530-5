@@ -70,14 +70,14 @@ public class BookingController {
             multiple bookings at once.
             */
             boolean isBooked = false;
-            Iterator<Booking> i = desiredBookings.iterator();
-            while(i.hasNext()) {
-                Booking tempBooking_service = i.next();
+            Iterator<Booking> desiredIterator = desiredBookings.iterator();
+            while(desiredIterator.hasNext()) {
+                Booking tempBooking_service = desiredIterator.next();
                 if (tempBooking_service.getServiceId().equals(bookingDTO.returnServiceIdAsLong())) {
                     if (null == tempBooking_service.getCustomerUsername()) {
                         tempBooking_service.setCustomerUsername(bookingDTO.getCustomerUsername());
                         bookingService.addOrUpdateBooking(tempBooking_service);
-                        i.remove();
+                        desiredIterator.remove();
                         isBooked = true;
                     } else {
                         return new ResponseEntity<String>("Booking already occupied", HttpStatus.BAD_REQUEST);
@@ -85,17 +85,18 @@ public class BookingController {
                 }
             }
             if (isBooked) {
-                while(i.hasNext()) {
-                    Booking tempBooking = i.next();
+                Iterator<Booking> undesiredIterator = desiredBookings.iterator();
+                while(undesiredIterator.hasNext()) {
+                    Booking tempBooking = undesiredIterator.next();
                     bookingService.removeBooking(tempBooking);
-                    i.remove();
+                    undesiredIterator.remove();
                 }
                 return new ResponseEntity<String>("Booking filled, and consequent bookings removed!", HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<String>("Invalid serviceId", HttpStatus.NOT_FOUND);
             }
         }
-        catch (NumberFormatException e) {
+        catch (ParseException e) {
             return new ResponseEntity<String>("Invalid date format", HttpStatus.BAD_REQUEST);
         }
     }
