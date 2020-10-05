@@ -67,7 +67,7 @@ public class User{
         return role;
     }
 
-    public void setRoles(RoleEnum role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
     }
 }

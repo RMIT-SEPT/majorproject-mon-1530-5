@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class BookingControllerTests {
 
     @Autowired
@@ -155,7 +155,7 @@ public class BookingControllerTests {
 
     @Test
     @DirtiesContext
-    void invalidAddBookingReturn400_invalidService() throws Exception{
+    void invalidAddBookingReturn404_invalidService() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
                 "0", "testCustomer", "testEmployee");
@@ -168,7 +168,7 @@ public class BookingControllerTests {
 
     @Test
     @DirtiesContext
-    void invalidAddBookingReturn400_invalidEmployee() throws Exception{
+    void invalidAddBookingReturn404_invalidEmployee() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
                 "1", "testCustomer", "janDoe");

@@ -8,6 +8,7 @@ import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class BookingController {
     PaidServiceService paidServiceService;
 
     @PostMapping(value = "/booking/add")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> addBooking(@Valid @RequestBody BookingDTO bookingDTO, BindingResult result) throws Exception{
 
         if (result.hasErrors()) {
@@ -40,7 +42,6 @@ public class BookingController {
         if (null == userService.findEmployeeDetailsByUsername(bookingDTO.getEmployeeUsername())) {
             return new ResponseEntity<String>("Employee with that username does not exist", HttpStatus.NOT_FOUND);
         }
-
         try {
 
             /*
@@ -104,6 +105,7 @@ public class BookingController {
     *   for the employees services
     */
     @DeleteMapping (value = "/booking/cancel")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> cancelBooking(@RequestBody Map<String, String> bookingDetails) {
 
         if (null == userService.findEmployeeDetailsByUsername(bookingDetails.get("employeeUsername"))) {
@@ -157,6 +159,7 @@ public class BookingController {
     }
 
     @GetMapping(value="/booking/vacantBookings")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<List<Booking>> getVacantFutureBookings() {
 
         List<Booking> desiredBookings = new ArrayList<>();
@@ -173,6 +176,7 @@ public class BookingController {
     }
 
     @GetMapping(value = "/booking/vacantBookings/{serviceId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getVacantFutureBookingsByService(@PathVariable("serviceId") String serviceIdString) {
 
         try {
@@ -200,6 +204,7 @@ public class BookingController {
     }
 
     @GetMapping(value="/booking/occupiedBookings")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Booking>> getOccupiedFutureBookings() {
 
         List<Booking> desiredBookings = new ArrayList<>();
@@ -216,6 +221,7 @@ public class BookingController {
     }
 
     @GetMapping(value = "/booking/occupiedBookings/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getOccupiedFutureBookingsByUsername(@PathVariable("username") String username) {
 
         CustomerDetails customerDetails = userService.findCustomerDetailsByUsername(username);
@@ -237,6 +243,7 @@ public class BookingController {
     }
 
     @GetMapping(value="/booking/pastBookings")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Booking>> getPastBookings() {
 
         List<Booking> desiredBookings = new ArrayList<>();
@@ -253,6 +260,7 @@ public class BookingController {
     }
 
     @GetMapping(value = "/booking/pastBookings/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getOccupiedPastBookingsByUsername(@PathVariable("username") String username) {
 
         CustomerDetails customerDetails = userService.findCustomerDetailsByUsername(username);

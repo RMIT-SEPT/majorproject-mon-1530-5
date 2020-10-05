@@ -2,7 +2,6 @@ package com.rmit.bookingAPI.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.CustomerDTO;
-import com.rmit.bookingAPI.controller.dto.LoginDTO;
 import com.rmit.bookingAPI.model.CustomerDetails;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class CustomerControllerTests {
 
 	@Autowired
@@ -44,80 +43,6 @@ class CustomerControllerTests {
 	@AfterEach
 	void breakdownEach() throws Exception {
 		this.mockMvc.perform(delete("/api/customer/remove/testCustomer"));
-	}
-
-	@Test
-	@DirtiesContext
-	void validCustomerRegisterReturn201() throws Exception {
-
-		this.mockMvc.perform(delete("/api/customer/remove/testCustomer"));
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)))
-				.andExpect(status().isCreated());
-	}
-
-	@Test
-	@DirtiesContext
-	void invalidCustomerRegisterReturn400_missingField() throws Exception {
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)))
-				.andExpect(status().isBadRequest());
-	}
-
-	@Test
-	@DirtiesContext
-	void invalidCustomerRegisterReturn400_existingUsername() throws Exception {
-
-		CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
-
-		this.mockMvc.perform(post("/api/customer/add")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(customerDTO)))
-				.andExpect(status().isBadRequest());
-	}
-
-	@Test
-	@DirtiesContext
-	void validCustomerLoginReturn200() throws Exception{
-
-		LoginDTO loginDTO = new LoginDTO("testCustomer", "password");
-
-		this.mockMvc.perform(post("/api/login")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(loginDTO)))
-				.andExpect(status().isOk());
-	}
-
-	@Test
-	@DirtiesContext
-	void invalidCustomerLoginReturn400_wrongUsername() throws Exception{
-
-		LoginDTO loginDTO = new LoginDTO("tsetCustomer", "password");
-
-		this.mockMvc.perform(post("/api/login")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(loginDTO)))
-				.andExpect(status().isNotFound());
-	}
-
-	@Test
-	@DirtiesContext
-	void invalidCustomerLoginReturn400_wrongPassword() throws Exception{
-
-		LoginDTO loginDTO = new LoginDTO("testCustomer", "passwrod");
-
-		this.mockMvc.perform(post("/api/login")
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(loginDTO)))
-				.andExpect(status().isBadRequest());
 	}
 
 	@Test

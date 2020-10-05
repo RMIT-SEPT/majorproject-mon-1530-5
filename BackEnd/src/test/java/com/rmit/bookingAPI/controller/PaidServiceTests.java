@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class PaidServiceTests {
 
     @Autowired
@@ -47,7 +47,7 @@ class PaidServiceTests {
     void breakdownEach() throws Exception {
 
         Long serviceId = paidServiceService.findPaidServiceByName("Test Service").getId();
-        this.mockMvc.perform(delete("/api/customer/remove/" + Long.toString(serviceId)));
+        this.mockMvc.perform(delete("/api/service/remove/" + Long.toString(serviceId)));
     }
 
     @Test

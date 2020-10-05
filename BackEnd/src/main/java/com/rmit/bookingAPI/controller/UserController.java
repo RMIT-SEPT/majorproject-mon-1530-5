@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,23 +33,28 @@ public class UserController {
     @Autowired
     PaidServiceService paidServiceService;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PutMapping(value = "/user/updatePassword")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('CUSTOMER')")
     public ResponseEntity<String> updatePassword(@RequestBody Map<String,String> updatedDetails) {
         if (null == userService.findUserByUsername(updatedDetails.get("username"))) {
             return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
         }
 
         User desiredUser = userService.findUserByUsername(updatedDetails.get("username"));
-        if (!desiredUser.getPassword().equals(updatedDetails.get("oldPassword"))) {
+        if (!bCryptPasswordEncoder.matches(updatedDetails.get("oldPassword"), desiredUser.getPassword())) {
             return new ResponseEntity<String>("Incorrect old password", HttpStatus.BAD_REQUEST);
         }
 
-        desiredUser.setPassword(updatedDetails.get("newPassword"));
+        desiredUser.setPassword(bCryptPasswordEncoder.encode(updatedDetails.get("newPassword")));
         userService.updateUser(desiredUser);
         return new ResponseEntity<String>("Password updated successfully", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/customer/remove/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> removeCustomer(@PathVariable("username") String username) {
         if (null == userService.findCustomerDetailsByUsername(username)) {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
@@ -58,6 +64,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/customer/updateDetails/{username}")
+    @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> updateCustomerDetails(@RequestBody CustomerDetails updateDetails) {
         if (null == userService.findCustomerDetailsByUsername(updateDetails.getUsername())) {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
@@ -80,6 +87,7 @@ public class UserController {
     }
 
     @GetMapping(value="/customer/get/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getCustomerByUsername(@PathVariable("username") String username) {
         if (null == userService.findCustomerDetailsByUsername(username)) {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
@@ -88,6 +96,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/employee/remove/{username}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> removeEmployee(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("Employee not found", HttpStatus.NOT_FOUND);
@@ -97,11 +106,13 @@ public class UserController {
     }
 
     @GetMapping(value="/employee/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Map<String,String>>> getAllEmployees() {
         return new ResponseEntity<List<Map<String, String>>>(userService.getAllEmployeeDetailsSimplified(), HttpStatus.OK);
     }
 
     @GetMapping(value="/employee/get/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getEmployeeByUsername(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
@@ -110,6 +121,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/employee/addService")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addServiceToEmployee(@RequestBody Map<String, String> updatedDetails) {
 
         String username = updatedDetails.get("username");
@@ -131,6 +143,7 @@ public class UserController {
 
     //Add availability to employeeDetails
     @PostMapping(value = "/employee/addAvailability")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addAvailabilityToEmployee(@RequestBody Map<String,String> updatedDetails) {
 
         String username = updatedDetails.get("username");
@@ -153,6 +166,7 @@ public class UserController {
 
     //Remove availability from employeeDetails
     @PostMapping(value = "/employee/removeAvailability")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> removeAvailabilityFromEmployee(@RequestBody Map<String, String> updatedDetails) {
 
         String username = updatedDetails.get("username");
@@ -175,6 +189,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/employee/getAvailability/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getEmployeeAvailability(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);

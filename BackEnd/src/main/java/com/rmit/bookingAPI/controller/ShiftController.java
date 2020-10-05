@@ -10,6 +10,7 @@ import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,8 @@ public class ShiftController {
     @Autowired
     BookingService bookingService;
 
-
     @PostMapping(value = "/shift/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> addShift(@Valid @RequestBody ShiftDTO shiftDTO, BindingResult result) throws Exception{
         if (result.hasErrors()) {
             return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
@@ -97,6 +98,7 @@ public class ShiftController {
     }
 
     @DeleteMapping(value = "/shift/remove")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> removeShift(@RequestBody Map<String, String> shiftDetails) {
         //remove all bookings
         //remove shift
@@ -149,11 +151,13 @@ public class ShiftController {
 
 
     @GetMapping(value="/shift/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Shift>> getAllShifts() {
         return new ResponseEntity<List<Shift>>(shiftService.getAllShifts(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/shift/findAllByUsername/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getAllShiftsByUsername(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
@@ -162,6 +166,7 @@ public class ShiftController {
     }
 
     @GetMapping(value = "/shift/findFutureByUsername/{username}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getFutureShiftsByUsername(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
             return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
@@ -178,6 +183,7 @@ public class ShiftController {
     }
 
     @GetMapping(value = "shift/getAvailableEmployees/{date}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAvailableEmployeesOnDay(@PathVariable("date") String date) throws Exception{
 
         List<Map<String,String>> availableEmployees = new ArrayList<Map<String,String>>();

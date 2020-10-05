@@ -4,18 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.CustomerDTO;
 import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
 import com.rmit.bookingAPI.controller.dto.LoginDTO;
-import com.rmit.bookingAPI.model.CustomerDetails;
-import com.rmit.bookingAPI.model.EmployeeDetails;
-import com.rmit.bookingAPI.model.User;
-import com.rmit.bookingAPI.repository.UserRepository;
 import com.rmit.bookingAPI.security.jwt.JWTResponsePayload;
 import com.rmit.bookingAPI.security.jwt.JWTUtils;
-import com.rmit.bookingAPI.security.service.UserDetailsImpl;
 import com.rmit.bookingAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +21,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.rmit.bookingAPI.security.SecurityConstants.TOKEN_PREFIX;
 
@@ -42,7 +36,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    PasswordEncoder bCryptPasswordEncoder;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     JWTUtils jwtUtils;
@@ -55,20 +49,22 @@ public class AuthController {
         if (result.hasErrors()) {
             return new ResponseEntity<>("Invalid form data", HttpStatus.BAD_REQUEST);
         }
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = jwtUtils.generate(authentication);
-        JWTResponsePayload jwtResponsePayload = new JWTResponsePayload(
-                TOKEN_PREFIX + jwt,
-                loginDTO.getUsername(),
-                userService.findUserByUsername(loginDTO.getUsername()).getRole()
-        );
-
-        return new ResponseEntity<>(jwtResponsePayload, HttpStatus.OK);
+            String jwt = jwtUtils.generate(authentication);
+            JWTResponsePayload jwtResponsePayload = new JWTResponsePayload(
+                    TOKEN_PREFIX + jwt,
+                    loginDTO.getUsername(),
+                    userService.findUserByUsername(loginDTO.getUsername()).getRole()
+            );
+            return new ResponseEntity<>(jwtResponsePayload, HttpStatus.OK);
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>("Incorrect username or password", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(value = "/customer/add")

@@ -5,6 +5,7 @@ import com.rmit.bookingAPI.service.PaidServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ public class PaidServiceController {
     PaidServiceService paidServiceService;
 
     @PostMapping(value = "/service/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> addService(@Valid @RequestBody PaidService paidService, BindingResult result) {
         if (result.hasErrors()) {
             return new ResponseEntity<String>("Invalid form data", HttpStatus.BAD_REQUEST);
@@ -31,6 +33,7 @@ public class PaidServiceController {
     }
 
     @DeleteMapping(value = "/service/remove/{serviceId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> removeService(@PathVariable("serviceId") String serviceIdString) {
         try{
             Long serviceId = Long.parseLong(serviceIdString);
@@ -45,11 +48,13 @@ public class PaidServiceController {
     }
 
     @GetMapping(value="/service/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<PaidService>> getAllServices() {
         return new ResponseEntity<List<PaidService>>(paidServiceService.getAllPaidServices(), HttpStatus.OK);
     }
 
     @GetMapping(value="/service/get/{serviceId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getServiceById(@PathVariable("serviceId") String serviceIdString) {
 
         /* Spring boot didn't like it when I asked directly for a 'Long' value here ^^.

@@ -2,7 +2,6 @@ package com.rmit.bookingAPI.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
-import com.rmit.bookingAPI.controller.dto.LoginDTO;
 import com.rmit.bookingAPI.model.PaidService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 class EmployeeControllerTests {
 
     @Autowired
@@ -47,83 +46,7 @@ class EmployeeControllerTests {
     @AfterEach
     void breakdownEach() throws Exception {
         this.mockMvc.perform(delete("/api/employee/remove/testEmployee"));
-    }
-
-    @Test
-    @DirtiesContext
-    void validAddEmployeeReturn201() throws Exception {
-
-        this.mockMvc.perform(delete("/api/employee/remove/testEmployee")); //undoes the @Beforeeach method
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)))
-                .andExpect(status().isCreated());
-    }
-
-    @Test
-    @DirtiesContext
-    void invalidAddEmployeeReturn400_missingField() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "");
-
-        this.mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DirtiesContext
-    void invalidAddEmployeeReturn400_existingUsername() throws Exception {
-
-        EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
-
-        mockMvc.perform(post("/api/employee/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(employeeDTO)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DirtiesContext
-    void validEmployeeLoginReturn200() throws Exception{
-
-        LoginDTO loginDTO = new LoginDTO("testEmployee", "password");
-
-        mockMvc.perform(post("/api/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDTO)))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DirtiesContext
-    void invalidEmployeeLoginReturn400_wrongUsername() throws Exception{
-
-        LoginDTO loginDTO = new LoginDTO("testEpmloyee", "password");
-
-        mockMvc.perform(post("/api/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDTO)))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @DirtiesContext
-    void invalidEmployeeLoginReturn400_wrongPassword() throws Exception{
-
-        LoginDTO loginDTO = new LoginDTO("testEmployee", "passwrod");
-
-        mockMvc.perform(post("/api/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginDTO)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
+    }@Test
     @DirtiesContext
     void validEmployeeGetReturn200() throws Exception{
 
