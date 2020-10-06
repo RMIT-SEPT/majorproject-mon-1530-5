@@ -30,7 +30,7 @@ export const getOccupiedBookings = (username) =>{
      axios.get(`http://localhost:8080/api/booking/occupiedBookings/${username}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
-                type:'GET_BOOKINGS', response:response.data
+                type:'GET_OCC_BOOKINGS', response:response.data
             })
         })
         .catch((err) =>{ 
@@ -39,7 +39,22 @@ export const getOccupiedBookings = (username) =>{
                 payload: err.response
             })
         })
-        
-    
+    }
+}
+
+export const getPastBookings = (username) =>{
+    return(dispatch)=>{
+     axios.get(`http://localhost:8080/api/booking/pastBookings/${username}`,{ headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'GET_PAST_BOOKINGS', response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
     }
 }

@@ -10,10 +10,16 @@ const bookingReducer = (state = initialState,action)=> {
         msgBook: action.response,
         msgStyle:"text-green-500 text-xl text-center italic"
       })
-    case'GET_BOOKINGS':{
+    case'GET_OCC_BOOKINGS':{
       console.log(action.response)
       return  Object.assign({}, state, {
-        bookings:action.response
+        occBookings:action.response
+      })
+    }
+    case'GET_PAST_BOOKINGS':{
+      console.log(action.response)
+      return  Object.assign({}, state, {
+        pastBookings:action.response
       })
     }
     case'GET_ERRORS':{
