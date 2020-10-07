@@ -222,25 +222,33 @@ public class BookingController {
     }
 
     @GetMapping(value = "/booking/occupiedBookings/{username}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getOccupiedFutureBookingsByUsername(@PathVariable("username") String username) {
 
         CustomerDetails customerDetails = userService.findCustomerDetailsByUsername(username);
         if (null == customerDetails) {
-            return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
         }
 
-        List<Booking> desiredBookings = new ArrayList<>();
+        List<Map<String,String>> desiredBookings = new ArrayList<>();
+        Map<String,String> bookingInfo = new HashMap<>();
         Calendar cal = Calendar.getInstance();
 
         for (Booking booking : bookingService.getAllBookings()) {
             if (booking.getDate().after(cal.getTime())) {
                 if (customerDetails.getUsername().equals(booking.getCustomerUsername())) {
-                    desiredBookings.add(booking);
+                    bookingInfo.put("id", booking.getId().toString());
+                    bookingInfo.put("bookingDate", booking.getDate().toString());
+                    bookingInfo.put("bookingTime", booking.getBookingTime().toString());
+                    bookingInfo.put("serviceId", booking.getServiceId().toString());
+                    bookingInfo.put("serviceName", paidServiceService.findPaidServiceById(booking.getServiceId()).getName());
+                    bookingInfo.put("customerUsername", booking.getCustomerUsername());
+                    bookingInfo.put("employeeUsername", booking.getEmployeeUsername());
+                    bookingInfo.put("employeeName", userService.findEmployeeDetailsByUsername(booking.getEmployeeUsername()).getName());
                 }
             }
         }
-        return new ResponseEntity<List<Booking>>(desiredBookings, HttpStatus.OK);
+        return new ResponseEntity<>(bookingInfo, HttpStatus.OK);
     }
 
     @GetMapping(value="/booking/pastBookings")

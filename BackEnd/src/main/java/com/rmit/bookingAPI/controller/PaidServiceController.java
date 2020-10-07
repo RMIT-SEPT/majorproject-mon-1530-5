@@ -48,13 +48,13 @@ public class PaidServiceController {
     }
 
     @GetMapping(value="/service/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<List<PaidService>> getAllServices() {
         return new ResponseEntity<List<PaidService>>(paidServiceService.getAllPaidServices(), HttpStatus.OK);
     }
 
     @GetMapping(value="/service/get/{serviceId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
     public ResponseEntity<?> getServiceById(@PathVariable("serviceId") String serviceIdString) {
 
         /* Spring boot didn't like it when I asked directly for a 'Long' value here ^^.
