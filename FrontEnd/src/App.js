@@ -12,6 +12,7 @@ import AddShift from './components/AddShift';
 import {Provider} from "react-redux"
 import store from "./store"
 import Bookings from './components/Bookings';
+import Employee from './components/Employee';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Route path ="/addEmployee" component ={AddEmployee}/>
       <Route path ="/addShift" component ={AddShift}/>
       <Route path ="/bookings" component ={Bookings}/>
+      <Route path ="/employee" component ={Employee}/>
     </div>
     </Router>
     </Provider>

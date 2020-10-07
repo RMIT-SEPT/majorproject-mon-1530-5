@@ -119,7 +119,7 @@ export class CalendarHome extends Component {
       var i = this.getBookingIndex()
       this.setState({
         selectedDate: this.state.vacantBookings[i].date.split('-').reverse().join('-'),
-        selectedTime: this.state.vacantBookings[i].bookingTime.substring(0, this.state.vacantBookings[i].bookingTime.length - 3),
+        selectedTime: this.state.vacantBookings[i].bookingTime.substring(0, 5),
         selectedServiceID: this.state.vacantBookings[i].serviceId,
         selectedEmployee: this.state.vacantBookings[i].employeeUsername
       })
@@ -388,7 +388,7 @@ export class CalendarHome extends Component {
           </tbody>
         </table>
         {bookingForm()}
-        {msgBook === "" ? null: <p className={msgStyle}>{msgBook}</p>}
+        {msgBook === "" ? null: <div className={msgStyle}>{msgBook}</div>}
       </div>
     );
   }

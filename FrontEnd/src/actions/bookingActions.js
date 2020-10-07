@@ -25,6 +25,23 @@ export const addBooking = (booking) => {
     }
 }
 
+export const cancelBooking = (booking) => {
+    return (dispatch)=>{
+     axios.delete('http://localhost:8080/api/booking/cancel',booking,{ headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'CANCEL_BOOKING',response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+    }
+}
+
 export const getOccupiedBookings = (username) =>{
     return(dispatch)=>{
      axios.get(`http://localhost:8080/api/booking/occupiedBookings/${username}`,{ headers: authHeader() })

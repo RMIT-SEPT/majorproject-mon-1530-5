@@ -17,20 +17,6 @@ function About(props) {
     return <Redirect to="/login"/>
   }
     const {isLoggedIn,user} = props
-    const adminLink = "/profile"
-    const userLink = "/bookings"
-    let link;
-    if(user != null){
-      if(user.role === "ROLE_ADMIN"){
-        link = adminLink
-      }
-      else if (user.role === "ROLE_CUSTOMER"){
-        link = userLink
-      }
-      else if (user.role === "ROLE_EMPLOYEE"){
-        link = '/about'
-      }
-    }
   return (
     <div>
       <div className="container mx-auto pt-5">

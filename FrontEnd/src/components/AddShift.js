@@ -96,7 +96,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
               >
                  <option>Please select employee</option>
                 {employees && employees.map(employee =>{
-                  return(<option>{employee.username}</option>)
+                  return(<option key={employee.id}>{employee.username}</option>)
                 })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -143,15 +143,15 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
 
          <div className="flex flex-col space-y-4 container mx-auto flex-inital">
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
             <p className="text-lg"> - Available days</p>
            </div>
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Unavailable days</p>
            </div>
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Selected day/Current day</p>
            </div>
          </div>

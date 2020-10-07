@@ -107,10 +107,10 @@ class AddEmployee extends Component {
                 id="type"
               >
                 {services && services.map(service =>{
-                  return( <option>{service.name}</option>)
+                  return( <option key={service.id}>{service.name}</option>)
                 })}
               </select>
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
                   className="fill-current h-4 w-4"
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +121,7 @@ class AddEmployee extends Component {
               </div>
             </div>
           </div>
-          <div class="flex justify-center">
+          <div className="flex justify-center">
             <div>
               <button
                 className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
