@@ -231,12 +231,12 @@ public class BookingController {
         }
 
         List<Map<String,String>> desiredBookings = new ArrayList<>();
-        Map<String,String> bookingInfo = new HashMap<>();
         Calendar cal = Calendar.getInstance();
 
         for (Booking booking : bookingService.getAllBookings()) {
             if (booking.getDate().after(cal.getTime())) {
                 if (customerDetails.getUsername().equals(booking.getCustomerUsername())) {
+                    Map<String,String> bookingInfo = new HashMap<>();
                     bookingInfo.put("id", booking.getId().toString());
                     bookingInfo.put("bookingDate", booking.getDate().toString());
                     bookingInfo.put("bookingTime", booking.getBookingTime().toString());
@@ -245,10 +245,11 @@ public class BookingController {
                     bookingInfo.put("customerUsername", booking.getCustomerUsername());
                     bookingInfo.put("employeeUsername", booking.getEmployeeUsername());
                     bookingInfo.put("employeeName", userService.findEmployeeDetailsByUsername(booking.getEmployeeUsername()).getName());
+                    desiredBookings.add(bookingInfo);
                 }
             }
         }
-        return new ResponseEntity<>(bookingInfo, HttpStatus.OK);
+        return new ResponseEntity<>(desiredBookings, HttpStatus.OK);
     }
 
     @GetMapping(value="/booking/pastBookings")
