@@ -6,13 +6,15 @@ import Contacts from './components/Contacts';
 import Login from './components/Login'
 import Register from './components/Register'
 import {BrowserRouter as Router,Route} from 'react-router-dom';
-import Profile from './components/Profile';
+import Admin from './components/Admin';
+import AddService from './components/AddService';
 import AddEmployee from './components/AddEmployee';
 import AddShift from './components/AddShift';
 import {Provider} from "react-redux"
 import store from "./store"
 import Bookings from './components/Bookings';
 import Employee from './components/Employee';
+import SetAvailability from './components/SetAvailability';
 
 
 function App() {
@@ -26,9 +28,11 @@ function App() {
       <Route path="/contacts" component= {Contacts}/>
       <Route path="/login" component= {Login}/>
       <Route path="/register" component= {Register}/>
-      <Route path="/profile" component= {Profile}/>
+      <Route path="/admin" component= {Admin}/>
+      <Route path ="/addService" component ={AddService}/>
       <Route path ="/addEmployee" component ={AddEmployee}/>
       <Route path ="/addShift" component ={AddShift}/>
+      <Route path ="/setAvailability" component ={SetAvailability}/>
       <Route path ="/bookings" component ={Bookings}/>
       <Route path ="/employee" component ={Employee}/>
     </div>

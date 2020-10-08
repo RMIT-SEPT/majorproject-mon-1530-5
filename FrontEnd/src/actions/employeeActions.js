@@ -44,8 +44,40 @@ export const resetFeedback = () =>{
             dispatch({
                 type:'RESET'
             })
+    }
+}
 
-    
+export const addAvailability = (availability) => {
+    return (dispatch)=>{
+     axios.post('http://localhost:8080/api/employee/addAvailability',availability,{ headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'ADD_AVAILABILITY',response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+    }
+}
+
+export const removeAvailability = (availability) => {
+    return (dispatch)=>{
+     axios.post('http://localhost:8080/api/employee/removeAvailability',availability,{ headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'REMOVE_AVAILABILITY',response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
     }
 }
 

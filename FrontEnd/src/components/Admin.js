@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-function Profile(props) {
+function Admin(props) {
   // Route guarding in case the user is not logged in or has a different role 
   if(props.user !== null)  {
     if(props.user.role !== "ROLE_ADMIN"){
@@ -21,6 +21,18 @@ function Profile(props) {
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="button"
+                data-test="addService"
+                onClick= {()=>{
+                  props.history.push('/addService')
+                }}
+              >
+                Add Service
+              </button>
+         </div>
+        <div className="text-gray-700 text-center  px-4 py-5 m-2">
+              <button
+                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
                 data-test="addEmployee"
                 onClick= {()=>{
                   props.history.push('/addEmployee')
@@ -29,6 +41,18 @@ function Profile(props) {
                 Add Employee
               </button>
          </div>
+         <div className="text-gray-700 text-center  px-4 py-5 m-2">
+          <button
+            className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+            data-test="setAvailability"
+            onClick= {()=>{
+              props.history.push('/setAvailability')
+            }}
+          >
+            Set Availability
+          </button>
+        </div>
          <div className="text-gray-700 text-center  px-4 py-5 m-2">
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
@@ -41,7 +65,7 @@ function Profile(props) {
                 Add Shift
               </button>
               </div>
-<hr/>
+      <hr/>
       </div>
       </div>
     </div>
@@ -56,4 +80,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps)(Admin);

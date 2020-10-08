@@ -6,7 +6,7 @@ import '../css/NavBar.css';
 
 function Navbar(props) {
   const {isLoggedIn,user} = props 
-  const adminLink = "/profile"
+  const adminLink = "/admin"
   const userLink = "/bookings"
   const employeeLink = "/employee"
   let link;

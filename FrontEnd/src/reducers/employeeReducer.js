@@ -12,7 +12,18 @@ const employeeReducer = (state = initialState,action)=> {
     return Object.assign({}, state, {
       employees: action.response
     })
-
+    case'ADD_AVAILABILITY':
+    console.log(action.response)
+    return Object.assign({},state, {
+      msgBook: action.response,
+      msgStyle:"text-green-500 text-xl text-center italic"
+    })
+    case'REMOVE_AVAILABILITY':
+    console.log(action.response)
+    return Object.assign({},state, {
+      msgBook: action.response,
+      msgStyle:"text-green-500 text-xl text-center italic"
+    })
     case'GET_AVAILABILITY': 
     console.log(action.response)
     return Object.assign({}, state, {

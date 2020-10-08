@@ -21,7 +21,7 @@
 .leftArrow{
     color:white;
     width:60px;
-    left:11%;
+    left: auto;
     top:500px;
     position: absolute;
 
@@ -30,7 +30,8 @@
 .rightArrow{
     color:white;
     width:60px;
-    right:11%;
+    right:auto;
+    margin-left: 1080px;
     top:500px;
     position: absolute;
 }

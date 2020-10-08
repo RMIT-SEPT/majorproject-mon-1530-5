@@ -6,7 +6,7 @@ import { getService } from "../actions/servicesActions";
 
 class AddEmployee extends Component {
   state = {
-    uesname:"",
+    username:"",
     name: "",
     password:"",
     type:""
@@ -136,7 +136,7 @@ class AddEmployee extends Component {
                 type="submit"
                 onClick = {() =>{
                   this.props.resetFeedback()
-                  this.props.history.push("/profile")
+                  this.props.history.push("/admin")
                   // Will remove the msg but reloads the page, which is not good UX
                   // window.location.reload(false); 
                 }}
