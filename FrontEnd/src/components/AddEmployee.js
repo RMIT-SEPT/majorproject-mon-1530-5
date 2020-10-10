@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
-import {createEmployees, resetFeedback} from "../actions/employeeActions"
+import {createEmployees, assignService, resetFeedback} from "../actions/employeeActions"
 import { getService } from "../actions/servicesActions";
+import { Multiselect } from 'multiselect-react-dropdown';
 
 
 class AddEmployee extends Component {
@@ -9,7 +10,8 @@ class AddEmployee extends Component {
     username:"",
     name: "",
     password:"",
-    type:""
+    type:"",
+    selectedServices: []
   }
   handleChange = (e) => {
     this.setState({
@@ -24,13 +26,46 @@ class AddEmployee extends Component {
       name:this.state.name
     }
     this.props.createEmployees(newEmployee)
-    this.setState({
+    setTimeout(() => this.addServices(), 1000);
+    setTimeout(() => this.setState({
       username:"",
       name: "",
       password:""
-    })
+    }), 2000);
   }
-
+  addServices = () => {
+    console.log(this.state.selectedServices)
+    for (let i = 0; i < this.state.selectedServices.length; i++) {
+      const service = {
+        username: this.state.username,
+        serviceId: this.state.selectedServices[i].id
+      }
+      console.log(service)
+      this.props.assignService(service)
+    }
+  }
+  //When a service is selected
+  onSelect = (services, selected) => {
+    this.state.selectedServices.push(selected);
+    this.setState({
+      selectedServices: this.state.selectedServices
+    })
+    this.props.resetFeedback();
+    console.log(this.state.selectedServices)
+  }
+  //When a service is removed
+  onRemove = (services, removed) => {
+    for (var i = 0; i < this.state.selectedServices.length; i++) {
+      if (removed.id === this.state.selectedServices[i].id) {
+        this.state.selectedServices.splice(i,1);
+      }
+    }
+    this.setState({
+      selectedServices: this.state.selectedServices
+    })
+    this.props.resetFeedback();
+    console.log(this.state.selectedServices)
+  }
 
   componentDidMount(){
     this.props.getService()
@@ -102,14 +137,16 @@ class AddEmployee extends Component {
               Type
             </label>
             <div className="relative">
-              <select
-                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                id="type"
-              >
-                {services && services.map(service =>{
-                  return( <option key={service.id}>{service.name}</option>)
-                })}
-              </select>
+              <div className="text-center max-w-4xl m-auto">
+                <Multiselect 
+                  options={services}
+                  onSelect={this.onSelect} 
+                  onRemove={this.onRemove}
+                  displayValue="name" 
+                  emptyRecordMsg="No Services Available" 
+                  placeholder="Select Services" />
+              </div>
+              <br/>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <svg
                   className="fill-current h-4 w-4"
@@ -156,6 +193,7 @@ const mapDispatchToProps=(dispatch) =>{
   return{
     createEmployees:(employee)=> dispatch(createEmployees(employee)),
     getService:() => dispatch(getService()),
+    assignService:(service) => dispatch(assignService(service)),
     resetFeedback:()=>dispatch(resetFeedback())
   }
   }

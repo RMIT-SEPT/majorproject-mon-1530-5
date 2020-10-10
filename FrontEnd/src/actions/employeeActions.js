@@ -118,3 +118,21 @@ export const createEmployees = (employee) =>{
     }
 }
 
+export const assignService = (service) =>{
+    return(dispatch)=>{
+     axios.post('http://localhost:8080/api/employee/addService',service,{ headers: authHeader() })
+        .then(()=>{
+            dispatch({
+                type:'ASSIGN_SERVICE', service
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+        
+    
+    }
+}

@@ -191,7 +191,7 @@ export class CalendarHome extends Component {
           return (<div className="pt-4">
           <h1 className="text-center text-4xl">Book Service</h1>
           <div className="text-center">Booking ID: {vacantBookings[i].id}
-                <br/>Service ID: {vacantBookings[i].serviceId}
+                <br/>Service Name: {services[vacantBookings[i].serviceId-1].name}
                 <br/>Employee Name: {vacantBookings[i].employeeUsername}
                 <br/>Date: {vacantBookings[i].date}
                 <br/>Booking Time: {vacantBookings[i].bookingTime}</div><br/>
@@ -319,7 +319,6 @@ export class CalendarHome extends Component {
           options={services}
           onSelect={this.onSelect} 
           onRemove={this.onRemove}
-          onSearch={this.onSearch}
           displayValue="name" 
           emptyRecordMsg="No Services Available" 
           placeholder="Select Services" />

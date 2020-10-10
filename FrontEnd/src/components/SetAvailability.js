@@ -38,21 +38,17 @@ class Employee extends Component {
         this.props.resetFeedback();
         var time = 0;
         // Loop through each weekday
-        console.log(this.props.availability)
         for (let i = 0; i < this.state.weekdays.length; i++) {
             const weekday = this.state.weekdays[i];
             const availability = {
                 username: this.state.selectedEmployee,
                 dayOfWeek: weekday
             }
-            console.log(this.state.weekdays[i])
             // If weekday is in selected days
             if (this.state.selectedDays.includes(weekday)) {
                 // Then it should be added to availability
                 // If weekday is not in availability
                 if (!this.props.availability.includes(weekday)) {
-                    console.log("added to availability")
-                    console.log(availability)
                     // Add to availability
                     setTimeout(() => 
                         this.props.addAvailability(availability), time);
@@ -60,8 +56,6 @@ class Employee extends Component {
             } else { // Else weekday is not in selected days
                 // If weekday is in availability
                 if (this.props.availability.includes(weekday)) {
-                    console.log("removed from availability")
-                    console.log(availability)
                     // Remove from availability
                     setTimeout(() => 
                         this.props.removeAvailability(availability), time);
@@ -87,7 +81,6 @@ class Employee extends Component {
         this.setState({
             selectedDays: selDays
         })
-        console.log(this.state.selectedDays)
     }
     render() {
         const {employees,msg,msgStyle} = this.props;

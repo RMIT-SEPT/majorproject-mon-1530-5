@@ -29,11 +29,17 @@ const employeeReducer = (state = initialState,action)=> {
     return Object.assign({}, state, {
       availability: action.response
     })
-
     case'CREATE_EMPLOYEE':{
       console.log(action.employee)
       return Object.assign({}, state, {
         authError:false
+      })
+    }
+    case'ASSIGN_SERVICE':{
+      console.log(action.response)
+      return Object.assign({}, state, {
+        msg: action.response,
+        msgStyle:"text-green-500 text-xl text-center italic"
       })
     }
     case'GET_ERRORS':{

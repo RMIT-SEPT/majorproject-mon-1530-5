@@ -31,7 +31,7 @@ class Bookings extends Component {
       const allBookings = [];
       if ((occBookings !== undefined) && (pastBookings !== undefined)) {
         // Add occupied bookings to booking history
-        for (let i = occBookings.length-1; i >= 0; i--) {
+        for (let i = 0; i < occBookings.length; i++) {
           allBookings.push(
           <div key={'C'+i} className="max-w-md rounded overflow-hidden shadow-xl">
           <div className="px-6 py-4">
