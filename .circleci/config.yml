@@ -93,9 +93,9 @@ workflows:
           filters:
             branches:
               only: master
-      - build_and_push_frontend:
-          requires:
-            - test_frontend
-          filters:
-            branches:
-              only: master
+#      - build_and_push_frontend:
+#          requires:
+#            - test_frontend
+#          filters:
+#            branches:
+#              only: master
