@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN"})
 class ShiftControllerTests {
 
     @Autowired
@@ -82,7 +84,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validAddShiftReturn200() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
@@ -92,7 +93,7 @@ class ShiftControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(shiftDTO)))
                 .andExpect(status().isOk());
-//
+
         Map<String,String> body = new HashMap<>();
         body.put("username", "testEmployee");
         body.put("shiftDate", validWorkDateString);
@@ -103,7 +104,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddShiftReturn400_existingShift() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
@@ -128,7 +128,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddShiftReturn400_outsideOfAvailability() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
@@ -141,7 +140,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddShiftReturn404_invalidUsername() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("tesEmployee",
@@ -154,7 +152,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddShiftReturn400_invalidDateFormat() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("testEmployee",
@@ -181,7 +178,6 @@ class ShiftControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddShiftReturn400_invalidPastDate() throws Exception {
 
         ShiftDTO shiftDTO = new ShiftDTO("testEmployee",

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN"})
 public class AuthControllerTests {
 
     @Autowired
@@ -54,7 +56,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validCustomerRegisterReturn201() throws Exception {
 
         this.mockMvc.perform(delete("/api/customer/remove/testCustomer"));
@@ -68,7 +69,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCustomerRegisterReturn400_missingField() throws Exception {
 
         CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "", "1 Victoria Street", "0412345678");
@@ -80,7 +80,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCustomerRegisterReturn400_existingUsername() throws Exception {
 
         CustomerDTO customerDTO = new CustomerDTO("testCustomer", "password", "Test Name", "1 Victoria Street", "0412345678");
@@ -92,8 +91,7 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
-    void validCustomerLoginReturn200() throws Exception{
+    void validCustomerLoginReturn200() throws Exception {
 
         LoginDTO loginDTO = new LoginDTO("testCustomer", "password");
 
@@ -104,7 +102,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCustomerLoginReturn400_wrongUsername() throws Exception{
 
         LoginDTO loginDTO = new LoginDTO("tsetCustomer", "password");
@@ -116,7 +113,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCustomerLoginReturn400_wrongPassword() throws Exception{
 
         LoginDTO loginDTO = new LoginDTO("testCustomer", "passwrod");
@@ -128,7 +124,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validAddEmployeeReturn201() throws Exception {
 
         this.mockMvc.perform(delete("/api/employee/remove/testEmployee")); //undoes the @Beforeeach method
@@ -142,7 +137,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddEmployeeReturn400_missingField() throws Exception {
 
         EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "");
@@ -154,7 +148,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddEmployeeReturn400_existingUsername() throws Exception {
 
         EmployeeDTO employeeDTO = new EmployeeDTO("testEmployee", "password", "Test Name");
@@ -166,7 +159,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validEmployeeLoginReturn200() throws Exception{
 
         LoginDTO loginDTO = new LoginDTO("testEmployee", "password");
@@ -178,7 +170,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeLoginReturn400_wrongUsername() throws Exception{
 
         LoginDTO loginDTO = new LoginDTO("testEpmloyee", "password");
@@ -190,7 +181,6 @@ public class AuthControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeLoginReturn400_wrongPassword() throws Exception{
 
         LoginDTO loginDTO = new LoginDTO("testEmployee", "passwrod");

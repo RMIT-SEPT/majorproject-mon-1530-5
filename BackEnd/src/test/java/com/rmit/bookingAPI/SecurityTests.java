@@ -99,7 +99,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void authorizedAdminAccessReturn200() throws Exception {
 
         Map<String, String> updatedDetails = new HashMap<>();
@@ -115,7 +114,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void forbiddenAdminAccessReturn403_forbidden() throws Exception {
 
         CustomerDetails customerDetails = new CustomerDetails("testCustomer", "Test Name", "1 Victoria Street", "0412121212");
@@ -128,7 +126,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void authorizedEmployeeAccessReturn200() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -144,7 +141,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void forbiddenEmployeeAccessReturn403_forbidden() throws Exception {
 
         this.mockMvc.perform(delete("/api/employee/remove/testEmployee")
@@ -153,7 +149,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void authorizedCustomerAccessReturn200() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -169,7 +164,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void forbiddenCustomerAccessReturn403_forbidden() throws Exception {
 
         this.mockMvc.perform(delete("/api/customer/remove/testCustomer")
@@ -178,7 +172,6 @@ public class SecurityTests {
     }
 
     @Test
-    @DirtiesContext
     void unauthorizedUserAccessReturn401_unauthorized() throws Exception {
 
         this.mockMvc.perform(delete("/api/customer/remove/testCustomer"))

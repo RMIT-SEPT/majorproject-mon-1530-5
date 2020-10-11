@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,7 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN"})
 public class BookingControllerTests {
 
     @Autowired
@@ -115,7 +117,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validAddBookingReturn201() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -128,7 +129,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn400_invalidDate() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(invalidWorkDateString, "12:30",
@@ -141,7 +141,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn400_invalidTime() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "14:30",
@@ -154,7 +153,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn404_invalidService() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -167,7 +165,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn404_invalidEmployee() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -180,7 +177,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn400_existingBooking() throws Exception{
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -197,7 +193,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddBookingReturn400_concurrentBookingsSameEmployee() throws Exception{
 
         BookingDTO bookingDTO_1 = new BookingDTO(validWorkDateString, "12:30",
@@ -218,7 +213,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validCancelBookingReturn200() throws Exception {
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -240,7 +234,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCancelBookingReturn404_employeeNotFound() throws Exception {
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -262,7 +255,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidCancelBookingReturn404_customerNotFound() throws Exception {
 
         BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
@@ -284,7 +276,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetVacantBookingsReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/vacantBookings"))
@@ -292,7 +283,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetVacantBookingsByServiceIdReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/vacantBookings/1"))
@@ -300,7 +290,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidGetVacantBookingsByServiceIdReturn404_notFound() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/vacantBookings/0"))
@@ -308,7 +297,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidGetVacantBookingsByServiceIdReturn404_invalidServiceId() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/vacantBookings/one"))
@@ -316,7 +304,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetOccupiedBookingsReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/occupiedBookings"))
@@ -324,7 +311,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetOccupiedBookingsByUsernameReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/occupiedBookings/testCustomer"))
@@ -332,7 +318,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidGetOccupiedBookingsByUsernameReturn404_notFound() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/occupiedBookings/tetCustomer"))
@@ -340,7 +325,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetPastBookingsReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/pastBookings"))
@@ -348,7 +332,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetPastBookingsByUsernameReturn200() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/pastBookings/testCustomer"))
@@ -356,7 +339,6 @@ public class BookingControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetPastBookingsByUsernameReturn404_notFound() throws Exception {
 
         this.mockMvc.perform(get("/api/booking/pastBookings/tetCustomer"))

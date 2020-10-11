@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN"})
 class PaidServiceTests {
 
     @Autowired
@@ -51,7 +53,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void validAddServiceReturn201() throws Exception {
 
         breakdownEach();
@@ -65,7 +66,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddServiceReturn400_missingField() throws Exception {
 
         PaidService paidService = new PaidService("", "Test Service Description");
@@ -77,7 +77,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidAddServiceReturn400_existingName() throws Exception {
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
@@ -89,7 +88,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void validGetServiceReturn200() throws Exception {
 
         Long serviceId = paidServiceService.findPaidServiceByName("Test Service").getId();
@@ -99,7 +97,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidGetServiceReturn404_notFound() throws Exception {
 
         this.mockMvc.perform(get("/api/service/get/0")) // 0 will always be an invalid serviceId
@@ -107,7 +104,6 @@ class PaidServiceTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidGetServiceReturn400_invalidServiceId() throws Exception {
 
         this.mockMvc.perform(get("/api/service/get/zero"))

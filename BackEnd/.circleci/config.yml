@@ -1,13 +1,12 @@
 version: 2.0
 jobs:
-  build:
+  build_backend:
     docker:
       - image: circleci/openjdk:8-jdk-stretch
 
-    working_directory: ~/repofiles/ 
+    working_directory: ~/repofiles/BackEnd 
       
     steps:
-      - run: pwd
       - checkout:
           path: ~/repofiles
       - restore_cache:
@@ -19,8 +18,25 @@ jobs:
           paths:
             - ~/.m2
           key: bookingapi-dependencies-{{ checksum "pom.xml" }}
-      - run: ./mvnw package
+      - run: ./mvnw package -Dmaven.test.skip=true
       - store_test_results:
           path: target/surefire-reports
       - store_artifacts:
           path: target/bookingAPI-0.0.1-SNAPSHOT.jar
+          
+#  test:
+#    docker:
+#      - image: circleci/openjdk:8-jdk-stretch
+#      
+#    working_directory: ~/repofiles/BackEnd
+#    
+#    steps:
+#      - run: ls
+    
+          
+workflows:
+  build-and-deploy:
+    jobs:
+      - build_backend
+#      - test
+#      - deploy

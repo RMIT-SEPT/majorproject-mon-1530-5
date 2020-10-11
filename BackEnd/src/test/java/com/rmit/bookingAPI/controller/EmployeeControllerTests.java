@@ -3,14 +3,17 @@ package com.rmit.bookingAPI.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
 import com.rmit.bookingAPI.model.PaidService;
+import com.rmit.bookingAPI.security.SecurityConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN", "EMPLOYEE"})
 class EmployeeControllerTests {
 
     @Autowired
@@ -46,8 +50,9 @@ class EmployeeControllerTests {
     @AfterEach
     void breakdownEach() throws Exception {
         this.mockMvc.perform(delete("/api/employee/remove/testEmployee"));
-    }@Test
-    @DirtiesContext
+    }
+
+    @Test
     void validEmployeeGetReturn200() throws Exception{
 
         this.mockMvc.perform(get("/api/employee/get/testEmployee"))
@@ -55,7 +60,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeGetReturn404() throws Exception{
 
         this.mockMvc.perform(get("/api/employee/get/tsetEmployee"))
@@ -63,7 +67,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validEmployeeAddAvailabilityReturn200() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -77,7 +80,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn400_existingDay() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -95,7 +97,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn400_invalidDay() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -109,7 +110,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeAddAvailabilityReturn404_invalidEmployee() throws Exception {
 
         Map<String, String> updatedDetails = new HashMap<>();
@@ -123,7 +123,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validEmployeeRemoveAvailabilityReturn200() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -141,7 +140,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn404_notFound() throws Exception {
 
         Map<String,String> updatedDetails1 = new HashMap<>();
@@ -163,7 +161,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn400_invalidDay() throws Exception {
 
         Map<String,String> updatedDetails1 = new HashMap<>();
@@ -185,7 +182,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeRemoveAvailabilityReturn404_invalidEmployee() throws Exception {
 
         Map<String,String> updatedDetails1 = new HashMap<>();
@@ -207,7 +203,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validEmployeeAddServiceReturn200() throws Exception {
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
@@ -227,7 +222,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeAddServiceReturn400_invalidService() throws Exception {
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
@@ -247,7 +241,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeAddServiceReturn400_existingService() throws Exception {
 
         PaidService paidService = new PaidService("Test Service", "Test Service Description");
@@ -271,7 +264,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void validEmployeeUpdatePasswordReturn200() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -286,7 +278,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeUpdatePasswordReturn404_notFound() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();
@@ -301,7 +292,6 @@ class EmployeeControllerTests {
     }
 
     @Test
-    @DirtiesContext
     void invalidEmployeeUpdatePasswordReturn400_wrongPassword() throws Exception {
 
         Map<String,String> updatedDetails = new HashMap<>();

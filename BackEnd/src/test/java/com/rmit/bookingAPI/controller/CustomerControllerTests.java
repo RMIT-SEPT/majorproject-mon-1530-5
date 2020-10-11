@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,7 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
+@WithMockUser(roles = {"ADMIN", "CUSTOMER"})
 class CustomerControllerTests {
 
 	@Autowired
@@ -46,7 +48,6 @@ class CustomerControllerTests {
 	}
 
 	@Test
-	@DirtiesContext
 	void validCustomerGetReturn200() throws Exception{
 
 		this.mockMvc.perform(get("/api/customer/get/testCustomer"))
@@ -54,7 +55,6 @@ class CustomerControllerTests {
 	}
 
 	@Test
-	@DirtiesContext
 	void invalidCustomerGetReturn404() throws Exception{
 
 		this.mockMvc.perform(get("/api/customer/get/tsetCustomer"))
@@ -62,7 +62,6 @@ class CustomerControllerTests {
 	}
 
 	@Test
-	@DirtiesContext
 	void validCustomerUpdateReturn200() throws Exception{
 
 		CustomerDetails customerDetails = new CustomerDetails("testCustomer", "Test Name", "1 Victoria Street", "0412121212");
@@ -74,7 +73,6 @@ class CustomerControllerTests {
 	}
 
 	@Test
-	@DirtiesContext
 	void invalidCustomerUpdateReturn404_notFound() throws Exception{
 
 		CustomerDetails customerDetails = new CustomerDetails("tsetCustomer", "Test Name", "1 Victoria Street", "0412121212");
