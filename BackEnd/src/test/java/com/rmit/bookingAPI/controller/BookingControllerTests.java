@@ -223,35 +223,13 @@ public class BookingControllerTests {
                 .content(objectMapper.writeValueAsString(bookingDTO)));
 
         Map<String,String> bookingDetails = new HashMap<>();
-        bookingDetails.put("employeeUsername", "testEmployee");
-        bookingDetails.put("bookingDate", validWorkDateString);
+        bookingDetails.put("bookingId", "17");
         bookingDetails.put("customerUsername", "testCustomer");
 
         this.mockMvc.perform(delete("/api/booking/cancel")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(bookingDetails)))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    void invalidCancelBookingReturn404_employeeNotFound() throws Exception {
-
-        BookingDTO bookingDTO = new BookingDTO(validWorkDateString, "12:30",
-                "1", "testCustomer", "testEmployee");
-
-        this.mockMvc.perform(post("/api/booking/add")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(bookingDTO)));
-
-        Map<String,String> bookingDetails = new HashMap<>();
-        bookingDetails.put("employeeUsername", "tetEmployee");
-        bookingDetails.put("bookingDate", validWorkDateString);
-        bookingDetails.put("customerUsername", "testCustomer");
-
-        this.mockMvc.perform(delete("/api/booking/cancel")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(bookingDetails)))
-                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -265,8 +243,7 @@ public class BookingControllerTests {
                 .content(objectMapper.writeValueAsString(bookingDTO)));
 
         Map<String,String> bookingDetails = new HashMap<>();
-        bookingDetails.put("employeeUsername", "testEmployee");
-        bookingDetails.put("bookingDate", validWorkDateString);
+        bookingDetails.put("bookingId", "18"); //need to find solution to remove this
         bookingDetails.put("customerUsername", "tetCustomer");
 
         this.mockMvc.perform(delete("/api/booking/remove/")

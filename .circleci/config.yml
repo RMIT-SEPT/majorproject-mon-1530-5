@@ -1,11 +1,32 @@
 version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  
 jobs:
-  build:
+  test_backend:
     docker:
-     - image:  "circleci/node:13.11.0"
-        
+      - image: circleci/openjdk:8-jdk-stretch
+    working_directory: ~/repofiles/BackEnd 
+    steps:
+      - checkout:
+          path: ~/repofiles
+      - restore_cache:
+          keys:
+            - bookingapi-dependencies-{{ checksum "pom.xml" }}
+      - run: ./mvnw dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: bookingapi-dependencies-{{ checksum "pom.xml" }}
+      - run: ./mvnw test
+      - store_test_results:
+          path: target/surefire-reports
+          
+          
+  test_frontend:
+    docker:
+      - image:  "circleci/node:13.11.0"
     working_directory: ~/repofiles/FrontEnd
-      
     steps:
       - checkout:
           path: ~/repofiles
@@ -13,12 +34,68 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-        
       - run: npm install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run: npm test 
+      
+    
+  build_and_push_backend:
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+    environment:
+      FULL_IMAGE_NAME: 149859093103.dkr.ecr.us-east-1.amazonaws.com/backend:latest
+    working_directory: ~/repofiles/BackEnd 
+    steps:
+      - checkout:
+          path: ~/repofiles
+      - restore_cache:
+          keys:
+            - bookingapi-dependencies-{{ checksum "pom.xml" }}
+      - run: ./mvnw dependency:go-offline
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: bookingapi-dependencies-{{ checksum "pom.xml" }}
+      - run: ./mvnw package -Dmaven.test.skip=true
+      - store_artifacts:
+          path: target/bookingAPI-0.0.1-SNAPSHOT.jar    
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            sudo apt-get update
+            sudo apt-get -y -qq install awscli
+            sudo apt-get install python3-pip
+            sudo pip3 install --upgrade awscli     
+      - setup_remote_docker
+      - run:
+          name: Build and tag image
+          command: |
+            docker build -t $FULL_IMAGE_NAME .
+      - run:
+          name: Push image to repo
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_URL
+            docker push $FULL_IMAGE_NAME
+  
         
-      - run: npm test
+workflows:
+  version: 2.1
+  build-and-deploy:
+    jobs:
+      - test_backend
+      - test_frontend
+      - build_and_push_backend:
+          requires:
+            - test_backend
+          filters:
+            branches:
+              only: master
+      - build_and_push_frontend:
+          requires:
+            - test_frontend
+          filters:
+            branches:
+              only: master

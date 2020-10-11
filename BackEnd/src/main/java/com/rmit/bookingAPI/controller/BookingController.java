@@ -1,5 +1,6 @@
 package com.rmit.bookingAPI.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.BookingDTO;
 import com.rmit.bookingAPI.model.*;
 import com.rmit.bookingAPI.service.BookingService;
@@ -113,7 +114,6 @@ public class BookingController {
             return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
         }
         try {
-
             Booking booking = bookingService.findBookingById(Long.valueOf(bookingDetails.get("bookingId")));
             if (null == booking) {
                 return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);

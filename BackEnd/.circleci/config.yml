@@ -37,6 +37,7 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - build_backend
-#      - test
-#      - deploy
+      - build_backend:
+      filters:
+        branches:
+          only: master
