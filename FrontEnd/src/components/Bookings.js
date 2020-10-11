@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { getOccupiedBookings, getPastBookings, cancelBooking } from '../actions/bookingActions'
+import { getOccupiedBookings, getPastBookings, cancelBooking, resetFeedback } from '../actions/bookingActions'
 
 class Bookings extends Component {
   componentDidMount() {
     this.props.getOccupiedBookings(this.props.user.username);
     this.props.getPastBookings(this.props.user.username);
+    this.props.resetFeedback();
   }
   handleClick = (e) => {
     console.log(e.target.value);
-    console.log(this.props.occBookings[e.target.value]);
-    // this.props.cancelBooking(this.props.occBookings[e.target.value]);
+    const bookingToCancel = {
+      bookingId: parseInt(this.props.occBookings[e.target.value].id),
+      customerUsername: this.props.occBookings[e.target.value].customerUsername
+    }
+    console.log(bookingToCancel);
+    this.props.cancelBooking(bookingToCancel);
+    setTimeout(() => this.props.getOccupiedBookings(this.props.user.username),100);
   }
   render() {
     // Route guarding in case the user is not logged in or has a different role 
@@ -22,7 +28,7 @@ class Bookings extends Component {
     }else{
       return <Redirect to="/login"/>
     }
-    const {occBookings,pastBookings} = this.props;
+    const {occBookings,pastBookings,msgBook,msgStyle} = this.props;
 
     const formatEndTime = (time) => {
       return (parseInt(time.substring(0,2))+2) + time.substring(2,5);;
@@ -97,8 +103,13 @@ class Bookings extends Component {
       return allBookings;
     }
     return (
-      <div className="container mx-auto py-5 flex flew-row justify-evenly">
-        {bookingHistory()}
+      <div>
+        <br/>
+        {msgBook === "" ? null : <div className={msgStyle}>{msgBook}</div>}
+        <br/>
+        <div className="container mx-auto py-5 flex flew-row justify-evenly">
+          {bookingHistory()}
+        </div>
       </div>
     );
   }
@@ -107,7 +118,8 @@ const mapDispatchToProps=(dispatch) =>{
   return{
     getOccupiedBookings:(username)=> dispatch(getOccupiedBookings(username)),
     getPastBookings:(username)=> dispatch(getPastBookings(username)),
-    cancelBooking:(booking)=> dispatch(cancelBooking(booking))
+    cancelBooking:(booking)=> dispatch(cancelBooking(booking)),
+    resetFeedback:() =>dispatch(resetFeedback())
   }
 }
 const mapStateToProps=(state) => {
@@ -115,7 +127,8 @@ const mapStateToProps=(state) => {
    occBookings:state.booking.occBookings,
    pastBookings:state.booking.pastBookings,
    isLoggedIn:state.auth.isLoggedIn,
-   authError:state.auth.authError,
+   msgBook:state.booking.msgBook,
+   msgStyle:state.booking.msgStyle,
    user:state.auth.user
   }
 }
