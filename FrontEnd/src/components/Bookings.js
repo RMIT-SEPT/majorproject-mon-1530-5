@@ -2,12 +2,23 @@ import React, { Component } from "react";
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { getOccupiedBookings, getPastBookings, cancelBooking, resetFeedback } from '../actions/bookingActions'
+import { getCustomers } from '../actions/customerActions'
 
 class Bookings extends Component {
+  state = {
+    selectedCustomer:""
+  }
   componentDidMount() {
     this.props.getOccupiedBookings(this.props.user.username);
     this.props.getPastBookings(this.props.user.username);
     this.props.resetFeedback();
+    if (this.props.user.role === "ROLE_ADMIN") {
+      this.props.getCustomers();
+    } else {
+      this.setState({
+        selectedCustomer: this.props.user.username
+      })
+    }
   }
   handleClick = (e) => {
     console.log(e.target.value);
@@ -17,21 +28,67 @@ class Bookings extends Component {
     }
     console.log(bookingToCancel);
     this.props.cancelBooking(bookingToCancel);
-    setTimeout(() => this.props.getOccupiedBookings(this.props.user.username),100);
+    setTimeout(() => this.props.getOccupiedBookings(this.state.selectedCustomer),100);
+  }
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+    if(e.target.id === 'selectedCustomer'){
+      console.log(e.target.value)
+      this.props.getOccupiedBookings(e.target.value)
+    }
+    this.props.resetFeedback()
   }
   render() {
     // Route guarding in case the user is not logged in or has a different role 
     if(this.props.user !== null)  {
-      if(this.props.user.role !== "ROLE_CUSTOMER"){
+      if(this.props.user.role !== "ROLE_CUSTOMER" && this.props.user.role !== "ROLE_ADMIN"){
         return <Redirect to="/about"/>
       } 
     }else{
       return <Redirect to="/login"/>
     }
-    const {occBookings,pastBookings,msgBook,msgStyle} = this.props;
+    const {occBookings,pastBookings,customers,msgBook,msgStyle} = this.props;
 
     const formatEndTime = (time) => {
       return (parseInt(time.substring(0,2))+2) + time.substring(2,5);;
+    }
+    const adminOptions = () => {
+      if (this.props.user.role === "ROLE_ADMIN") {
+        return(<div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            >
+              Choose The Employee
+            </label>
+            <div className="relative">
+              <select
+                className="bg-gray-200  appearance-none  block w-full border-2 border-gray-200 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                id="selectedCustomer"
+                onChange= {this.handleChange}
+              >
+                 <option>Please select employee</option>
+                {customers && customers.map(customer =>{
+                  return(<option key={customer.id}>{customer.username}</option>)
+                })}
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>)
+      } else {
+        return(
+          <div className="text-center text-4xl">{this.state.selectedCustomer}'s Bookings</div>
+        )
+      }
     }
     const bookingHistory = () => {
       const allBookings = [];
@@ -95,10 +152,10 @@ class Bookings extends Component {
         </div>)
         }
         if (!occBookings.length && !pastBookings.length) {
-          return (<div className="text-center text-4xl">No Current or Past Bookings To Show</div>)
+          return (<div className="text-center text-2xl">No Current or Past Bookings To Show</div>)
         }
       } else {
-        return (<div className="text-center text-4xl">No Current or Past Bookings To Show</div>)
+        return (<div className="text-center text-2xl">No Current or Past Bookings To Show</div>)
       }
       return allBookings;
     }
@@ -107,6 +164,7 @@ class Bookings extends Component {
         <br/>
         {msgBook === "" ? null : <div className={msgStyle}>{msgBook}</div>}
         <br/>
+        {adminOptions()}
         <div className="container mx-auto py-5 flex flew-row justify-evenly">
           {bookingHistory()}
         </div>
@@ -119,7 +177,8 @@ const mapDispatchToProps=(dispatch) =>{
     getOccupiedBookings:(username)=> dispatch(getOccupiedBookings(username)),
     getPastBookings:(username)=> dispatch(getPastBookings(username)),
     cancelBooking:(booking)=> dispatch(cancelBooking(booking)),
-    resetFeedback:() =>dispatch(resetFeedback())
+    resetFeedback:() =>dispatch(resetFeedback()),
+    getCustomers:() =>dispatch(getCustomers())
   }
 }
 const mapStateToProps=(state) => {
@@ -129,7 +188,8 @@ const mapStateToProps=(state) => {
    isLoggedIn:state.auth.isLoggedIn,
    msgBook:state.booking.msgBook,
    msgStyle:state.booking.msgStyle,
-   user:state.auth.user
+   user:state.auth.user,
+   customers:state.customer.customers
   }
 }
 

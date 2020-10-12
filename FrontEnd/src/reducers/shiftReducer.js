@@ -3,7 +3,8 @@ const initialState = {
     startDateTime:"",
     endDateTime:"",
     msgStyle:"text-xl text-center italic",
-    msg:""
+    msg:"",
+    shifts:[]
   }
     
     const shiftReducer = (state =initialState,action)=> {

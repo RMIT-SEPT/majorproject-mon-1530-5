@@ -1,6 +1,7 @@
-
 const initialState = {
-  services:[]
+  services:[],
+  msg:"",
+  msgStyle:""
 }
   
   const servicesReducer = (state =initialState,action)=> {
@@ -14,7 +15,7 @@ const initialState = {
       case'ADD_SERVICE':{
         console.log(action.response)
         return  Object.assign({}, state, {
-          msgBook: action.response,
+          msg: "Service Added!",
           msgStyle:"text-green-500 text-xl text-center italic"
         }) 
       }

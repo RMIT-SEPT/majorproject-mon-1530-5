@@ -1,8 +1,9 @@
-
-
 const initialState = {
   employees:[],
-  availability:[]
+  availability:[],
+  msg:"",
+  msgStyle:"",
+  authError:""
 }
 
 const employeeReducer = (state = initialState,action)=> {
@@ -15,13 +16,13 @@ const employeeReducer = (state = initialState,action)=> {
     case'ADD_AVAILABILITY':
     console.log(action.response)
     return Object.assign({},state, {
-      msgBook: action.response,
+      msg: "Availability Updated!",
       msgStyle:"text-green-500 text-xl text-center italic"
     })
     case'REMOVE_AVAILABILITY':
     console.log(action.response)
     return Object.assign({},state, {
-      msgBook: action.response,
+      msg: "Availability Updated!",
       msgStyle:"text-green-500 text-xl text-center italic"
     })
     case'GET_AVAILABILITY': 

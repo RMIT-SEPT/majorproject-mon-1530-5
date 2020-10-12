@@ -1,5 +1,8 @@
 const initialState = {
-    msgStyle:"text-xl text-center italic"
+    msgBook:"",
+    msgStyle:"text-xl text-center italic",
+    occBookings:[],
+    pastBookings:[],
   }
     
 const bookingReducer = (state = initialState,action)=> {
