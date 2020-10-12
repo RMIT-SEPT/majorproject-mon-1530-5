@@ -111,7 +111,7 @@ public class BookingController {
     public ResponseEntity<?> cancelBooking(@RequestBody Map<String,String> bookingDetails) {
 
         if (null == userService.findCustomerDetailsByUsername(bookingDetails.get("customerUsername"))) {
-            return new ResponseEntity<String>("Customer not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Customer not found", HttpStatus.NOT_FOUND);
         }
         try {
             Booking booking = bookingService.findBookingById(Long.valueOf(bookingDetails.get("bookingId")));
@@ -119,7 +119,10 @@ public class BookingController {
                 return new ResponseEntity<>("Booking not found", HttpStatus.NOT_FOUND);
             }
             if (null == booking.getCustomerUsername()) {
-                return new ResponseEntity<String>("Booking is not occupied", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Booking is not occupied", HttpStatus.BAD_REQUEST);
+            }
+            if (!bookingService.isBookingCancellable(booking.getDate(), booking.getBookingTime())) {
+                return new ResponseEntity<>("Booking cannot be cancelled within 48 hours of booking time", HttpStatus.BAD_REQUEST);
             }
 
             booking.setCustomerUsername(null);

@@ -47,26 +47,26 @@ public class ShiftController {
             Shift newShift = shiftDTO.returnShiftObject();
 
             if (newShift.getShiftDate().before(tempCal.getTime())) {
-                return new ResponseEntity<String>("Cannot add a shift before today's date", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot add a shift before or on today's date", HttpStatus.BAD_REQUEST);
             }
 
             //shift cannot be added further than 1 month in the future
             tempCal.add(Calendar.MONTH, 1);
             if (newShift.getShiftDate().after(tempCal.getTime())) {
-                return new ResponseEntity<String>("Cannot add shift further than 1 month in the future", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot add shift further than 1 month in the future", HttpStatus.BAD_REQUEST);
             }
             if (null == userService.findEmployeeDetailsByUsername(newShift.getEmployeeUsername())) {
-                return new ResponseEntity<String>("That employee does not exist", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("That employee does not exist", HttpStatus.NOT_FOUND);
             }
             for (Shift tempShift : shiftService.getAllShifts()) {
                 if (tempShift.getEmployeeUsername().equals(newShift.getEmployeeUsername())) {
                     if (tempShift.getShiftDate().compareTo(newShift.getShiftDate()) == 0) {
-                        return new ResponseEntity<String>("That shift already exists", HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity<>("That shift already exists", HttpStatus.BAD_REQUEST);
                     }
                 }
             }
             if (!shiftService.isShiftWorkable(newShift, userService.getEmployeeAvailability(newShift.getEmployeeUsername()))) {
-                return new ResponseEntity<String>("Shift is outside of employee availability", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Shift is outside of employee availability", HttpStatus.BAD_REQUEST);
             }
             shiftService.addOrUpdateShift(newShift);
 
@@ -90,10 +90,10 @@ public class ShiftController {
                         )
                 );
             }
-            return new ResponseEntity<String>("Shift and consequent bookings added!", HttpStatus.OK);
+            return new ResponseEntity<>("Shift and consequent bookings added!", HttpStatus.OK);
         }
         catch(Exception e) {
-            return new ResponseEntity<String>("Invalid date format", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid date format", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -103,7 +103,7 @@ public class ShiftController {
         //remove all bookings
         //remove shift
         if (null == userService.findEmployeeDetailsByUsername(shiftDetails.get("username"))) {
-            return new ResponseEntity<String>("Employee not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
         }
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -113,7 +113,7 @@ public class ShiftController {
             boolean shiftFound = false;
 
             if (cal.getTime().after(desiredDate)) {
-                return new ResponseEntity<String>("Cannot remove past shift", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Cannot remove past shift", HttpStatus.BAD_REQUEST);
             }
 
             Iterator<Shift> shiftIterator = shiftService.getAllShifts().iterator();
@@ -129,7 +129,7 @@ public class ShiftController {
             }
 
             if (!shiftFound) {
-                return new ResponseEntity<String>("Shift not found", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Shift not found", HttpStatus.NOT_FOUND);
             }
 
             Iterator<Booking> bookingIterator = bookingService.getAllBookings().iterator();
@@ -142,10 +142,10 @@ public class ShiftController {
                 }
                 bookingIterator.remove();
             }
-            return new ResponseEntity<String>("Shift and bookings removed", HttpStatus.OK);
+            return new ResponseEntity<>("Shift and bookings removed", HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<String>("Invalid date", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid date", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -153,23 +153,23 @@ public class ShiftController {
     @GetMapping(value="/shift/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Shift>> getAllShifts() {
-        return new ResponseEntity<List<Shift>>(shiftService.getAllShifts(), HttpStatus.OK);
+        return new ResponseEntity<>(shiftService.getAllShifts(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/shift/findAllByUsername/{username}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getAllShiftsByUsername(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
-            return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<List<Shift>>(shiftService.getShiftsByUsername(username), HttpStatus.OK);
+        return new ResponseEntity<>(shiftService.getShiftsByUsername(username), HttpStatus.OK);
     }
 
     @GetMapping(value = "/shift/findFutureByUsername/{username}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<?> getFutureShiftsByUsername(@PathVariable("username") String username) {
         if (null == userService.findEmployeeDetailsByUsername(username)) {
-            return new ResponseEntity<String>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("An employee with that username doesn't exist", HttpStatus.NOT_FOUND);
         }
 
         List<Shift> desiredShifts = new ArrayList<>();
@@ -179,7 +179,7 @@ public class ShiftController {
                 desiredShifts.add(shift);
             }
         }
-        return new ResponseEntity<List<Shift>>(desiredShifts, HttpStatus.OK);
+        return new ResponseEntity<>(desiredShifts, HttpStatus.OK);
     }
 
     @GetMapping(value = "shift/getAvailableEmployees/{date}")
@@ -208,11 +208,11 @@ public class ShiftController {
                 availableEmployees.removeIf(employee -> tempShift.getEmployeeUsername().equals(employee.get("username")));
             }
 
-            return new ResponseEntity<List<Map<String,String>>>(availableEmployees, HttpStatus.OK);
+            return new ResponseEntity<>(availableEmployees, HttpStatus.OK);
 
         }
         catch (Exception e) {
-            return new ResponseEntity<String>("Invalid date", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Invalid date", HttpStatus.BAD_REQUEST);
         }
     }
 }

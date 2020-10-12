@@ -5,7 +5,12 @@ import com.rmit.bookingAPI.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -45,6 +50,22 @@ public class BookingService {
 
     public void removeBooking(Booking booking) {
         bookingRepository.delete(booking);
+    }
+
+    /*
+    * Helper method to determine if a booking made by a customer can be cancelled due
+    * to the 48 hour cutoff time before the booking.
+    * */
+    public boolean isBookingCancellable(Date bookingDate, Time bookingTime) {
+        Calendar calendar = Calendar.getInstance();
+        long cutoffTimeInMilli = calendar.getTimeInMillis();
+        cutoffTimeInMilli += 48 * 60 * 60 * 1000; //48 hours in milliseconds;
+        long bookingTimeInMilli = bookingDate.getTime() + bookingTime.getTime();
+
+        if (cutoffTimeInMilli > bookingTimeInMilli) {
+            return false;
+        }
+        return true;
     }
 
 }
