@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 import { getService } from "../actions/servicesActions";
 import { addBooking, resetFeedback } from "../actions/bookingActions";
-import { Multiselect } from 'multiselect-react-dropdown';
-import axios from "axios"
-import authHeader from '../services/authHeader';
+import { Multiselect } from "multiselect-react-dropdown";
+import axios from "axios";
+import authHeader from "../services/authHeader";
 import "../css/CalendarHome.css";
 export class CalendarHome extends Component {
   state = {
@@ -32,7 +32,7 @@ export class CalendarHome extends Component {
     selectedServices: [],
     selectedServiceID: "",
     selectedBookingID: "",
-    vacantBookings: [ ],
+    vacantBookings: [],
     customerUsername: "",
     selectedDate: "",
     selectedTime: "",
@@ -86,163 +86,232 @@ export class CalendarHome extends Component {
   onSelect = (services, selected) => {
     this.state.selectedServices.push(selected);
     this.setState({
-      selectedServices: this.state.selectedServices
-    })
+      selectedServices: this.state.selectedServices,
+    });
     this.props.resetFeedback();
-  }
+  };
   //When a service is removed
   onRemove = (services, removed) => {
     for (var i = 0; i < this.state.selectedServices.length; i++) {
       if (removed.id === this.state.selectedServices[i].id) {
-        this.state.selectedServices.splice(i,1);
+        this.state.selectedServices.splice(i, 1);
       }
     }
     this.setState({
-      selectedServices: this.state.selectedServices
-    })
+      selectedServices: this.state.selectedServices,
+    });
     this.props.resetFeedback();
-  }
+  };
   //Get vacant bookings and set vacantBookings[] to api data
   getVacantBookings = () => {
-    axios.get(`http://localhost:8080/api/booking/vacantBookings`,{ headers: authHeader() })
-        .then((response)=>{
-          this.setState({
-            vacantBookings: response.data
-          })
-        })
-  }
+    axios
+      .get(`http://localhost:8080/api/booking/vacantBookings`, {
+        headers: authHeader(),
+      })
+      .then((response) => {
+        this.setState({
+          vacantBookings: response.data,
+        });
+      });
+  };
   // When booking button is clicked
   handleClick = (e) => {
-    this.setState({
-      selectedBookingID: e.target.value
-    }, function () {
-      var i = this.getBookingIndex()
-      this.setState({
-        selectedDate: this.state.vacantBookings[i].date.split('-').reverse().join('-'),
-        selectedTime: this.state.vacantBookings[i].bookingTime.substring(0, 5),
-        selectedServiceID: this.state.vacantBookings[i].serviceId,
-        selectedEmployee: this.state.vacantBookings[i].employeeUsername
-      })
-    })
+    this.setState(
+      {
+        selectedBookingID: e.target.value,
+      },
+      function () {
+        var i = this.getBookingIndex();
+        this.setState({
+          selectedDate: this.state.vacantBookings[i].date
+            .split("-")
+            .reverse()
+            .join("-"),
+          selectedTime: this.state.vacantBookings[i].bookingTime.substring(
+            0,
+            5
+          ),
+          selectedServiceID: this.state.vacantBookings[i].serviceId,
+          selectedEmployee: this.state.vacantBookings[i].employeeUsername,
+        });
+      }
+    );
     this.props.resetFeedback();
-  }
+  };
   // Get index of the booking selected on calendar in vacantBookings[]
   getBookingIndex = () => {
     for (var i = 0; i < this.state.vacantBookings.length; i++) {
-      if (this.state.vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
+      if (
+        this.state.vacantBookings[i].id ===
+        parseInt(this.state.selectedBookingID)
+      ) {
         return i;
       }
     }
-  }
-  // Set customerUsername to username value 
+  };
+  // Set customerUsername to username value
   handleUsername = (e) => {
     this.setState({
       [e.target.id]: e.target.value,
     });
-  }
+  };
   // Create booking object and post to api
   handleSubmit = (e) => {
-    e.preventDefault()
-    const booking = {
+    e.preventDefault();
+    let booking;
+    if (
+      this.props.user.role !== null &&
+      this.props.user.role === "ROLE_CUSTOMER"
+    ) {
+       booking = {
+        bookingDate: this.state.selectedDate,
+        bookingTime: this.state.selectedTime,
+        serviceId: this.state.selectedServiceID,
+        customerUsername: this.props.user.username,
+        employeeUsername: this.state.selectedEmployee,
+      };
+    }
+    else if (
+      this.props.user.role !== null &&
+      this.props.user.role === "ROLE_ADMIN"
+    ) {
+     booking = {
       bookingDate: this.state.selectedDate,
       bookingTime: this.state.selectedTime,
       serviceId: this.state.selectedServiceID,
       customerUsername: this.state.customerUsername,
-      employeeUsername: this.state.selectedEmployee
-    }
-    console.log(booking);
-    this.props.addBooking(booking);
+      employeeUsername: this.state.selectedEmployee,
+    };
+  }
+  console.log(booking);
+  this.props.addBooking(booking);
   };
   render() {
-    const {services,msgBook,msgStyle} = this.props;
-    const {vacantBookings, selectedServices} = this.state;
+    const { services, msgBook, msgStyle } = this.props;
+    const { vacantBookings, selectedServices } = this.state;
     const date = this.state.date;
     const newDate = new Date(date);
     // Create booking buttons for calendar
     const bookingButtons = (bookDate) => {
       const bookings = [];
       var year = bookDate.getFullYear(),
-      month = '' + (bookDate.getMonth()+1),
-      day = '' + bookDate.getDate();
+        month = "" + (bookDate.getMonth() + 1),
+        day = "" + bookDate.getDate();
       if (month.length < 2) {
-        month = '0' + month;
+        month = "0" + month;
       }
       if (day.length < 2) {
-        day = '0' + day;
+        day = "0" + day;
       }
-      const formattedDate = [year,month,day].join('-');
+      const formattedDate = [year, month, day].join("-");
       for (let i = 0; i < vacantBookings.length; i++) {
         if (vacantBookings[i].date === formattedDate) {
           for (let j = 0; j < selectedServices.length; j++) {
             if (vacantBookings[i].serviceId === selectedServices[j].id)
-            bookings.push(<button className="border px-1 py-2 bg-blue-900 text-xs text-white text-left mx-1" key={vacantBookings[i].id}
-            value={vacantBookings[i].id} onClick={this.handleClick}>
-              {selectedServices[j].name}<br/>
-              {vacantBookings[i].bookingTime.slice(0,5)}</button>)
+              bookings.push(
+                <button
+                  className="border px-1 py-2 bg-blue-900 text-xs text-white text-left mx-1"
+                  key={vacantBookings[i].id}
+                  value={vacantBookings[i].id}
+                  onClick={this.handleClick}
+                >
+                  {selectedServices[j].name}
+                  <br />
+                  {vacantBookings[i].bookingTime.slice(0, 5)}
+                </button>
+              );
           }
         }
       }
       return bookings;
-    }
+    };
     // Create booking form for when a booking button is selected
     const bookingForm = () => {
       for (let i = 0; i < vacantBookings.length; i++) {
         if (vacantBookings[i].id === parseInt(this.state.selectedBookingID)) {
-          return (<div className="pt-4">
-          <h1 className="text-center text-4xl">Book Service</h1>
-          <div className="text-center">Booking ID: {vacantBookings[i].id}
-                <br/>Service Name: {services[vacantBookings[i].serviceId-1].name}
-                <br/>Employee Name: {vacantBookings[i].employeeUsername}
-                <br/>Date: {vacantBookings[i].date}
-                <br/>Booking Time: {vacantBookings[i].bookingTime}</div><br/>
-          <form
-            onSubmit={this.handleSubmit}
-            className="w-full max-w-lg mx-auto py-2"
-          >
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                  Full Name
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  type="text"
-                  placeholder="e.g Jane Doe"
-                  id="name"
-                  required
-                />
-              </div>
-              <div className="w-full md:w-1/2 px-3">
-                <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                  Username
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  type="text"
-                  placeholder="e.g janeDoe"
-                  id="customerUsername"
-                  onChange={this.handleUsername}
-                  required
-                />
-              </div>
-            </div>
-            <div className="md:flex md:items-center">
-              <div className="md:w-1/3"></div>
-              <div className="md:w-2/3">
+          if (
+            this.props.user.role !== null &&
+            this.props.user.role === "ROLE_CUSTOMER"
+          ) {
+            return (
+              <div className="pt-4">
                 <button
                   className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                   type="submit"
+                  onClick={this.handleSubmit}
                 >
                   Book
                 </button>
               </div>
-            </div>
-          </form>
-        </div>)
-        } 
+            );
+          } else if (
+            this.props.user.role !== null &&
+            this.props.user.role === "ROLE_ADMIN"
+          ) {
+            return (
+              <div className="pt-4">
+                <h1 className="text-center text-4xl">Book Service</h1>
+                <div className="text-center">
+                  Booking ID: {vacantBookings[i].id}
+                  <br />
+                  Service Name: {services[vacantBookings[i].serviceId - 1].name}
+                  <br />
+                  Employee Name: {vacantBookings[i].employeeUsername}
+                  <br />
+                  Date: {vacantBookings[i].date}
+                  <br />
+                  Booking Time: {vacantBookings[i].bookingTime}
+                </div>
+                <br />
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="w-full max-w-lg mx-auto py-2"
+                >
+                  <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Full Name
+                      </label>
+                      <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+                        type="text"
+                        placeholder="e.g Jane Doe"
+                        id="name"
+                        required
+                      />
+                    </div>
+                    <div className="w-full md:w-1/2 px-3">
+                      <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Username
+                      </label>
+                      <input
+                        className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text"
+                        placeholder="e.g janeDoe"
+                        id="customerUsername"
+                        onChange={this.handleUsername}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="md:flex md:items-center">
+                    <div className="md:w-1/3"></div>
+                    <div className="md:w-2/3">
+                      <button
+                        className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                        type="submit"
+                      >
+                        Book
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            );
+          }
+        }
       }
-
-    }
+    };
 
     const previousMonthLastDays = () => {
       const previousDays = [];
@@ -259,7 +328,11 @@ export class CalendarHome extends Component {
       const nextMonthDays = [];
       let nextDays = 7 - this.state.lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
-        nextMonthDays.push(<td className="nextPreviousMonthDays" key={i}>{i}</td>);
+        nextMonthDays.push(
+          <td className="nextPreviousMonthDays" key={i}>
+            {i}
+          </td>
+        );
       }
       return nextMonthDays;
     };
@@ -268,7 +341,12 @@ export class CalendarHome extends Component {
       rows.push(previousMonthLastDays());
       for (let i = 1; i <= 7 - previousMonthLastDays().length; i++) {
         newDate.setDate(i);
-        rows.push(<td className="currentMonthDays" key={i}>{i}{bookingButtons(newDate)}</td>);
+        rows.push(
+          <td className="currentMonthDays" key={i}>
+            {i}
+            {bookingButtons(newDate)}
+          </td>
+        );
       }
 
       return rows;
@@ -281,7 +359,8 @@ export class CalendarHome extends Component {
           rows.push(
             <td className="currentMonthDays" key={i}>
               {7 - previousMonthLastDays().length + i + n}
-              <br/>{bookingButtons(newDate)}
+              <br />
+              {bookingButtons(newDate)}
             </td>
           );
         }
@@ -293,19 +372,26 @@ export class CalendarHome extends Component {
       if (previousMonthLastDays().length === 5) {
         newDate.setDate(31);
         rows.push(
-          <td className="nextPreviousMonthDays"key={31} >31
-          {bookingButtons(newDate)}</td>,
+          <td className="nextPreviousMonthDays" key={31}>
+            31
+            {bookingButtons(newDate)}
+          </td>,
           nextMonthDays()
         );
       } else if (previousMonthLastDays().length === 6) {
         newDate.setDate(30);
         rows.push(
-          <td className="nextPreviousMonthDays" key={30}>30
-          {bookingButtons(newDate)}</td>);
+          <td className="nextPreviousMonthDays" key={30}>
+            30
+            {bookingButtons(newDate)}
+          </td>
+        );
         newDate.setDate(31);
         rows.push(
-          <td className="nextPreviousMonthDays" key={31}>31
-          {bookingButtons(newDate)}</td>,
+          <td className="nextPreviousMonthDays" key={31}>
+            31
+            {bookingButtons(newDate)}
+          </td>,
           nextMonthDays()
         );
       }
@@ -315,17 +401,18 @@ export class CalendarHome extends Component {
     return (
       <div className="max-w-gl px-100 py-10 container ">
         <div className="text-center max-w-4xl m-auto">
-        <Multiselect 
-          options={services}
-          onSelect={this.onSelect} 
-          onRemove={this.onRemove}
-          displayValue="name" 
-          emptyRecordMsg="No Services Available" 
-          placeholder="Select Services" />
+          <Multiselect
+            options={services}
+            onSelect={this.onSelect}
+            onRemove={this.onRemove}
+            displayValue="name"
+            emptyRecordMsg="No Services Available"
+            placeholder="Select Services"
+          />
         </div>
-        <br/>
+        <br />
         <div className="calendarHeading">
-        {/*Left Arrow Month*/}
+          {/*Left Arrow Month*/}
           <svg
             className="leftArrow"
             xmlns="http://www.w3.org/2000/svg"
@@ -387,26 +474,27 @@ export class CalendarHome extends Component {
           </tbody>
         </table>
         {bookingForm()}
-        {msgBook === "" ? null: <div className={msgStyle}>{msgBook}</div>}
+        {msgBook === "" ? null : <div className={msgStyle}>{msgBook}</div>}
       </div>
     );
   }
 }
 
-const mapDispatchToProps=(dispatch) =>{
-  return{
-    getService:() => dispatch(getService()),
-    addBooking:(booking) => dispatch(addBooking(booking)),
-    resetFeedback:() =>dispatch(resetFeedback())
-  }
-}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getService: () => dispatch(getService()),
+    addBooking: (booking) => dispatch(addBooking(booking)),
+    resetFeedback: () => dispatch(resetFeedback()),
+  };
+};
 
-const mapStateToProps =(state) =>{
-  return{
-    services:state.service.services,
-    msgBook:state.booking.msgBook,
-    msgStyle:state.booking.msgStyle
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    services: state.service.services,
+    msgBook: state.booking.msgBook,
+    msgStyle: state.booking.msgStyle,
+    user: state.auth.user,
+  };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(CalendarHome);
+export default connect(mapStateToProps, mapDispatchToProps)(CalendarHome);
