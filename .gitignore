@@ -6,3 +6,5 @@ terraform.tfstate.backup
 tmp/
 node_modules/
 .DS_Store
+.idea
+
