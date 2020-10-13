@@ -234,7 +234,10 @@ export class CalendarHome extends Component {
             this.props.user.role === "ROLE_CUSTOMER"
           ) {
             return (
-              <div className="pt-4">
+             
+                <div className="md:flex md:items-center">
+                    <div className="md:w-1/3"></div>
+                    <div className="md:w-2/3">
                 <button
                   className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                   type="submit"
@@ -242,7 +245,9 @@ export class CalendarHome extends Component {
                 >
                   Book
                 </button>
-              </div>
+                </div>
+                </div>
+             
             );
           } else if (
             this.props.user.role !== null &&
