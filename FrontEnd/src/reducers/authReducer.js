@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
     case'RESET':
     return Object.assign({}, state, {
       ...state,
-      authError:""
+      registerError:""
     })
     
     default:

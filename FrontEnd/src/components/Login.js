@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {connect} from 'react-redux'
 import{ login } from "../actions/authAction"
 import { Redirect } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -73,7 +74,11 @@ class Login extends Component {
                 onChange={this.handleChange}
                 required
               />
-            </div>
+            </div>   
+          </div>
+          <div className="md:flex md:items-center my-3">
+          <div className="md:w-1/3"></div>
+          <NavLink to="/register" className="text-xs italic">Dont have an account yet ?</NavLink>
           </div>
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>

@@ -26,9 +26,16 @@ class Register extends Component {
   render() {
     if(this.props.user != null)  return <Redirect to="/about"/>
     const { authError } = this.props
+   let msg = []
+   const checkCreds = () =>{
+     if(authError === false){
+       msg.push(<p className="text-green-500 text-xl text-center italic">You have succesfully registered</p>)
+     }
+  }
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl">Register</h1>
+        {msg}
         <form
           onSubmit={this.handleSubmit}
           className="w-full max-w-lg mx-auto py-2"
@@ -98,6 +105,7 @@ class Register extends Component {
                 required
               />
             </div>
+            <input type="hidden" onSubmit={checkCreds()}/>
             <div className="w-full md:w-1/2 px-3">
               <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Phone Number
@@ -112,17 +120,26 @@ class Register extends Component {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center">
-            <div className="md:w-1/3"></div>
-            <div className="md:w-2/3">
+          <div className="flex justify-center space-x-5">
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >
                 Register
               </button>
+              <button
+                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="submit"
+                onClick={() => {
+                  this.props.resetFeedback()
+                  this.props.history.push("/login");
+                  // Will remove the msg but reloads the page, which is not good UX
+                  // window.location.reload(false);
+                }}
+              >
+                Back
+              </button>
             </div>
-          </div>
         </form>
       </div>
     );
@@ -137,7 +154,7 @@ const mapDispatchToProps=(dispatch) =>{
 
 function mapStateToProps(state) {
   return{
-   authError:state.auth.authError,
+   authError:state.auth.registerError,
    user:state.auth.user,
   }
 }
