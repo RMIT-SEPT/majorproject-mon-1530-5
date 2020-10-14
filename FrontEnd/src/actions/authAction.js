@@ -20,6 +20,7 @@ export const login = (username, password) => (dispatch) => {
 
             dispatch({
                 type: "LOGIN_FAIL",
+                payload:message
               });
             dispatch({
                 type: "GET_ERRORS",
@@ -45,6 +46,7 @@ export const login = (username, password) => (dispatch) => {
 
         dispatch({
             type: "REGISTER_FAIL",
+            payload: message
           });
         dispatch({
             type: "GET_ERRORS",

@@ -101,7 +101,7 @@ const mapDispatchToProps=(dispatch) =>{
 function mapStateToProps(state) {
   return{
    isLoggedIn:state.auth.isLoggedIn,
-   authError:state.auth.authError,
+   authError:state.auth.loginError,
    user:state.auth.user
   }
 }

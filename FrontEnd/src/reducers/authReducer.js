@@ -12,24 +12,27 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
-        authErroe:false
+        registerError:false
       };
     case "REGISTER_FAIL":
       return {
         ...state,
         isLoggedIn: false,
+        registerError: action.payload
       };
     case "LOGIN_SUCCESS":
       return {
         ...state,
         isLoggedIn: true,
         user: payload.user,
+        loginError: false
       };
     case "LOGIN_FAIL":
       return {
         ...state,
         isLoggedIn: false,
         user: null,
+        loginError: action.payload
       };
     case "LOGOUT":
       return {
@@ -45,10 +48,7 @@ export default function (state = initialState, action) {
         authError: "Server connection is required"
       })
     }else{
-      return Object.assign({}, state, {
-        ...state,
-        authError:action.payload,
-      })
+      return state
     }
 
     case'RESET':
