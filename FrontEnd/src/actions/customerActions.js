@@ -25,3 +25,37 @@ export const getCustomers = () =>{
         })
     }
 }
+
+export const updateDetails = (username, details) =>{
+    return(dispatch)=>{
+     axios.put(`http://localhost:8080/api/customer/updateDetails/${username}`, details, { headers: authHeader() })
+        .then((response)=>{
+            dispatch({
+                type:'UPDATE_DETAILS', response:response.data
+            })
+        })
+        .catch((err) =>{ 
+            dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+    }
+}
+
+export const changePassword = (details) => {
+    return (dispatch)=>{
+      axios.put('http://localhost:8080/api/user/updatePassword',details,{ headers: authHeader() })
+         .then((response)=>{
+             dispatch({
+                type:'CHANGE_PASSWORD',response:response.data
+             })
+         })
+         .catch((err) =>{ 
+             dispatch({
+                type: "GET_ERRORS",
+                payload: err.response
+            })
+        })
+    }
+}

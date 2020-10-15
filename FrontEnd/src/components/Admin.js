@@ -14,6 +14,16 @@ function Admin(props) {
   
   return (
     <div>
+      <div className="text-gray-700 text-center px-8 py-5 absolute right-0">
+        <button
+        className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+        type="button"
+        onClick={() => {
+          props.history.push('/changePassword')}
+        }>
+        Change Password
+        </button>
+      </div>
       <div className="container mx-auto pt-5">
         <h1 className="text-center text-4xl">My Dashboard</h1>
         <div className="flex justify-center py-5">
@@ -76,7 +86,7 @@ function Admin(props) {
             >
               View Customer Bookings
             </button>
-          </div>  
+          </div>
       <hr/>
       </div>
       </div>

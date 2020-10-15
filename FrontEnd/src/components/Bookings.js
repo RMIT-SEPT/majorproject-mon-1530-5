@@ -54,6 +54,37 @@ class Bookings extends Component {
     const formatEndTime = (time) => {
       return (parseInt(time.substring(0,2))+2) + time.substring(2,5);;
     }
+    const editButton = () => {
+      if (this.props.user.role === "ROLE_CUSTOMER") {
+        return(
+          <div className="text-gray-700 text-center px-8 py-5 absolute right-0">
+            <button
+            className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+            onClick={() => {
+              this.props.history.push('/editDetails')}
+            }
+            >
+            Edit Details
+            </button>
+          </div>
+        )
+      } else {
+        return(
+          <div className="text-gray-700 text-center px-8 py-5 absolute right-0">
+            <button
+            className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+            type="button"
+            onClick={() => {
+              this.props.history.push('/admin')}
+            }
+            >
+            Back
+            </button>
+          </div>
+        )
+      }
+    }
     const adminOptions = () => {
       if (this.props.user.role === "ROLE_ADMIN") {
         return(<div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
@@ -161,9 +192,9 @@ class Bookings extends Component {
     }
     return (
       <div>
+        {editButton()}
         <br/>
         {msgBook === "" ? null : <div className={msgStyle}>{msgBook}</div>}
-        <br/>
         {adminOptions()}
         <div className="container mx-auto py-5 flex flew-row justify-evenly">
           {bookingHistory()}
@@ -185,7 +216,6 @@ const mapStateToProps=(state) => {
   return{
    occBookings:state.booking.occBookings,
    pastBookings:state.booking.pastBookings,
-   isLoggedIn:state.auth.isLoggedIn,
    msgBook:state.booking.msgBook,
    msgStyle:state.booking.msgStyle,
    user:state.auth.user,

@@ -26,6 +26,16 @@ class Employee extends Component {
         }
         return (
         <div className="pt-4">
+            <div className="text-gray-700 text-center px-8 py-5 absolute right-0">
+                <button
+                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="button"
+                onClick={() => {
+                this.props.history.push('/changePassword')}
+                }>
+                Change Password
+                </button>
+            </div>
             <h1 className="text-center text-4xl ">Employee Dashboard</h1>
             <div className="max-w-lg mx-auto px-100 py-10 container">
             <div className="space-y-4 container mx-auto">

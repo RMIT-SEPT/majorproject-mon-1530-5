@@ -15,6 +15,8 @@ import store from "./store"
 import Bookings from './components/Bookings';
 import Employee from './components/Employee';
 import SetAvailability from './components/SetAvailability';
+import EditDetails from './components/EditDetails';
+import ChangePassword from './components/ChangePassword';
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
       <Route path ="/setAvailability" component ={SetAvailability}/>
       <Route path ="/bookings" component ={Bookings}/>
       <Route path ="/employee" component ={Employee}/>
+      <Route path ="/editDetails" component ={EditDetails}/>
+      <Route path ="/changePassword" component ={ChangePassword}/>
     </div>
     </Router>
     </Provider>

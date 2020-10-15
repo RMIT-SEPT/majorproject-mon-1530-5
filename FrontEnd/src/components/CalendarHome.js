@@ -234,44 +234,62 @@ export class CalendarHome extends Component {
             this.props.user.role === "ROLE_CUSTOMER"
           ) {
             return (
-             
-                <div className="md:flex md:items-center">
-                    <div className="md:w-1/3"></div>
-                    <div className="md:w-2/3">
-                <button 
-                  className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded text-xl"
-                  type="submit"
-                  onClick={this.handleSubmit}
-                >
-                  Book
-                </button>
+              <div className="p-8 rounded shadow m-auto">
+                <h1 className="text-center text-4xl pb-8">Book Service</h1>
+                <div className="flex space-x-6 justify-center pb-8">
+                  <div className="flex flex-col w-40 space-y-3 pl-4">
+                    <div>Booking ID:</div>
+                    <div>Service Name:</div>
+                    <div>Employee Name:</div>
+                    <div>Date:</div>
+                    <div>Booking Time:</div>
+                    <div>Username:</div>
+                  </div>
+                  <div className="flex flex-col w-40 space-y-3 pl-4">
+                    <div>{vacantBookings[i].id}</div>
+                    <div>{services[vacantBookings[i].serviceId - 1].name}</div>
+                    <div>{vacantBookings[i].employeeUsername}</div>
+                    <div>{vacantBookings[i].date}</div>
+                    <div>{vacantBookings[i].bookingTime}</div>
+                    <div>{this.props.user.username}</div>
+                  </div>
                 </div>
-                </div>
-             
+                <form onSubmit={this.handleSubmit}>
+                  <div className="md:flex md:items-center justify-center">
+                    <button
+                      className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                      type="submit">
+                      Book
+                    </button>
+                  </div>
+                </form>
+              </div>
             );
           } else if (
             this.props.user.role !== null &&
             this.props.user.role === "ROLE_ADMIN"
           ) {
             return (
-              <div className="pt-4">
-                <h1 className="text-center text-4xl">Book Service</h1>
-                <div className="text-center">
-                  Booking ID: {vacantBookings[i].id}
-                  <br />
-                  Service Name: {services[vacantBookings[i].serviceId - 1].name}
-                  <br />
-                  Employee Name: {vacantBookings[i].employeeUsername}
-                  <br />
-                  Date: {vacantBookings[i].date}
-                  <br />
-                  Booking Time: {vacantBookings[i].bookingTime}
+            <div className="p-8 rounded shadow m-auto">
+              <h1 className="text-center text-4xl pb-8">Book Service</h1>
+              <div className="flex space-x-6 justify-center pb-8">
+                <div className="flex flex-col w-40 space-y-3 pl-4">
+                  <div>Booking ID:</div>
+                  <div>Service Name:</div>
+                  <div>Employee Name:</div>
+                  <div>Date:</div>
+                  <div>Booking Time:</div>
                 </div>
-                <br />
-                <form
-                  onSubmit={this.handleSubmit}
-                  className="w-full max-w-lg mx-auto py-2"
-                >
+                <div className="flex flex-col w-40 space-y-3 pl-4">
+                  <div>{vacantBookings[i].id}</div>
+                  <div>{services[vacantBookings[i].serviceId - 1].name}</div>
+                  <div>{vacantBookings[i].employeeUsername}</div>
+                  <div>{vacantBookings[i].date}</div>
+                  <div>{vacantBookings[i].bookingTime}</div>
+                </div>
+              </div>
+              <form onSubmit={this.handleSubmit}>
+                <div className="md:flex md:items-center justify-center">
                   <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                       <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -299,19 +317,16 @@ export class CalendarHome extends Component {
                       />
                     </div>
                   </div>
-                  <div className="md:flex md:items-center">
-                    <div className="md:w-1/3"></div>
-                    <div className="md:w-2/3">
-                      <button
-                        className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-                        type="submit"
-                      >
-                        Book
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <div className="md:flex md:items-center justify-center">
+                  <button
+                    className="shadow bg-blue-900 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                    type="submit">
+                    Book
+                  </button>
+                </div>
+              </form>
+            </div>
             );
           }
         }
@@ -404,7 +419,7 @@ export class CalendarHome extends Component {
       return rows;
     };
     return (
-      <div className="max-w-gl px-100 py-10 container ">
+      <div className="px-100 py-10 container ">
         <div className="text-center max-w-4xl m-auto">
           <Multiselect
             options={services}
