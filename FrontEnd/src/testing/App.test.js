@@ -79,7 +79,7 @@ describe("Empployee Reducer Tests",()=>{
     })
     expect(state).toEqual({employees:employees})
   })
-  test("Should update, when availablity is added",()=>{
+  test("Should update state, when availablity is added",()=>{
    const  msg = "Availability Updated!"
    const  msgStyle ="text-green-500 text-xl text-center italic"
     const state = employeeReducer({},{
@@ -87,7 +87,7 @@ describe("Empployee Reducer Tests",()=>{
     })
     expect(state).toEqual({msg:msg,msgStyle:msgStyle})
   })
-  test("Should update, when availablity is added",()=>{
+  test("Should get available days and add it to to the state",()=>{
      const availability = ["MONDAY","WENDESDAY","FRIDAY"]
      const state = employeeReducer({},{
        type: "GET_AVAILABILITY",
@@ -122,20 +122,7 @@ describe("Service Reducer Tests",()=>{
 })
 
 
-describe("Empployee Reducer Tests",()=>{
-  test("Should return default state",()=>{
-     const state = employeeReducer(undefined,{})
-     expect(state).toEqual({authError:"",availability:[],employees:[],msg:'',msgStyle:''})
-  })
-  test("Should return list of employees",()=>{
-    const employees = [{username:"username",password:"password",name:"name"}, {username:"username1",password:"password1",name:"name1"}]
-    const state = employeeReducer({},{
-      type: types.GET_EMPLOYEES,
-      response: employees
-    })
-    expect(state).toEqual({employees:employees})
-  })
-})
+
 
 
 
