@@ -11,6 +11,7 @@ import employeeReducer from '../reducers/employeeReducer';
 import servicesReducer from '../reducers/servicesReducer'
 import { types } from '../actions/types'
 import thunk from 'redux-thunk'
+import authReducer from '../reducers/authReducer';
 
 
 const findByTestAttr = (component,attr) =>{
@@ -121,8 +122,20 @@ describe("Service Reducer Tests",()=>{
   })
 })
 
+describe("Auth Reducer Test", () =>{
+  test("Should return default state",()=>{
+    const state = authReducer(undefined,{})
+    expect(state).toEqual({isLoggedIn: false, user: null })
+ })
+ test("Should update state, on succesful registration",()=>{
+  const state = authReducer({},{
+    type: "REGISTER_SUCCESS"
+  })
+  expect(state).toEqual({isLoggedIn: false, registerError:false })
+})
 
 
+})
 
 
 
