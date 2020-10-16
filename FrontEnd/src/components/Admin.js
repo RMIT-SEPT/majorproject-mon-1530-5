@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from 'react-redux'
 import { Redirect } from 'react-router-dom'
+import '../css/Admin.css';
 
 function Admin(props) {
   // Route guarding in case the user is not logged in or has a different role 
@@ -16,10 +17,10 @@ function Admin(props) {
     <div>
       <div className="container mx-auto pt-5">
         <h1 className="text-center text-4xl">My Dashboard</h1>
-        <div className="flex justify-center py-5">
-        <div className="text-gray-700 text-center  px-4 py-5 m-2">
+        <div className="parent">
+        <div className="buttonPosition">
               <button
-                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="buttonColor"
                 type="button"
                 data-test="addService"
                 onClick= {()=>{
@@ -29,9 +30,9 @@ function Admin(props) {
                 Add Service
               </button>
          </div>
-        <div className="text-gray-700 text-center  px-4 py-5 m-2">
+        <div className="buttonPosition">
               <button
-                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="buttonColor"
                 type="button"
                 data-test="addEmployee"
                 onClick= {()=>{
@@ -41,9 +42,9 @@ function Admin(props) {
                 Add Employee
               </button>
          </div>
-         <div className="text-gray-700 text-center  px-4 py-5 m-2">
+         <div className="buttonPosition">
           <button
-            className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="buttonColor"
             type="button"
             data-test="setAvailability"
             onClick= {()=>{
@@ -53,9 +54,9 @@ function Admin(props) {
             Set Availability
           </button>
         </div>
-         <div className="text-gray-700 text-center  px-4 py-5 m-2">
+         <div className="buttonPosition">
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="buttonColor"
               type="button"
               data-test="addShift"
               onClick= {()=>{
@@ -65,9 +66,9 @@ function Admin(props) {
               Add Shift
             </button>
           </div>
-          <div className="text-gray-700 text-center  px-4 py-5 m-2">
+          <div className="buttonPosition">
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                className="buttonColor"
               type="button"
               data-test="bookings"
               onClick= {()=>{

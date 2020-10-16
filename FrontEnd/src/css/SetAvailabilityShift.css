@@ -1,0 +1,217 @@
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 42%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: -20rem;
+        margin-left: 55%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 2rem;
+        margin-left: 17%;
+        position: flex;
+
+}
+
+.timeIndexWeekDayContainer{
+        margin-top: -20rem;
+        margin-left: 40%;
+        position: flex;
+}
+
+.enterButtonsContainer{
+        margin-top: 10rem;
+        margin-left: 42%;
+        position: flex;
+        display: inline-block;
+        margin-bottom: 2rem;
+
+}
+
+
+@media(max-width: 1300px) {
+
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 39%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: -20rem;
+        margin-left: 55%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 2rem;
+        margin-left: 5%;
+        position: flex;
+
+}
+
+.enterButtonsContainer{
+        margin-top: 10rem;
+        margin-left: 42%;
+        position: flex;
+        display: inline-block;
+        margin-bottom: 2rem;
+
+}
+
+}
+
+@media(max-width: 1000px) {
+
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 39%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: -20rem;
+        margin-right: 0%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 2rem;
+        margin-left: 0%;
+        position: flex;
+
+}
+
+.enterButtonsContainer{
+        margin-top: 10rem;
+        margin-left: 42%;
+        position: flex;
+        display: inline-block;
+        margin-bottom: 2rem;
+
+}
+
+.timeIndexWeekDayContainer{
+        margin-top: -20rem;
+        margin-left: 60%;
+        position: flex;
+}
+
+}
+
+
+@media(max-width: 900px) {
+
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 39%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: 2rem;
+        margin-left: 25%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 3rem;
+        margin: 2% 15%;
+        position: flex;
+
+}
+
+.enterButtonsContainer{
+        margin-top: 2rem;
+        margin-left: 42%;
+        position: absolute;
+        display: flex;
+        margin-bottom: 2rem;
+
+}
+
+.timeIndexWeekDayContainer{
+        margin-top: 2rem;
+        margin-left: 0%;
+        position: flex;
+}
+
+.enterButtonsContainer{
+    width:100px;
+    margin:0 auto;
+}
+
+}
+
+
+@media(max-width: 900px) {
+
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 30%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: 2rem;
+        margin-left: 12%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 3rem;
+        margin: 4%;
+
+}
+
+.enterButtonsContainer{
+        margin-top: 2rem;
+        margin-left: 32%;
+        margin-bottom: 2rem;
+        position: absolute;
+        display: flex;
+
+}
+
+}
+
+@media(max-width: 380px) {
+
+.daysIndexContainer{
+    margin-top: 2rem;
+    margin-left: 30%;
+    position: flex;
+
+}
+
+.timeIndexContainer{
+        margin-top: 2rem;
+        margin-left: 12%;
+        position: flex;
+}
+
+.calendarContainer{
+        margin-top: 3rem;
+        margin-left: 0%;
+
+}
+
+.enterButtonsContainer{
+        margin-top: 2rem;
+        margin-left: 32%;
+        margin-bottom: 2rem;
+        position: absolute;
+        display: flex;
+
+}
+
+}

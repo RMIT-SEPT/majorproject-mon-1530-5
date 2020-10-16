@@ -3,6 +3,7 @@ import Calendar from "./Calendar";
 import {connect} from 'react-redux'
 import {getAvailability, getEmployees} from "../actions/employeeActions"
 import { addShift, resetFeedback } from "../actions/shiftActions";
+import '../css/SetAvailabilityShift.css';
 
  class AddShift extends Component {
    state = {
@@ -75,7 +76,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
       return shiftBtns
     }
     return (
-      <div className="pt-4">
+      <div className="pt-4 w-screen">
         <h1 className="text-center text-4xl ">Add Shift</h1>
         <div className="flex flex-col-reverse py-2">
           <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
@@ -109,22 +110,23 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
         </div>
          {msg === "" ? null: <p className={msgStyle}>{msg}</p>}
 
-         <div className="flex flex-col space-y-4 container mx-auto flex-inital">
-           <div className="flex space-x-2">
+         <div className="daysIndexContainer">
+           <div className="flex space-x-2 py-1">
            <button className=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
-            <p className="text-lg"> - Available days</p>
+            <p className="text-lg "> - Available days</p>
            </div>
-           <div className="flex space-x-2">
+           <div className="flex space-x-2 py-1">
            <button className=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Unavailable days</p>
            </div>
-           <div className="flex space-x-2">
+           <div className="flex space-x-2 py-1">
            <button className=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Selected day/Current day</p>
            </div>
          </div>
-        <div className="flex justify-evenly mx-5 my-5 py-5">
-          <Calendar changeSelectedDate={this.changeSelectedDate} />
+        <div className="calendarContainer">
+          <Calendar changeSelectedDate={this.changeSelectedDate} /></div>
+          <div className="timeIndexContainer">
           <div className="self-center mx-5 px-5">
             <div className="flex space-x-6">
               <div className="flex flex-col w-40 space-y-3">
@@ -138,16 +140,16 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
         </div>
         <form onSubmit={this.handleSubmit}>
       
-        <div className="flex justify-center space-x-5">
-          <div>
+        <div className="enterButtonsContainer">
+          <div className="float-left">
             <button
-              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
+              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
             >
               Add Shift
             </button>
           </div>
-          <div className="pl-5">
+          <div className="pl-5 float-left">
             <button
               className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"

@@ -23,7 +23,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6dfe08a9-7b88-4e49-a5da-b88536e4a2c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/About.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/AddShift.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/Admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/Calendar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/SetAvailabilityShift.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/css/SideBar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/images/hamburger.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/SideNavBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/majorproject-mon-1530-5.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/AddShift.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/Admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/Admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/Calendar.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/Calendar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/CalendarHome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/components/SetAvailability.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/components/SetAvailability.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/css/CalendarHome.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/css/CalendarHome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/css/NavBar.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/css/NavBar.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +86,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/FrontEnd/src/css" />
       <recent name="$PROJECT_DIR$/FrontEnd/src/images" />
     </key>
   </component>
@@ -119,30 +142,30 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1888" y="133" key="#Project_Structure" timestamp="1601859853151">
+    <state x="1888" y="133" key="#Project_Structure" timestamp="1602569917618">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state x="1888" y="133" key="#Project_Structure/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601859853151" />
+    <state x="1888" y="133" key="#Project_Structure/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1602569917618" />
     <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600699856276">
       <screen x="0" y="23" width="1440" height="792" />
     </state>
     <state x="190" y="59" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.792@0.23.1440.792" timestamp="1600699856276" />
-    <state width="1878" height="290" key="GridCell.Tab.0.bottom" timestamp="1601863359040">
+    <state width="1878" height="290" key="GridCell.Tab.0.bottom" timestamp="1602845034415">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="290" key="GridCell.Tab.0.bottom/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359040" />
-    <state width="1878" height="290" key="GridCell.Tab.0.center" timestamp="1601863359039">
+    <state width="1878" height="290" key="GridCell.Tab.0.bottom/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1602845034415" />
+    <state width="1878" height="290" key="GridCell.Tab.0.center" timestamp="1602845034414">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="290" key="GridCell.Tab.0.center/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359039" />
-    <state width="1878" height="290" key="GridCell.Tab.0.left" timestamp="1601863359038">
+    <state width="1878" height="290" key="GridCell.Tab.0.center/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1602845034414" />
+    <state width="1878" height="290" key="GridCell.Tab.0.left" timestamp="1602845034414">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="290" key="GridCell.Tab.0.left/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359038" />
-    <state width="1878" height="290" key="GridCell.Tab.0.right" timestamp="1601863359039">
+    <state width="1878" height="290" key="GridCell.Tab.0.left/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1602845034414" />
+    <state width="1878" height="290" key="GridCell.Tab.0.right" timestamp="1602845034415">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>
-    <state width="1878" height="290" key="GridCell.Tab.0.right/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1601863359039" />
+    <state width="1878" height="290" key="GridCell.Tab.0.right/1440.23.1920.1057/0.23.1440.831@1440.23.1920.1057" timestamp="1602845034415" />
     <state x="2107" y="306" width="619" height="490" key="find.popup" timestamp="1601863919977">
       <screen x="1440" y="23" width="1920" height="1057" />
     </state>

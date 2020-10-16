@@ -1,0 +1,48 @@
+.buttonColor{
+    background-color: #3E5C76;
+    padding: 10px 17px 10px 17px;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    display:inline-block;
+}
+
+
+.buttonPosition{
+    margin:0 50px;
+    display:inline-block;
+    outline: none;
+
+}
+
+.parent{
+    display:inline-block;
+    outline: none;
+
+}
+
+@media(max-width: 1200px){
+
+.buttonColor{
+    background-color: #3E5C76;
+    padding: 10px 17px 10px 17px;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+
+}
+
+.buttonPosition{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 150px;
+  padding: 20px 0 0 0;
+
+}
+.parent{
+    margin: 0 30%;
+
+}
+
+}

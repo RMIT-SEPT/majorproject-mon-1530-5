@@ -50,3 +50,44 @@
     background-color: #2a4365;
     background-color: rgba(42, 67, 101, var(--bg-opacity));
 }
+
+.hamburger{
+        display: none;
+}
+
+
+
+
+@media only screen and (max-width: 900px) {
+    .NonLoggedButtons{
+        display: none;
+    }
+
+    .LoggedButtons{
+        display: none;
+    }
+
+    .NavBarButton{
+        display: none;
+    }
+
+
+    .hamburger {
+        display:block;
+        width:100px;
+        height:auto;
+        position:absolute;
+        top:1px;
+        right:10px;
+        left:auto;
+        }
+.WebsiteName{
+    background-color: #0e3446;
+}
+
+.MainContainer{
+    background-color: #0e3446;
+
+}
+
+}

@@ -1,0 +1,119 @@
+.sideNavBar {
+   display:none;
+}
+
+.WebsiteName{
+    background-color: #3E5C76;
+    color: white;
+    left: 0px;
+}
+
+.website-nam{
+    top:0;
+    left:0;
+
+}
+.nav-menu {
+    width: 230px;
+    height: 100vh;
+    top: 0;
+    right:-100%;
+    left:auto;
+    position: absolute;
+    background-color: white;
+    transition: 800ms;
+}
+
+.close{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    height: 60px;
+}
+
+.nav-menu-active {
+    height: 100vh;
+    background-color: #0e3446;
+    width: 230px;
+    transition: 300ms;
+    top: 0;
+    right:0;
+    left:auto;
+    position: absolute;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-text {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px 0px 8px 16px;
+    height: 60px;
+    font-family: Arial;
+}
+
+
+.nav-text  {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1em 16px;
+    border-radius: 4px;
+    font-family: Arial;
+}
+
+.nav-text:hover {
+    background-color: #3E5C76;
+}
+
+.nav-menu-items {
+    width: 100%;
+    justify-content: end;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.navbar-toggle {
+    background-color: #0e3446;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+
+.bars-image{
+    display:none;
+}
+
+@media(max-width: 900px){
+
+.bars-image{
+        display:block;
+        width:30px;
+        height:auto;
+        position:absolute;
+        top:25%;
+        right:20px;
+        left:auto;
+
+}
+.sideNavBar {
+    display:flex;
+    background-color: #0e3446;
+    height: 48px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 25px;
+
+}
+
+}

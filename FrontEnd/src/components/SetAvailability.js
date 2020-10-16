@@ -83,6 +83,7 @@ class Employee extends Component {
         })
     }
     render() {
+
         const {employees,msg,msgStyle} = this.props;
         const {selectedDays,weekdays} = this.state;
         const createDayButtons = (startIndex,loopLength) => {
@@ -109,7 +110,7 @@ class Employee extends Component {
         return (
         <div className="pt-4">
             <h1 className="text-center text-4xl ">Set Availability</h1>
-            <div className="flex flex-col-reverse py-2">
+            <div className="flex flex-col-reverse py-10">
                 <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
                     <label
                     className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -140,45 +141,45 @@ class Employee extends Component {
                 </div>
             </div>
             {msg === "" ? null: <p className={msgStyle}>{msg}</p>}
-            <div className="space-y-4 container mx-auto">
-                <div className="flex space-x-2">
-                <button className=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
-                <p className="text-lg"> - Available days</p>
-                </div>
-                <div className="flex space-x-2">
-                <button className=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
-                <p className="text-lg"> - Unavailable days</p>
-                </div>
-                <div className="flex space-x-2">
-                <button className=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
-                <p className="text-lg"> - Selected day/Current day</p>
-                </div>
-            </div>
-            <div className="flex justify-evenly mx-5 my-5 py-5">
-                <Calendar changeSelectedDate={this.changeSelectedDate} />
-                <div className="self-center mx-5 px-5">
-                    <div className=" text-center text-lg font-bold">Select Available Days</div><br/>
-                    <div className="flex space-x-6">
-                        <div className="flex flex-col w-40 space-y-3">
-                            {createDayButtons(0,3)}
-                        </div>
-                        <div className="flex flex-col w-40 space-y-3">
-                            {createDayButtons(4,6)}
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div className="daysIndexContainer">
+           <div className="flex space-x-2 py-1">
+           <button className=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
+            <p className="text-lg "> - Available days</p>
+           </div>
+           <div className="flex space-x-2 py-1">
+           <button className=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
+           <p className="text-lg"> - Unavailable days</p>
+           </div>
+           <div className="flex space-x-2 py-1">
+           <button className=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
+           <p className="text-lg"> - Selected day/Current day</p>
+           </div>
+         </div>
+
+        <div className="calendarContainer">
+          <Calendar changeSelectedDate={this.changeSelectedDate} /></div>
+                           <div className="timeIndexWeekDayContainer" >
+                                <div className=" text-center text-lg font-bold">Select Available Days</div><br/>
+                                <div className="flex space-x-6 justify-center">
+                                    <div className="flex flex-col w-40 space-y-3  ">
+                                        {createDayButtons(0,3)}
+                                    </div>
+                                    <div className="flex flex-col w-40 space-y-3 ">
+                                        {createDayButtons(4,6)}
+                                    </div>
+                                </div>
+                            </div>
             <form onSubmit={this.handleSubmit}>
-                <div className="flex justify-center space-x-5">
-                    <div>
+                <div className="enterButtonsContainer">
+                    <div className=" float-left">
                         <button
-                        className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
+                        className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                         type="submit"
                         >
                         Update Availability
                         </button>
-                    </div>
-                    <div className="pl-5">
+                    </div >
+                    <div className="pl-5 pr-20 float-left">
                         <button
                         className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                         type="submit"

@@ -14,6 +14,8 @@ import {Provider} from "react-redux"
 import store from "./store"
 import Bookings from './components/Bookings';
 import Employee from './components/Employee';
+import SideNavBar from './components/SideNavBar';
+
 import SetAvailability from './components/SetAvailability';
 
 
@@ -35,6 +37,8 @@ function App() {
       <Route path ="/setAvailability" component ={SetAvailability}/>
       <Route path ="/bookings" component ={Bookings}/>
       <Route path ="/employee" component ={Employee}/>
+      <SideNavBar />
+
     </div>
     </Router>
     </Provider>

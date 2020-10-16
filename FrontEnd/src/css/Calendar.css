@@ -1,0 +1,137 @@
+.previousDays{
+    background-color: #cbd5e0;
+    height: 40px;
+    width: 100px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+.days{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.nextMonth{
+    background-color: #cbd5e0;
+    height: 40px;
+    width: 100px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+    font-weight: bold;
+    }
+
+.currentMonth{
+    background-color: white;
+    height: 40px;
+    width: 100px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+.availableDays{
+    background-color: white;
+    height: 40px;
+    width: 100px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+.unavailableDays{
+    background-color: #d3d3d3;
+    height: 40px;
+    width: 100px;
+    vertical-align: top;
+    text-align: left;
+    border: 1px solid white;
+    font-weight: bold;
+}
+
+@media(max-width: 600px) {
+  .previousDays{
+      background-color: #cbd5e0;
+      height: 40px;
+      width: 10%;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid white;
+      font-weight: bold;
+  }
+
+  .nextMonth{
+      background-color: #cbd5e0;
+      height: 40px;
+      width: 10%;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid white;
+      font-weight: bold;
+      }
+
+  .currentMonth{
+      background-color: white;
+      height: 40px;
+      width: 10%;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid white;
+      font-weight: bold;
+  }
+
+  .availableDays{
+      background-color: white;
+      height: 40px;
+      width: 10%;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid white;
+      font-weight: bold;
+  }
+
+  .unavailableDays{
+      background-color: #d3d3d3;
+      height: 40px;
+      width: 10%;
+      vertical-align: top;
+      text-align: left;
+      border: 1px solid white;
+      font-weight: bold;
+  }
+
+.days{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media(max-width: 390px) {
+
+.days{
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+}
+
+@media(max-width: 470px) {
+
+.days{
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+}

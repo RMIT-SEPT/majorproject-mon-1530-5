@@ -1,10 +1,14 @@
 import React from "react";
+import { IconContext } from 'react-icons';
+import { SideNavBar } from "./SideNavBar";
 import { NavLink } from "react-router-dom";
 import {connect} from 'react-redux'
 import{ logout } from "../actions/authAction"
 import '../css/NavBar.css';
 
 function Navbar(props) {
+
+
   const {isLoggedIn,user} = props 
   const adminLink = "/admin"
   const userLink = "/bookings"
@@ -49,6 +53,7 @@ function Navbar(props) {
           :<div className="NavBarButton">
             <NavLink to="/login">Login</NavLink>
           </div>
+
         }
           {isLoggedIn ?
           <div className="NavBarButton">
@@ -58,6 +63,7 @@ function Navbar(props) {
           </div>
         }
           </div>
+
         </div>
       </nav>
     </div>
