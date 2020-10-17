@@ -1,73 +1,13 @@
-import React from 'react';
-import Home from '../components/Home'
-import AddEmployee from '../components/AddEmployee'
-import { shallow } from 'enzyme'
-import About from '../components/About';
-import Contacts from '../components/Contacts';
-import Login from '../components/Login'
-import Admin from '../components/Admin'
-import Register from '../components/Register';
+
 import employeeReducer from '../reducers/employeeReducer';
 import servicesReducer from '../reducers/servicesReducer'
 import { types } from '../actions/types'
-import thunk from 'redux-thunk'
 import authReducer from '../reducers/authReducer';
+import customerReducer from '../reducers/customerReducer';
+import bookingReducer from '../reducers/bookingReducer'
+import shiftReducer from '../reducers/shiftReducer'
 
-
-const findByTestAttr = (component,attr) =>{
-  const wrapper = component.find(`[data-test='${attr}']`)
-  return wrapper;
-}
-
-
-
-// describe("Component Render Testing for Admin", ()=>{
-
-//   test('Renders Home without crashing', () => {
-//     const wrapper = shallow(<Home store={store}/>);
-//     expect(wrapper.find('p').text()).toContain('Welcome to BookMe!')
-//   });
-//   test('Renders About without crashing', () => {
-//     const wrapper = shallow(<About store={store}/>);
-//     expect(wrapper.find('h1').text()).toContain('About')
-//   });
-//   test('Renders Contacts without crashing', () => {
-//     const wrapper = shallow(<Contacts/>);
-//     expect(wrapper.find('h1').text()).toContain('Contact Us')
-//   });
-//   test('Renders Login without crashing', () => {
-//     const wrapper = shallow(<Login store={store}/>);
-//     expect(wrapper.find('h1').text()).toContain('Login')
-//   });
-//   test('Renders Login without crashing', () => {
-//     const wrapper = shallow(<Register/>);
-//     expect(wrapper.find('h1').text()).toContain('Register')
-//   });
-// })
-
-// describe("Admin Dashboard Tests",()=>{
-//   let profileWrapper;
-//   let addEmplWrapper;
-//   // let addShiftWrapper;
-
-
-//   })
-
-//   test("Render buttons on admin page", () =>{
-//     expect(findByTestAttr(profileWrapper,'addEmployee').text()).toBe("Add Employee")
-//     expect(findByTestAttr(profileWrapper,'addShift').text()).toBe("Add Shift")
-//     expect(findByTestAttr(profileWrapper,'addService').text()).toBe("Add Service")
-//     expect(findByTestAttr(profileWrapper,'setAvailability').text()).toBe("Set Availability")
-//     expect(findByTestAttr(profileWrapper,'addService').text()).toBe("Add Service")
-//     expect(findByTestAttr(profileWrapper,'setAvailability').text()).toBe("Set Availability")
-//     expect(findByTestAttr(profileWrapper,'bookings').text()).toBe("View Customer Bookings")
-//     expect(findByTestAttr(profileWrapper,'changePassword').text()).toBe("Change Password")
-    
-//   })
-
-// })
-
-describe("Empployee Reducer Tests",()=>{
+describe("Employee Reducer Tests",()=>{
   test("Should return default state",()=>{
      const state = employeeReducer(undefined,{})
      expect(state).toEqual({authError:"",availability:[],employees:[],msg:'',msgStyle:''})
@@ -132,11 +72,133 @@ describe("Auth Reducer Test", () =>{
     type: "REGISTER_SUCCESS"
   })
   expect(state).toEqual({isLoggedIn: false, registerError:false })
+  
+ })
+ test("Should update state, on unsuccesful registration",()=>{
+  let message = "Fail"
+  const state = authReducer({},{
+    type: "REGISTER_FAIL",
+    payload: message
+  })
+  expect(state).toEqual({isLoggedIn: false, registerError:message })
+  
+ })
+ test("Should update state, when user logs in",()=>{
+  let user = {username:"username",password:"password",name:"name"}
+  const state = authReducer({},{
+    type: "LOGIN_SUCCESS",
+    payload: {user:user}
+  })
+  expect(state).toEqual({isLoggedIn: true,loginError: false, user})
+  
+ })
+ test("Should update state, on logout",()=>{
+  const state = authReducer({},{
+    type: "LOGOUT"
+  })
+  expect(state).toEqual({isLoggedIn: false, user: null })
+  
+ })
+
 })
 
-
+describe("Customer Reducer Test", () =>{
+  test("Should return default state",()=>{
+    const state = customerReducer(undefined,{})
+    expect(state).toEqual({ customers:[],
+      customer:"",
+      msg:"",
+      msgStyle:"text-xl text-center italic" })
+ })
+ test("Should return customers",()=>{
+  const customers = [{username:"username",password:"password",name:"name"}, {username:"username1",password:"password1",name:"name1"}]
+  const state = customerReducer({},{
+    type: "GET_CUSTOMERS",
+    response:customers
+  })
+  expect(state).toEqual({ customers:customers})
 })
 
+test("Should update state, on update details",()=>{
+  let msg ="Details Updated!"
+  const state = customerReducer({},{
+    type: "UPDATE_DETAILS"
+  })
+  expect(state).toEqual({msg:msg,
+  msgStyle:"text-green-500 text-xl text-center italic"})
+})
 
+test("Should update state, on chage password",()=>{
+  let msg ="Details Updated!"
+  const state = customerReducer({},{
+    type: "CHANGE_PASSWORD",
+    response:msg
+  })
+  expect(state).toEqual({msg:msg,
+  msgStyle:"text-green-500 text-xl text-center italic"})
+})
+})
 
+describe("Booking Reducer Test", () =>{
+  test("Should return default state",()=>{
+    const state = bookingReducer(undefined,{})
+    expect(state).toEqual({ msgBook:"",
+    msgStyle:"text-xl text-center italic",
+    occBookings:[],
+    pastBookings:[], })
+ })
+ test("Should update state, on add booking",()=>{
+  let msg = "Booking Added!"
+  const state = bookingReducer({},{
+    type: "ADD_BOOKING",
+    response:msg
+  })
+  expect(state).toEqual({ msgBook: msg,
+    msgStyle:"text-green-500 text-xl text-center italic"})
+})
+test("Should update state, on cancel booking",()=>{
+  let msg = "Booking Added!"
+  const state = bookingReducer({},{
+    type: "CANCEL_BOOKING",
+    response:msg
+  })
+  expect(state).toEqual({ msgBook: msg,
+    msgStyle:"text-green-500 text-xl text-center italic"})
+})
+test("Should return occupied bookings ",()=>{
+  let occBookings = []
+  const state = bookingReducer({},{
+    type: "GET_OCC_BOOKINGS",
+    response:occBookings
+  })
+  expect(state).toEqual({ occBookings })
+})
+test("Should return past bookings ",()=>{
+  let pastBookings = []
+  const state = bookingReducer({},{
+    type: "GET_PAST_BOOKINGS",
+    response:pastBookings
+  })
+  expect(state).toEqual({ pastBookings })
+})
+})
+
+describe("Shift Reducer Test", () =>{
+  test("Should return default state",()=>{
+    const state = shiftReducer(undefined,{})
+    expect(state).toEqual({ startDateTime:"",
+    endDateTime:"",
+    msgStyle:"text-xl text-center italic",
+    msg:"",
+    shifts:[] })
+ })
+ test("Should return list of shifts",()=>{
+  let shifts = []
+  const state = shiftReducer({},{
+    type: "GET_SHIFT",
+    response:shifts
+  })
+  expect(state).toEqual({ shifts })
+})
+})
 
