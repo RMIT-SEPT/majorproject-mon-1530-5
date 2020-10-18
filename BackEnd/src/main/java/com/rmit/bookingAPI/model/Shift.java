@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import java.sql.Time;
 import java.sql.Date;
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class Shift {
 

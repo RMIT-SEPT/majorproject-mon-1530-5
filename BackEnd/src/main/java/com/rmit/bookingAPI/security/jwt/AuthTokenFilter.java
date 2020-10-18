@@ -19,6 +19,9 @@ import java.io.IOException;
 
 import static com.rmit.bookingAPI.security.SecurityConstants.*;
 
+/*
+@author Daniel Bound
+*/
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired

@@ -6,6 +6,8 @@ import com.rmit.bookingAPI.controller.dto.BookingDTO;
 import com.rmit.bookingAPI.controller.dto.CustomerDTO;
 import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
 import com.rmit.bookingAPI.controller.dto.ShiftDTO;
+import com.rmit.bookingAPI.model.Booking;
+import com.rmit.bookingAPI.service.BookingService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +45,9 @@ public class BookingControllerTests {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private BookingService bookingService;
 
     private static String validWorkDateString;
     private static String invalidWorkDateString;
@@ -223,8 +228,14 @@ public class BookingControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(bookingDTO)));
 
+        /*
+        * Due to before and after methods, there will only be the above booking in database,
+        * so we can assume an index of zero
+        * */
+        Long bookingId = bookingService.findBookingsByUsername("testCustomer").get(0).getId();
+
         Map<String,String> bookingDetails = new HashMap<>();
-        bookingDetails.put("bookingId", "17");
+        bookingDetails.put("bookingId", bookingId.toString());
         bookingDetails.put("customerUsername", "testCustomer");
 
         this.mockMvc.perform(delete("/api/booking/cancel")
@@ -243,8 +254,14 @@ public class BookingControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(bookingDTO)));
 
+        /*
+        * Due to before and after methods, there will only be the above booking in database,
+        * so we can assume an index of zero
+        * */
+        Long bookingId = bookingService.findBookingsByUsername("testCustomer").get(0).getId();
+
         Map<String,String> bookingDetails = new HashMap<>();
-        bookingDetails.put("bookingId", "18"); //need to find solution to remove this
+        bookingDetails.put("bookingId", bookingId.toString());
         bookingDetails.put("customerUsername", "tetCustomer");
 
         this.mockMvc.perform(delete("/api/booking/remove/")

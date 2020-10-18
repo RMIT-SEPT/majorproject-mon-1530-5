@@ -1,6 +1,5 @@
 package com.rmit.bookingAPI.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmit.bookingAPI.controller.dto.BookingDTO;
 import com.rmit.bookingAPI.model.*;
 import com.rmit.bookingAPI.service.BookingService;
@@ -14,10 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
+
+/*
+This controller method is responsible for the handling of all booking related requests
+@author Daniel Bound
+*/
 
 @RestController
 @RequestMapping("/api")

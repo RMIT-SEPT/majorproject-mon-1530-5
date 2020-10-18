@@ -2,8 +2,9 @@ package com.rmit.bookingAPI.security.jwt;
 
 import com.rmit.bookingAPI.model.RoleEnum;
 
-import java.util.Set;
-
+/*
+@author Daniel Bound
+*/
 public class JWTResponsePayload {
 
     private String jwt;

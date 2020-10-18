@@ -1,8 +1,6 @@
 package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /*
 * User Entity class design reasoning:
@@ -13,13 +11,16 @@ import java.util.Set;
 * After doing some research on JWT and security for Spring, a perhaps better way to implement different user types of
 * through 'roles' which I have implemented via the 'authGroup' parameter.
 * This gives the front end clear distinction between user types and allows all users to sign in through the same portal,
-* but receive different landing pages.
+* but have different abilities/authorizations.
 * For further user information the respective CustomerDetails and EmployeeDetails entity classes are provided, each
 * with their own Id and identical username corresponding to their separate User entity.
 * This design choice means the backend is able to send Customer and Employee information exclusively to the front end
-* without having to attach passwords.
+* without having to attach passwords, and de-couples it from that sensitive data.
 * */
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class User{
 

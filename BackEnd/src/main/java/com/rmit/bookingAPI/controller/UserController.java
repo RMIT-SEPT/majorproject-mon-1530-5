@@ -1,8 +1,5 @@
 package com.rmit.bookingAPI.controller;
 
-import com.rmit.bookingAPI.controller.dto.CustomerDTO;
-import com.rmit.bookingAPI.controller.dto.EmployeeDTO;
-import com.rmit.bookingAPI.controller.dto.LoginDTO;
 import com.rmit.bookingAPI.model.CustomerDetails;
 import com.rmit.bookingAPI.model.EmployeeDetails;
 import com.rmit.bookingAPI.model.User;
@@ -13,14 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.DayOfWeek;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+/*
+This controller method is responsible for the handling of all user entity requests, as well as
+employeeDetails and customerDetails requests too
+@author Daniel Bound
+*/
 
 @RestController
 @RequestMapping("/api")

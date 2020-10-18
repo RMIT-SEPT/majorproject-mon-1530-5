@@ -20,6 +20,11 @@ import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.util.*;
 
+/*
+This controller method is responsible for the handling of all shift based requests
+@author Daniel Bound
+*/
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000") // Connection support for ReactJs Frontend requests

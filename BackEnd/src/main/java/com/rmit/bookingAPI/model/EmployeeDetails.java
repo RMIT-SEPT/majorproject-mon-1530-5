@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.List;
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class EmployeeDetails {
 

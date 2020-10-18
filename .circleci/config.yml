@@ -79,7 +79,22 @@ jobs:
           command: |
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_URL
             docker push $FULL_IMAGE_NAME
-  
+
+  deploy:
+    docker:
+      - image: hashicorp/terraform:light
+    working_directory: ~/repofiles/deployment
+    steps:
+      - checkout:
+          path: ~/repofiles
+      - run:
+          name: terraform init & plan
+          command: |
+            terraform init 
+            terraform plan
+      - run:
+          name: terraform apply
+          command: terraform apply --auto-approve
         
 workflows:
   version: 2.1
@@ -93,9 +108,16 @@ workflows:
           filters:
             branches:
               only: master
-#      - build_and_push_frontend:
-#          requires:
-#            - test_frontend
-#          filters:
-#            branches:
-#              only: master
+      - build_and_push_frontend:
+          requires:
+            - test_frontend
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - build_and_push_backend
+            - build_and_push_frontend
+          filters:
+            branches:
+              only: master

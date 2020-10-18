@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+@author Daniel Bound
+*/
 @Service
 public class PaidServiceService {
 

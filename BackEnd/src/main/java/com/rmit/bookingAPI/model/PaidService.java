@@ -3,6 +3,9 @@ package com.rmit.bookingAPI.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class PaidService {
 

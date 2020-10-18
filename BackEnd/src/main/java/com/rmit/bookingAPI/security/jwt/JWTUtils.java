@@ -11,13 +11,16 @@ import static com.rmit.bookingAPI.security.SecurityConstants.*;
 
 import java.util.Date;
 
+/*
+@author Daniel Bound
+*/
 @Component
 public class JWTUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTUtils.class);
 
-    private String jwtSecret = SECRET;
-    private int jwtExpirationMs = EXPIRATION_TIME; //5 Minutes
+    private final String jwtSecret = SECRET;
+    private final int jwtExpirationMs = EXPIRATION_TIME; //5 Minutes
 
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();

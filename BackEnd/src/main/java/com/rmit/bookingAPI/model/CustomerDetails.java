@@ -2,6 +2,9 @@ package com.rmit.bookingAPI.model;
 
 import javax.persistence.*;
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class CustomerDetails{
 

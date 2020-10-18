@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
+/*
+@author Daniel Bound
+*/
 public class UserDetailsImpl implements UserDetails {
 
     private final User user;

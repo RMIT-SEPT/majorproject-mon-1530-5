@@ -7,14 +7,16 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/*
+@author Daniel Bound
+*/
 @Service
-public class BookingService {
+public class
+BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;

@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.util.*;
 
+/*
+@author Daniel Bound
+*/
 @Service
 public class UserService {
 

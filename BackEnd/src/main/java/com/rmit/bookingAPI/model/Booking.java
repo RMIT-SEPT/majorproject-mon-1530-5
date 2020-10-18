@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
+/*
+@author Daniel Bound
+*/
 @Entity
 public class Booking {
 

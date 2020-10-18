@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/*
+This controller method is responsible for the handling of requests related to paidService entities
+@author Daniel Bound
+*/
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000") // Connection support for ReactJs Frontend requests

@@ -11,6 +11,9 @@ import java.util.Calendar;
 import java.sql.Date;
 import java.util.List;
 
+/*
+@author Daniel Bound
+*/
 @Service
 public class ShiftService {
 
