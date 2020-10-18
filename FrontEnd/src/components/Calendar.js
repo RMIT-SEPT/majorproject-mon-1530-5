@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {getAvailability} from "../actions/employeeActions"
 import {connect} from 'react-redux'
 
 export class Calendar extends Component {
@@ -39,7 +38,7 @@ export class Calendar extends Component {
     currentDate.setFullYear(this.state.date.getFullYear())
     // Setting the current day of the month to first day on the date object
     // This is done to find out the day of the week this day corresponds too
-    date.setDate(1); 
+    date.setDate(1);
     this.setState({
       currentMonth: this.state.months[date.getMonth()], // Current month on the calendar
       currentDate: currentDate.toDateString(), // String that contains (day of the week ,day of the month ,year)
@@ -64,18 +63,17 @@ export class Calendar extends Component {
   }
 
   availableDays =(month) =>{
-    let  availableDays = []
-    for(let i=this.state.lastDay; i>=0;i--){
-      let date = new Date
+    let availableDays = []
+    for(let i=this.state.lastDay; i>0;i--){
+      let date = new Date();
       date.setMonth(month)
       date.setDate(i)
-      for(let j = 3;j>-1;j--){
+      for(let j = 0; j < this.props.availability.length; j++){
         if(this.props.availability[j] === this.state.weekdays[date.getDay()]){
-           availableDays.push(date.getDate())
+          availableDays.push(date.getDate())
         }
       }
     }
-  
     return availableDays
     
   }
@@ -130,7 +128,7 @@ export class Calendar extends Component {
   render() {
     const {lastDay,firstDayIndex,prevLastDay,lastDayIndex,selectedDay} = this.state
 
-    const previousMontLastDays = () => {
+    const previousMonthLastDays = () => {
       const previousDays = [];
       // loop starts from the index which corresponds 
       //to the day of the week of the first day (0..6)
@@ -149,7 +147,7 @@ export class Calendar extends Component {
       const nextMonthDays = [];
       // the number of the left over days 
       // of the next month on the calendar
-      let nextDays = 7 - lastDayIndex - 1; 
+      let nextDays = 7 - lastDayIndex - 1;
       for (let i = 1; i <= nextDays; i++) {
         nextMonthDays.push(<td className="border px-4 py-2 bg-gray-400" key={i}>{i}</td>);
       }
@@ -161,13 +159,13 @@ export class Calendar extends Component {
       const rows = [];
       const availableDays = this.availableDays(this.state.date.getMonth())
       // previousMontLastDays().length = returns the number of the left over last days of the previous month
-      rows.push(previousMontLastDays());
-      for (let i = 1; i <= 7 - previousMontLastDays().length; i++) {
+      rows.push(previousMonthLastDays());
+      for (let i = 1; i <= 7 - previousMonthLastDays().length; i++) {
         if(selectedDay === i){
           rows.push(<td className="border px-4 py-2 bg-blue-500" onClick={this.setDay} key={i}>{i}</td>);  
         }
         else if(availableDays.includes(i)){
-          rows.push(<td className="border px-4 py-2 hover:bg-blue-500"  onClick={this.setDay}>{i}</td>);  
+          rows.push(<td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={i}>{i}</td>);  
         }
         else{
           rows.push(<td className="border px-4 py-2 bg-gray-400" key={i}>{i}</td>);
@@ -182,21 +180,22 @@ export class Calendar extends Component {
       const rows = [];
       const availableDays = this.availableDays(this.state.date.getMonth())
       for (let i = 1; i <= 7; i++) {
-        if (7 - previousMontLastDays().length + i + n <= lastDay) {
-          if(selectedDay === 7 - previousMontLastDays().length + i + n){
+        var j = 7 - previousMonthLastDays().length + i + n
+        if (j <= lastDay) {
+          if(selectedDay === j){
             rows.push(
-              <td className="border px-4 py-2 bg-blue-500" key={i}>
-                {7 - previousMontLastDays().length + i + n}
+              <td className="border px-4 py-2 bg-blue-500" key={j}>
+                {j}
               </td>
             );
           }
-          else if(availableDays.includes(7 - previousMontLastDays().length + i + n)){
-            rows.push(<td className="border px-4 py-2  hover:bg-blue-500" key={7 - previousMontLastDays().length + i + n} onClick={this.setDay}>{7 - previousMontLastDays().length + i + n}</td>);  
+          else if(availableDays.includes(j)){
+            rows.push(<td className="border px-4 py-2  hover:bg-blue-500" onClick={this.setDay} key={j}>{j}</td>);  
           }
           else{
             rows.push(
-              <td className="border px-4 py-2 bg-gray-400"  key={7 - previousMontLastDays().length + i + n}>
-                {7 - previousMontLastDays().length + i + n}
+              <td className="border px-4 py-2 bg-gray-400" key={j}>
+                {j}
               </td>
             );
           }
@@ -209,19 +208,69 @@ export class Calendar extends Component {
     //Creates last row of the calendar
     const createLastRow = () => {
       const rows = [];
-      if (previousMontLastDays().length === 5) {
-        rows.push(
-          <td className="border px-4 py-2 hover:bg-blue-500"key={31} >31</td>,
-          nextMonthDays()
-        );
-      } else if (previousMontLastDays().length === 6) {
-        rows.push(
-          <td className="border px-4 py-2 hover:bg-blue-500" key={30}>30</td>,
-          <td className="border px-4 py-2 hover:bg-blue-500" key={31}>31</td>,
-          nextMonthDays()
-        );
+      const availableDays = this.availableDays(this.state.date.getMonth())
+      if (lastDayIndex !== 6) {
+        if (previousMonthLastDays().length === 5) {
+          if(selectedDay === 31){
+            rows.push(
+              <td className="border px-4 py-2 bg-blue-500" key={31}>
+                {31}
+              </td>,
+              nextMonthDays()
+            );
+          } else if (availableDays.includes(31)) {
+            rows.push(
+              <td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={31}>{31}</td>,
+              nextMonthDays()
+              );
+          } else {
+            rows.push(
+              <td className="border px-4 py-2 bg-gray-400" key={31}>
+                {31}
+              </td>,
+              nextMonthDays()
+            );
+          }
+        } else if (previousMonthLastDays().length === 6) {
+          if(selectedDay === 30){
+            rows.push(
+              <td className="border px-4 py-2 bg-blue-500" key={30}>
+                {30}
+              </td>
+            );
+          } else if (availableDays.includes(30)) {
+            rows.push(
+              <td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={30}>{30}</td>
+              );
+          } else {
+            rows.push(
+              <td className="border px-4 py-2 bg-gray-400" key={30}>
+                {30}
+              </td>
+            );
+          }
+          if(selectedDay === 31){
+            rows.push(
+              <td className="border px-4 py-2 bg-blue-500" key={31}>
+                {31}
+              </td>,
+              nextMonthDays()
+            );
+          } else if (availableDays.includes(31)) {
+            rows.push(
+              <td className="border px-4 py-2 hover:bg-blue-500" onClick={this.setDay} key={31}>{31}</td>,
+              nextMonthDays()
+              );
+          } else {
+            rows.push(
+              <td className="border px-4 py-2 bg-gray-400" key={31}>
+                {31}
+              </td>,
+              nextMonthDays()
+            );
+          }
+        }
       }
-
       return rows;
     };
     return (
@@ -281,7 +330,7 @@ export class Calendar extends Component {
             <tr>{createMiddleRows(14)}</tr>
             <tr>
               {createMiddleRows(21)}
-              {previousMontLastDays().length <= 4 ? nextMonthDays() : null}
+              {previousMonthLastDays().length <= 4 ? nextMonthDays() : null}
             </tr>
             <tr>{createLastRow()}</tr>
           </tbody>

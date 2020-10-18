@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import {connect} from 'react-redux'
+import{ register, resetFeedback } from "../actions/authAction"
+import { Redirect } from 'react-router-dom'
+
 
 class Register extends Component {
   state = {
@@ -8,21 +11,8 @@ class Register extends Component {
     password: "",
     address: "",
     pNumber: "",
-    authError: false,
   };
   handleChange = (e) => {
-    if (e.target.id === "username" ) {
-      axios
-        .get(`http://localhost:8080/api/customer/${e.target.value}`)
-        .then((response) => {
-          this.checkUsername(true);
-          console.log(response)
-        })
-        .catch((error) => {
-          console.log(error)
-          this.checkUsername(false);
-        });
-    }
     this.setState({
       [e.target.id]: e.target.value,
     });
@@ -30,35 +20,22 @@ class Register extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    axios
-      .post("http://localhost:8080/api/register", {
-        username: this.state.username,
-        password: this.state.password,
-        name: this.state.name,
-        address: this.state.address,
-        phoneNumber: this.state.pNumber,
-      })
-      .then((response) => {
-        console.log(response)    
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      this.props.history.push("/profile");
-    
-   
-  };
-  checkUsername = (response) => {
-    this.setState({
-      authError: response,
-    });
+    this.props.register(this.state.username, this.state.password,this.state.name,this.state.address,this.state.pNumber)
   };
   
   render() {
-    const { authError } = this.state;
+    if(this.props.user != null)  return <Redirect to="/about"/>
+    const { authError } = this.props
+   let msg = []
+   const checkCreds = () =>{
+     if(authError === false){
+       msg.push(<p className="text-green-500 text-xl text-center italic">You have succesfully registered</p>)
+     }
+  }
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl">Register</h1>
+        {msg}
         <form
           onSubmit={this.handleSubmit}
           className="w-full max-w-lg mx-auto py-2"
@@ -67,7 +44,7 @@ class Register extends Component {
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="name"
+                htmlFor="name"
               >
                 Full Name
               </label>
@@ -94,7 +71,7 @@ class Register extends Component {
               />
               {authError ? (
                 <p className="text-red-500 text-xs italic">
-                  Username already taken
+                 Username is taken
                 </p>
               ) : null}
             </div>
@@ -128,6 +105,7 @@ class Register extends Component {
                 required
               />
             </div>
+            <input type="hidden" onSubmit={checkCreds()}/>
             <div className="w-full md:w-1/2 px-3">
               <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Phone Number
@@ -142,23 +120,44 @@ class Register extends Component {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center">
-            <div className="md:w-1/3"></div>
-            <div className="md:w-2/3">
+          <div className="flex justify-center space-x-5">
               <button
                 className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
-                disabled={this.state.authError}
               >
                 Register
               </button>
+              <button
+                className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                type="submit"
+                onClick={() => {
+                  this.props.resetFeedback()
+                  this.props.history.push("/login");
+                  // Will remove the msg but reloads the page, which is not good UX
+                  // window.location.reload(false);
+                }}
+              >
+                Back
+              </button>
             </div>
-          </div>
         </form>
       </div>
     );
   }
 }
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    register:(username, password,name,address,phoneNumber) => dispatch(register(username, password,name,address,phoneNumber)),
+    resetFeedback:() =>dispatch(resetFeedback())
+  }
+  }
 
-export default Register;
+function mapStateToProps(state) {
+  return{
+   authError:state.auth.registerError,
+   user:state.auth.user,
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Register);
 

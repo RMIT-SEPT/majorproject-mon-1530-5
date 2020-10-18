@@ -1,36 +1,31 @@
 const initialState = {
-    msgBook:"",
-    msgStyle:"text-xl text-center italic",
-    occBookings:[],
-    pastBookings:[],
+    customers:[],
+    customer:"",
+    msg:"",
+    msgStyle:"text-xl text-center italic"
   }
     
-const bookingReducer = (state = initialState,action)=> {
+const customerReducer = (state = initialState,action)=> {
   switch(action.type){
-    case'ADD_BOOKING':
+    case'GET_CUSTOMERS':{
       console.log(action.response)
       return  Object.assign({}, state, {
-        msgBook: action.response,
-        msgStyle:"text-green-500 text-xl text-center italic"
-      })
-    case'CANCEL_BOOKING':
-      console.log(action.response)
-      return  Object.assign({}, state, {
-        msgBook: action.response,
-        msgStyle:"text-green-500 text-xl text-center italic"
-      })
-    case'GET_OCC_BOOKINGS':{
-      console.log(action.response)
-      return  Object.assign({}, state, {
-        occBookings:action.response
+        customers:action.response
       })
     }
-    case'GET_PAST_BOOKINGS':{
+    case'UPDATE_DETAILS':{
       console.log(action.response)
-      return  Object.assign({}, state, {
-        pastBookings:action.response
+      return Object.assign({}, state, {
+        msg:"Details Updated!",
+        msgStyle:"text-green-500 text-xl text-center italic"
       })
     }
+    case"CHANGE_PASSWORD":
+      console.log(action.response)
+      return  Object.assign({}, state, {
+        msg:action.response,
+        msgStyle:"text-green-500 text-xl text-center italic"
+      })
     case'GET_ERRORS':{
       console.log(action.payload)
       if(typeof action.payload === 'undefined'){
@@ -57,10 +52,10 @@ const bookingReducer = (state = initialState,action)=> {
     }
     case"RESET":
       return Object.assign({}, state, {
-        msgBook:""
+        msg:""
       })
     default:
       return state
   }
 }
-export default bookingReducer ;
+export default customerReducer ;
