@@ -80,6 +80,43 @@ jobs:
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_URL
             docker push $FULL_IMAGE_NAME
 
+  build_and_push_frontend:
+    docker:
+      - image:  "circleci/node:13.11.0"
+    environment:
+      FULL_IMAGE_NAME: 149859093103.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+    working_directory: ~/repofiles/FrontEnd
+    steps:
+      - checkout:
+          path: ~/repofiles
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+             - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies for AWS
+          command: |
+            sudo apt-get update
+            sudo apt-get -y -qq install awscli
+            sudo apt-get install python3-pip
+            sudo pip3 install --upgrade awscli     
+      - setup_remote_docker
+      - run:
+          name: Build and tag image
+          command: |
+            docker build -t $FULL_IMAGE_NAME .
+      - run:
+          name: Push image to repo
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $AWS_ACCOUNT_URL
+            docker push $FULL_IMAGE_NAME
+
+
   deploy:
     docker:
       - image: hashicorp/terraform:light
