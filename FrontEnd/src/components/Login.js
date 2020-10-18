@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import axios from "axios";
+import {connect} from 'react-redux'
+import{ login } from "../actions/authAction"
+import { Redirect } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 class Login extends Component {
   state = {
     username: "",
     password: "",
-    passError: false,
-    userError: false,
   };
   handleChange = (e) => {
     this.setState({
@@ -15,42 +16,21 @@ class Login extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/api/login", {
-        username: this.state.username,
-        password: this.state.password,
-      })
-      .then((response) => {
-        this.checkCreds(false, false);
-        console.log(response)
-      })
-      .catch((error) => {
-        console.log(error.response)
-        if (error.response) {
-          if (error.response.data === "Incorrect password") {
-            this.checkCreds(true, false);
-          } else if (
-            error.response.data === `A login with that username doesn't exist`
-          ) {
-            this.checkCreds(false, true);
-          }
-        }
-      });
-  };
-  checkCreds = (passError, userError) => {
-    this.setState({
-      passError: passError,
-      userError: userError,
-    });
-    if (this.state.passError === false && this.state.userError === false) {
-      this.props.history.push("/profile");
+    this.props.login(this.state.username,this.state.password)
+    if(this.props.isLoggedIn === true){
+      this.props.history.push("/about")
     }
   };
+  
   render() {
-    const { userError, passError } = this.state;
+   // Route guarding in case the user is not logged in or has a different role 
+    if(this.props.user != null)  return <Redirect to="/about"/>
+
+    const { authError } = this.props
     return (
       <div className="pt-4">
         <h1 className="text-center text-4xl ">Login</h1>
+        {authError ? <p className="text-red-500 text-xl text-center italic">Incorrect Credentials</p> : null}
         <form
           onSubmit={this.handleSubmit}
           className="max-w-lg mx-auto px-5 py-5"
@@ -59,7 +39,7 @@ class Login extends Component {
             <div className="md:w-1/3">
               <label
                 className="block text-gray-700 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                for="username"
+                htmlFor="username"
                 id="username"
               >
                 Username
@@ -74,9 +54,6 @@ class Login extends Component {
                 onChange={this.handleChange}
                 required
               />
-              {userError ? (
-                <p className="text-red-500 text-xs italic">Invaid username</p>
-              ) : null}
             </div>
           </div>
           <div className="md:flex md:items-center mb-6">
@@ -97,10 +74,11 @@ class Login extends Component {
                 onChange={this.handleChange}
                 required
               />
-              {passError ? (
-                <p className="text-red-500 text-xs italic">Invalid password</p>
-              ) : null}
-            </div>
+            </div>   
+          </div>
+          <div className="md:flex md:items-center my-3">
+          <div className="md:w-1/3"></div>
+          <NavLink to="/register" className="text-xs italic">Dont have an account yet ?</NavLink>
           </div>
           <div className="md:flex md:items-center">
             <div className="md:w-1/3"></div>
@@ -119,4 +97,19 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps=(dispatch) =>{
+  return{
+    login:(username,password) => dispatch(login(username,password))
+  }
+  }
+
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.loginError,
+   user:state.auth.user
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

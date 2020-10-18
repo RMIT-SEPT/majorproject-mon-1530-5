@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Calendar from "./Calendar";
 import {connect} from 'react-redux'
 import {getAvailability, getEmployees} from "../actions/employeeActions"
-import { getService } from "../actions/servicesActions";
 import { addShift, resetFeedback } from "../actions/shiftActions";
 
  class AddShift extends Component {
@@ -26,7 +25,6 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
     })
   }
 
-
   handleSubmit = (e) =>{
     e.preventDefault()
     const newShift = {
@@ -35,7 +33,6 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
       startTime:this.state.selectedTime,
       endTime:this.state.selectedTime
     }
-    console.log(this.state)
     this.props.addShift(newShift)
   }
 
@@ -47,17 +44,14 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
       console.log(e.target.value)
       this.props.getAvailability(e.target.value)
     }
-   
   }
 
   componentDidMount(){
-    this.props.getService()
     this.props.getEmployees()
   }
 
-
   render() {
-    const { employees,services,msg,msgStyle} = this.props;
+    const {employees,msg,msgStyle} = this.props;
     const {selectedTime} = this.state
     const createShiftBtns = (startIndex,loopLength) =>{
       let shiftTime = ["6:30","10:30","14:30","18:30","8:30","12:30","16:30","20:30"]
@@ -81,7 +75,8 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
       return shiftBtns
     }
     return (
-      <div>
+      <div className="pt-4">
+        <h1 className="text-center text-4xl ">Add Shift</h1>
         <div className="flex flex-col-reverse py-2">
           <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
             <label
@@ -97,35 +92,7 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
               >
                  <option>Please select employee</option>
                 {employees && employees.map(employee =>{
-                  return(<option>{employee.username}</option>)
-                })}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div className="max-w-sm md:w-1/2 my-6 md:mb-0 mx-auto">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-
-            >
-              Choose the Service
-            </label>
-            <div className="relative">
-              <select
-                className="bg-gray-200  appearance-none  block w-full border-2 border-gray-200 rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                id="type"
-              >
-               <option>Please select service</option>
-               {services && services.map(service =>{
-                  return( <option key={service.id}>{service.name}</option>)
+                  return(<option key={employee.id}>{employee.username}</option>)
                 })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -144,38 +111,37 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
 
          <div className="flex flex-col space-y-4 container mx-auto flex-inital">
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 font-bold py-2 px-4 rounded"></button>
             <p className="text-lg"> - Available days</p>
            </div>
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 bg-gray-400 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Unavailable days</p>
            </div>
            <div className="flex space-x-2">
-           <button class=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
+           <button className=" border-solid border-2 border-gray-600 bg-blue-500 font-bold py-2 px-4 rounded"></button>
            <p className="text-lg"> - Selected day/Current day</p>
            </div>
          </div>
         <div className="flex justify-evenly mx-5 my-5 py-5">
-        <Calendar changeSelectedDate={this.changeSelectedDate} />
-
+          <Calendar changeSelectedDate={this.changeSelectedDate} />
           <div className="self-center mx-5 px-5">
             <div className="flex space-x-6">
-            <div className="flex flex-col w-40 space-y-3">
-            {createShiftBtns(0,3)}
-            </div>
-            <div className="flex flex-col space-y-3 w-40">
-            {createShiftBtns(4,7)}
+              <div className="flex flex-col w-40 space-y-3">
+              {createShiftBtns(0,3)}
+              </div>
+              <div className="flex flex-col space-y-3 w-40">
+              {createShiftBtns(4,7)}
+              </div>
             </div>
           </div>
-        </div>
         </div>
         <form onSubmit={this.handleSubmit}>
       
         <div className="flex justify-center space-x-5">
           <div>
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
+              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded "
               type="submit"
             >
               Add Shift
@@ -183,16 +149,16 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
           </div>
           <div className="pl-5">
             <button
-              className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+              className="shadow bg-blue-900 hover:bg-blue-700 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
               type="submit"
               onClick={() => {
                 this.props.resetFeedback()
-                this.props.history.push("/profile");
+                this.props.history.push("/admin");
                 // Will remove the msg but reloads the page, which is not good UX
                 // window.location.reload(false);
               }}
             >
-              Cancel
+              Back
             </button>
           </div>
         </div>
@@ -203,20 +169,18 @@ import { addShift, resetFeedback } from "../actions/shiftActions";
 }
 
 const mapDispatchToProps=(dispatch) =>{
-return{
-  getEmployees:()=> dispatch(getEmployees()),
-  getService:() => dispatch(getService()),
-  addShift:(shift) => dispatch(addShift(shift)),
-  resetFeedback:() =>dispatch(resetFeedback()),
-  getAvailability:(username) => dispatch(getAvailability(username))
-}
+  return{
+    getEmployees:()=> dispatch(getEmployees()),
+    addShift:(shift) => dispatch(addShift(shift)),
+    resetFeedback:() =>dispatch(resetFeedback()),
+    getAvailability:(username) => dispatch(getAvailability(username))
+  }
 }
 
 
 const mapStateToProps =(state) =>{
   return{
     employees:state.employee.employees,
-    services:state.service.services,
     msg:state.shift.msg,
     msgStyle:state.shift.msgStyle
   }

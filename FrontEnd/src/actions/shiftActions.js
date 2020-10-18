@@ -1,8 +1,10 @@
 import axios from "axios"
+import authHeader from '../services/authHeader';
+
 
 export const getShift = () =>{
-    return(dispatch,getState)=>{
-     axios.get('http://localhost:8080/api/shift/all')
+    return(dispatch)=>{
+     axios.get('http://localhost:8080/api/shift/all',  { headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data
@@ -11,7 +13,7 @@ export const getShift = () =>{
         .catch((err) =>{ 
             dispatch({
                 type: "GET_ERRORS",
-                payload: err.response
+                payload: err
             })
         })
     }
@@ -19,7 +21,7 @@ export const getShift = () =>{
 
 export const getShiftByUsername = (username) =>{
     return(dispatch,getState)=>{
-     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${username}`)
+     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${username}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data
@@ -35,8 +37,8 @@ export const getShiftByUsername = (username) =>{
 }
 
 export const getShiftByDate = (date) =>{
-    return(dispatch,getState)=>{
-     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${date}`)
+    return(dispatch)=>{
+     axios.get(`http://localhost:8080/api/shift/getAvailableEmployees/${date}`,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'GET_SHIFT',response:response.data
@@ -45,14 +47,14 @@ export const getShiftByDate = (date) =>{
         .catch((err) =>{ 
             dispatch({
                 type: "GET_ERRORS",
-                payload: err.response
+                payload: err
             })
         })
     }
 }
 
 export const resetFeedback= () =>{
-    return(dispatch,getState)=>{
+    return(dispatch)=>{
             dispatch({
                 type:'RESET'
             })
@@ -61,8 +63,8 @@ export const resetFeedback= () =>{
     }
 }
 export const addShift= (shift) =>{
-    return(dispatch,getState)=>{
-     axios.post('http://localhost:8080/api//shift/add',shift)
+    return(dispatch)=>{
+     axios.post('http://localhost:8080/api/shift/add',shift,{ headers: authHeader() })
         .then((response)=>{
             dispatch({
                 type:'ADD_SHIFT',response:response.data

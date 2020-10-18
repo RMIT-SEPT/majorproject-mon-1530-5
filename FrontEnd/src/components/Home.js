@@ -1,8 +1,19 @@
 import React from "react";
 import CalendarHome from "./CalendarHome";
 import logo from '../images/logo.png';
+import {connect} from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
-function Home() {
+function Home(props) {
+  if(props.user !== null)  {
+    if(props.user.role === "ROLE_EMPLOYEE"){
+      return <Redirect to="/about"/>
+    } 
+  }else{
+    return <Redirect to="/login"/>
+  }
+  
+  
   return (
     <div>
       <div className="container mx-auto pt-5">
@@ -21,6 +32,13 @@ function Home() {
     </div>
   );
 }
+function mapStateToProps(state) {
+  return{
+   isLoggedIn:state.auth.isLoggedIn,
+   authError:state.auth.authError,
+   user:state.auth.user
+  }
+}
 
 
-export default Home;
+export default connect(mapStateToProps)(Home);
