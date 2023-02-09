@@ -6,7 +6,7 @@
 * BOUND, Daniel (s3719027)
 * VO, Alex (s3781244)
 * BOGACHEV, Gleb (s3694543)
-* TOBGUI, Alana (s3760538)
+* T, Alana (s3760538)
 
 ## Records
 * New Github Repository: https://github.com/RMIT-SEPT/majorproject-mon-1530-5.git
